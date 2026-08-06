@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AYT Mart — সেরা মূল্যে প্রিমিয়াম কোয়ালিটির দেশীয় পণ্য। সব প্রোডাক্ট এক জায়গায়, সহজ ফিল্টার ও সার্চ সুবিধাসহ।">
+  <meta name="theme-color" content="#0B4238">
+  <title>প্রোডাক্ট ক্যাটালগ | AYT Mart</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles/themes/variables.css">
+  <link rel="stylesheet" href="styles/base/reset.css">
+  <link rel="stylesheet" href="styles/layout/layout.css">
+  <style>
+    /* ==========================================================================
+       AYT MART — PRODUCT CATALOG PAGE
+       Inherits the same design system as the premium homepage & product page:
+       deep green + gold + rose palette, Tiro Bangla display type, Nakshi-stitch
+       dividers. Tokens fall back to shared theme vars if defined there.
+       ========================================================================== */
+    :root {
+      --ayt-primary:        var(--color-primary, #0B4238);
+      --ayt-primary-dark:   #072722;
+      --ayt-primary-light:  var(--color-primary-light, #14614F);
+      --ayt-gold:           var(--color-gold, #C9A227);
+      --ayt-gold-light:     #E7CD73;
+      --ayt-gold-dark:      #96751A;
+      --ayt-cream:          #FBF7EF;
+      --ayt-ink:            #1C2420;
+      --ayt-rose:           #B23B3B;
+      --ayt-rose-dark:      #8E2E2E;
+      --ayt-surface:        var(--bg-surface, #FFFFFF);
+      --ayt-surface-alt:    var(--bg-surface-alt, #F5F2E9);
+      --ayt-border:         var(--border-color, #E5E0D2);
+      --ayt-muted:          var(--text-muted, #756F62);
+
+      --ayt-sp-1: var(--space-1, 4px);
+      --ayt-sp-2: var(--space-2, 8px);
+      --ayt-sp-3: var(--space-3, 12px);
+      --ayt-sp-4: var(--space-4, 16px);
+      --ayt-sp-5: var(--space-5, 20px);
+      --ayt-sp-6: var(--space-6, 24px);
+      --ayt-sp-8: var(--space-8, 32px);
+      --ayt-sp-10: var(--space-10, 40px);
+      --ayt-sp-12: var(--space-12, 48px);
+      --ayt-radius-sm: var(--border-radius-sm, 6px);
+      --ayt-radius-md: var(--border-radius-md, 12px);
+      --ayt-radius-lg: var(--border-radius-lg, 18px);
+      --ayt-radius-full: var(--border-radius-full, 999px);
+      --ayt-shadow-sm: 0 2px 8px rgba(15, 35, 30, 0.06);
+      --ayt-shadow-md: var(--shadow-md, 0 10px 30px rgba(15, 35, 30, 0.10));
+      --ayt-shadow-lg: 0 24px 60px rgba(15, 35, 30, 0.16);
+      --ayt-shadow-gold: 0 10px 24px rgba(201, 162, 39, 0.25);
+      --ayt-fast: var(--transition-fast, 150ms ease);
+      --ayt-normal: var(--transition-normal, 320ms cubic-bezier(.22,.61,.36,1));
+
+      --ayt-font-display: 'Tiro Bangla', 'Noto Serif Bengali', serif;
+      --ayt-font-body: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+      --ayt-font-num: 'Poppins', 'Hind Siliguri', sans-serif;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+    }
+
+    body { font-family: var(--ayt-font-body); color: var(--ayt-ink); background: var(--ayt-cream); }
+    h1, h2, h3, .ayt-font-display { font-family: var(--ayt-font-display); }
+    :focus-visible { outline: 2px solid var(--ayt-gold-dark); outline-offset: 3px; }
+    img { max-width: 100%; display: block; }
+    button, select, input { font-family: inherit; }
+    button { cursor: pointer; }
+    a { text-decoration: none; color: inherit; }
+
+    .ayt-container { max-width: 1320px; margin: 0 auto; padding: 0 var(--ayt-sp-5); }
+    .ayt-eyebrow { display: inline-flex; align-items: center; gap: var(--ayt-sp-2); font-family: var(--ayt-font-num); font-size: 12px; font-weight: 600; letter-spacing: .12em; color: var(--ayt-gold-dark); margin-bottom: var(--ayt-sp-2); }
+    .ayt-eyebrow::before { content: ""; width: 20px; height: 2px; background: var(--ayt-gold); border-radius: 2px; }
+    .ayt-section-title { font-size: clamp(21px, 2.6vw, 27px); font-weight: 700; color: var(--ayt-primary-dark); line-height: 1.25; }
+    .ayt-view-all { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 14px; color: var(--ayt-primary); border-bottom: 1.5px solid var(--ayt-gold); padding-bottom: 2px; transition: color var(--ayt-fast), gap var(--ayt-fast); white-space: nowrap; }
+    .ayt-view-all:hover { color: var(--ayt-gold-dark); gap: 10px; }
+    .ayt-divider { position: relative; height: 22px; margin: 0; }
+    .ayt-divider::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background-image: repeating-linear-gradient(90deg, var(--ayt-gold) 0 10px, transparent 10px 20px); opacity: .55; }
+    .ayt-divider::after { content: "❖"; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-52%); background: var(--ayt-cream); color: var(--ayt-gold-dark); font-size: 13px; padding: 0 var(--ayt-sp-4); }
+    .ayt-reveal { opacity: 0; transform: translateY(18px); transition: opacity 640ms ease, transform 640ms ease; }
+    .ayt-reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .ayt-skel { position: relative; overflow: hidden; background: var(--ayt-surface-alt); border-radius: var(--ayt-radius-md); }
+    .ayt-skel::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.65), transparent); animation: aytShimmer 1.4s infinite; }
+    @keyframes aytShimmer { 100% { transform: translateX(100%); } }
+
+    .ayt-ticker { background: var(--ayt-ink); color: #EFE9D8; overflow: hidden; }
+    .ayt-ticker-track { display: flex; gap: var(--ayt-sp-10); padding: var(--ayt-sp-2) 0; white-space: nowrap; animation: aytTicker 26s linear infinite; width: max-content; }
+    .ayt-ticker-track span { font-size: 13px; font-weight: 500; letter-spacing: .02em; display: inline-flex; align-items: center; gap: 8px; }
+    .ayt-ticker-track span::before { content: "✓"; color: var(--ayt-gold-light); font-weight: 700; }
+    @keyframes aytTicker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ---------- Hero ---------- */
+    .cat-hero { position: relative; overflow: hidden; background: radial-gradient(120% 160% at 15% 0%, #1B6E56 0%, #0B4238 45%, #072722 100%); padding: var(--ayt-sp-10) 0 var(--ayt-sp-8); color: #FBF7EF; }
+    .cat-hero::after { content: ""; position: absolute; inset: 0; opacity: .1; background-image: repeating-linear-gradient(45deg, #fff 0 2px, transparent 2px 26px); }
+    .cat-hero-inner { position: relative; z-index: 1; text-align: center; max-width: 640px; margin: 0 auto; }
+    .cat-hero-eyebrow { font-family: var(--ayt-font-num); letter-spacing: .16em; font-size: 12px; font-weight: 600; color: var(--ayt-gold-light); text-transform: uppercase; }
+    .cat-hero-title { font-size: clamp(26px, 4vw, 40px); font-weight: 700; margin: var(--ayt-sp-3) 0 var(--ayt-sp-2); }
+    .cat-hero-sub { font-size: 14.5px; color: #E9E2CC; opacity: .92; }
+
+    /* ---------- Breadcrumb ---------- */
+    .pd-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 12.5px; color: var(--ayt-muted); padding: var(--ayt-sp-5) 0 var(--ayt-sp-2); }
+    .pd-breadcrumb a { color: var(--ayt-muted); transition: color var(--ayt-fast); }
+    .pd-breadcrumb a:hover { color: var(--ayt-gold-dark); }
+    .pd-breadcrumb .sep { opacity: .5; }
+    .pd-breadcrumb .current { color: var(--ayt-ink); font-weight: 600; }
+
+    /* ---------- Toolbar ---------- */
+    .cat-toolbar {
+      background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-lg);
+      padding: var(--ayt-sp-4) var(--ayt-sp-5); display: flex; align-items: center; gap: var(--ayt-sp-4); flex-wrap: wrap;
+      box-shadow: var(--ayt-shadow-sm); margin-bottom: var(--ayt-sp-5);
+    }
+    .cat-search { position: relative; flex: 1; min-width: 220px; }
+    .cat-search input {
+      width: 100%; height: 46px; border: 1.5px solid var(--ayt-border); border-radius: var(--ayt-radius-full);
+      padding: 0 var(--ayt-sp-5) 0 44px; font-size: 13.5px; background: var(--ayt-surface-alt); transition: border-color var(--ayt-fast), background var(--ayt-fast);
+    }
+    .cat-search input:focus { border-color: var(--ayt-gold); background: #fff; outline: none; }
+    .cat-search svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; stroke: var(--ayt-muted); fill: none; stroke-width: 1.8; }
+    .results-count { font-size: 12.5px; color: var(--ayt-muted); white-space: nowrap; }
+    .sort-select {
+      background: var(--ayt-surface-alt); border: 1.5px solid var(--ayt-border); border-radius: var(--ayt-radius-sm);
+      padding: 10px var(--ayt-sp-4); font-size: 13px; font-weight: 600; height: 46px;
+    }
+    .view-toggle { display: flex; border: 1.5px solid var(--ayt-border); border-radius: var(--ayt-radius-sm); overflow: hidden; height: 46px; }
+    .view-toggle button { width: 44px; height: 100%; background: var(--ayt-surface-alt); display: flex; align-items: center; justify-content: center; border: none; transition: background var(--ayt-fast); }
+    .view-toggle button svg { width: 18px; height: 18px; stroke: var(--ayt-ink); fill: none; stroke-width: 1.7; }
+    .view-toggle button.is-active { background: var(--ayt-primary); }
+    .view-toggle button.is-active svg { stroke: #fff; }
+    .filter-toggle-btn { display: none; align-items: center; gap: 8px; height: 46px; padding: 0 var(--ayt-sp-4); background: var(--ayt-primary); color: #fff; border: none; border-radius: var(--ayt-radius-sm); font-size: 13px; font-weight: 700; }
+    .filter-toggle-btn svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 1.8; }
+
+    /* ---------- Active filter chips ---------- */
+    .active-filters-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--ayt-sp-5); }
+    .active-filters-row:empty { display: none; }
+    .filter-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--ayt-surface); border: 1px solid var(--ayt-gold); color: var(--ayt-primary-dark); font-size: 12px; font-weight: 600; padding: 6px 10px 6px 14px; border-radius: var(--ayt-radius-full); }
+    .filter-chip button { width: 18px; height: 18px; border-radius: 50%; background: var(--ayt-surface-alt); border: none; font-size: 11px; line-height: 1; display: flex; align-items: center; justify-content: center; }
+    .filter-chip-clear { background: var(--ayt-ink); color: #fff; border: none; font-size: 12px; font-weight: 700; padding: 7px 16px; border-radius: var(--ayt-radius-full); }
+
+    /* ---------- Catalog layout ---------- */
+    .catalog-layout { display: grid; grid-template-columns: 268px 1fr; gap: var(--ayt-sp-6); align-items: start; }
+
+    .filter-sidebar {
+      background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-lg);
+      padding: var(--ayt-sp-5); display: flex; flex-direction: column; gap: var(--ayt-sp-6);
+      position: sticky; top: var(--ayt-sp-5); max-height: calc(100vh - 40px); overflow-y: auto;
+      box-shadow: var(--ayt-shadow-sm);
+    }
+    .filter-group-title { font-size: 12.5px; font-weight: 700; margin-bottom: var(--ayt-sp-3); text-transform: uppercase; letter-spacing: .06em; color: var(--ayt-primary-dark); display: flex; align-items: center; gap: 6px; }
+    .filter-group-title::before { content: ""; width: 3px; height: 13px; background: var(--ayt-gold); border-radius: 2px; }
+    .filter-list { display: flex; flex-direction: column; gap: 10px; max-height: 220px; overflow-y: auto; padding-right: 4px; }
+    .filter-item { display: flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer; color: var(--ayt-ink); }
+    .filter-checkbox { accent-color: var(--ayt-gold-dark); cursor: pointer; width: 15px; height: 15px; }
+
+    .price-range-wrap { display: flex; flex-direction: column; gap: 10px; }
+    .price-range-inputs { display: flex; align-items: center; gap: 8px; font-family: var(--ayt-font-num); font-size: 12.5px; }
+    .price-range-inputs input[type=number] { width: 100%; padding: 8px 10px; border: 1.5px solid var(--ayt-border); border-radius: var(--ayt-radius-sm); font-size: 12.5px; }
+    .price-range-inputs span { color: var(--ayt-muted); }
+    input[type=range] { width: 100%; accent-color: var(--ayt-gold-dark); }
+
+    .rating-filter-item svg { width: 14px; height: 14px; }
+    .star-icon { fill: #DCD6C4; }
+    .star-icon.is-filled { fill: var(--ayt-gold); }
+
+    .filter-actions { display: flex; gap: 10px; }
+    .btn-clear-filters { flex: 1; background: var(--ayt-surface-alt); border: 1.5px solid var(--ayt-border); color: var(--ayt-ink); font-weight: 700; font-size: 12.5px; padding: 11px; border-radius: var(--ayt-radius-sm); transition: border-color var(--ayt-fast); }
+    .btn-clear-filters:hover { border-color: var(--ayt-gold); }
+    .btn-apply-filters { flex: 1; background: var(--ayt-primary); color: #fff; font-weight: 700; font-size: 12.5px; padding: 11px; border: none; border-radius: var(--ayt-radius-sm); transition: background var(--ayt-fast); }
+    .btn-apply-filters:hover { background: var(--ayt-gold); color: #241A03; }
+
+    /* ---------- Product grid / list (catalog) ---------- */
+    .product-grid-catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: var(--ayt-sp-5); }
+    .product-grid-catalog.is-list { grid-template-columns: 1fr; }
+
+    .product-card {
+      position: relative; background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md);
+      overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--ayt-shadow-sm);
+      transition: box-shadow var(--ayt-normal), border-color var(--ayt-normal), transform var(--ayt-normal);
+    }
+    .product-card:hover { box-shadow: var(--ayt-shadow-lg); border-color: var(--ayt-gold); transform: translateY(-4px); }
+    .is-list .product-card { flex-direction: row; }
+    .is-list .product-card:hover { transform: translateY(-2px); }
+    .is-list .product-img-wrapper { width: 220px; flex-shrink: 0; aspect-ratio: auto; }
+    .is-list .product-info { flex: 1; }
+    .is-list .product-desc { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    .product-img-wrapper { position: relative; background: var(--ayt-surface-alt); aspect-ratio: 1; overflow: hidden; }
+    .product-img { width: 100%; height: 100%; object-fit: cover; transition: opacity var(--ayt-normal), transform var(--ayt-normal); }
+    .product-img-primary { position: relative; z-index: 1; }
+    .product-img-secondary { position: absolute; inset: 0; z-index: 2; opacity: 0; transform: scale(1.04); }
+    .product-card:hover .product-img-primary { transform: scale(1.06); }
+    .product-card:hover .product-img-secondary { opacity: 1; }
+
+    .badges-col { position: absolute; top: var(--ayt-sp-2); left: var(--ayt-sp-2); z-index: 3; display: flex; flex-direction: column; gap: 6px; }
+    .product-badge { background: var(--ayt-primary); color: #fff; font-size: 10.5px; font-weight: 700; padding: 4px var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); letter-spacing: .02em; width: fit-content; }
+    .product-badge.badge-sale { background: var(--ayt-rose); }
+    .product-badge.badge-hot { background: linear-gradient(120deg, #E0641F, #B23B3B); }
+    .product-badge.badge-shipping { background: var(--ayt-gold-dark); }
+    .discount-pill { position: absolute; top: var(--ayt-sp-2); right: var(--ayt-sp-2); z-index: 3; background: var(--ayt-gold); color: #241A03; font-family: var(--ayt-font-num); font-weight: 700; font-size: 11px; padding: 4px 8px; border-radius: var(--ayt-radius-sm); }
+
+    .card-side-actions { position: absolute; right: var(--ayt-sp-2); bottom: var(--ayt-sp-2); z-index: 3; display: flex; flex-direction: column; gap: 8px; opacity: 0; transform: translateX(6px); transition: opacity var(--ayt-fast), transform var(--ayt-fast); }
+    .product-card:hover .card-side-actions { opacity: 1; transform: translateX(0); }
+    .icon-action-btn { width: 34px; height: 34px; border-radius: 50%; border: none; background: rgba(255,255,255,.94); display: flex; align-items: center; justify-content: center; box-shadow: var(--ayt-shadow-sm); transition: background var(--ayt-fast); }
+    .icon-action-btn svg { width: 16px; height: 16px; fill: none; stroke: var(--ayt-ink); stroke-width: 1.8; }
+    .icon-action-btn.is-active { background: var(--ayt-rose); }
+    .icon-action-btn.is-active svg { fill: #fff; stroke: #fff; }
+    .icon-action-btn.compare-active { background: var(--ayt-gold); }
+
+    .quickview-btn { position: absolute; left: var(--ayt-sp-2); right: var(--ayt-sp-2); bottom: var(--ayt-sp-2); z-index: 3; background: rgba(11, 66, 56, .92); color: #fff; border: none; padding: 9px; font-size: 12px; font-weight: 600; border-radius: var(--ayt-radius-sm); opacity: 0; transform: translateY(8px); transition: opacity var(--ayt-fast), transform var(--ayt-fast); }
+    .product-card:hover .quickview-btn { opacity: 1; transform: translateY(0); }
+    .is-list .quickview-btn { display: none; }
+
+    .product-info { padding: var(--ayt-sp-4); display: flex; flex-direction: column; flex: 1; gap: 6px; }
+    .product-brand { font-size: 11px; color: var(--ayt-gold-dark); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+    .product-title { font-size: 13.5px; font-weight: 600; line-height: 1.4; height: 38px; overflow: hidden; }
+    .is-list .product-title { height: auto; }
+    .product-desc { font-size: 12px; color: var(--ayt-muted); line-height: 1.6; display: none; }
+    .is-list .product-desc { display: -webkit-box; }
+    .product-rating { display: flex; align-items: center; gap: 6px; }
+    .product-rating .stars { display: inline-flex; gap: 1px; }
+    .review-count { font-size: 11px; color: var(--ayt-muted); }
+    .product-pricing { display: flex; align-items: center; gap: var(--ayt-sp-2); font-family: var(--ayt-font-num); }
+    .price-sale { color: var(--ayt-rose); font-weight: 700; font-size: 15.5px; }
+    .price-regular { text-decoration: line-through; color: var(--ayt-muted); font-size: 12.5px; }
+    .product-meta-row { display: flex; align-items: center; justify-content: space-between; font-size: 10.5px; }
+    .stock-status { font-weight: 600; padding: 2px 8px; border-radius: var(--ayt-radius-full); }
+    .stock-status.in-stock { color: #1B6E4A; background: #E4F3EA; }
+    .stock-status.low-stock { color: #9C5B0E; background: #FBEBD6; }
+    .stock-status.out-of-stock { color: #9C2B2B; background: #FBE1E1; }
+    .sold-count { color: var(--ayt-muted); }
+    .product-actions { display: flex; gap: 8px; margin-top: auto; flex-wrap: wrap; }
+    .mini-add-cart { flex: 1; min-width: 90px; display: flex; align-items: center; justify-content: center; gap: 6px; background: var(--ayt-surface-alt); color: var(--ayt-primary-dark); border: 1px solid var(--ayt-border); padding: var(--ayt-sp-2); font-size: 12px; font-weight: 600; border-radius: var(--ayt-radius-sm); transition: background var(--ayt-fast), border-color var(--ayt-fast); }
+    .mini-add-cart:hover { background: #fff; border-color: var(--ayt-gold); }
+    .cart-icon { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+    .mini-buy-now { flex: 1; min-width: 90px; display: flex; align-items: center; justify-content: center; background: var(--ayt-primary); color: #fff; padding: var(--ayt-sp-2); font-size: 12px; font-weight: 600; text-align: center; border-radius: var(--ayt-radius-sm); transition: background var(--ayt-fast); }
+    .mini-buy-now:hover { background: var(--ayt-gold); color: #241A03; }
+    .mini-whatsapp { width: 40px; display: flex; align-items: center; justify-content: center; background: #25d366; color: #fff; border-radius: var(--ayt-radius-sm); }
+    .mini-whatsapp svg { width: 16px; height: 16px; fill: #fff; }
+
+    /* ---------- Empty / skeleton states ---------- */
+    .catalog-empty { grid-column: 1/-1; text-align: center; padding: var(--ayt-sp-12) var(--ayt-sp-5); }
+    .catalog-empty .icon { font-size: 46px; margin-bottom: var(--ayt-sp-3); }
+    .catalog-empty h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; color: var(--ayt-primary-dark); }
+    .catalog-empty p { font-size: 13px; color: var(--ayt-muted); }
+    .skel-card { aspect-ratio: .68; }
+
+    /* ---------- Pagination ---------- */
+    .cat-pagination { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: var(--ayt-sp-8); flex-wrap: wrap; }
+    .page-btn { min-width: 40px; height: 40px; padding: 0 10px; border-radius: var(--ayt-radius-sm); border: 1.5px solid var(--ayt-border); background: var(--ayt-surface); font-family: var(--ayt-font-num); font-weight: 700; font-size: 13px; transition: border-color var(--ayt-fast), background var(--ayt-fast), color var(--ayt-fast); }
+    .page-btn:hover:not(:disabled) { border-color: var(--ayt-gold); }
+    .page-btn.is-active { background: var(--ayt-primary); border-color: var(--ayt-primary); color: #fff; }
+    .page-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+    /* ---------- Brand marquee ---------- */
+    .brand-marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+    .brand-track { display: flex; align-items: center; gap: var(--ayt-sp-12); width: max-content; animation: aytTicker 22s linear infinite; }
+    .brand-item { font-family: var(--ayt-font-num); font-weight: 700; font-size: 20px; letter-spacing: .04em; color: var(--ayt-muted); opacity: .75; white-space: nowrap; cursor: pointer; transition: color var(--ayt-fast), opacity var(--ayt-fast); }
+    .brand-item:hover { color: var(--ayt-gold-dark); opacity: 1; }
+
+    /* ---------- Why shop ---------- */
+    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--ayt-sp-6); }
+    .why-card { text-align: center; padding: var(--ayt-sp-5); }
+    .why-icon { width: 60px; height: 60px; margin: 0 auto var(--ayt-sp-3); border-radius: 50%; background: rgba(201,162,39,.12); border: 1px solid var(--ayt-gold); display: flex; align-items: center; justify-content: center; }
+    .why-icon svg { width: 26px; height: 26px; stroke: var(--ayt-gold-dark); fill: none; stroke-width: 1.6; }
+    .why-card h3 { font-size: 14.5px; font-weight: 700; margin-bottom: 6px; color: var(--ayt-primary-dark); }
+    .why-card p { font-size: 12.5px; color: var(--ayt-muted); line-height: 1.6; }
+
+    /* ---------- Newsletter ---------- */
+    .newsletter-box { background: linear-gradient(135deg, var(--ayt-primary), var(--ayt-primary-dark)); border-radius: var(--ayt-radius-lg); padding: var(--ayt-sp-10) var(--ayt-sp-8); text-align: center; color: #fff; position: relative; overflow: hidden; }
+    .newsletter-box::before { content: ""; position: absolute; inset: 0; opacity: .12; background-image: repeating-linear-gradient(45deg, #fff 0 2px, transparent 2px 26px); }
+    .newsletter-box > * { position: relative; z-index: 1; }
+    .newsletter-box h2 { font-size: clamp(19px, 2.4vw, 26px); margin-bottom: 8px; }
+    .newsletter-box p { font-size: 13.5px; opacity: .85; max-width: 46ch; margin: 0 auto var(--ayt-sp-6); }
+    .newsletter-form { display: flex; gap: 10px; max-width: 440px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+    .newsletter-form input { flex: 1; min-width: 220px; padding: 13px var(--ayt-sp-4); border-radius: var(--ayt-radius-full); border: none; font-size: 13.5px; font-family: inherit; }
+    .newsletter-form button { background: var(--ayt-gold); color: #241A03; border: none; padding: 13px var(--ayt-sp-6); border-radius: var(--ayt-radius-full); font-weight: 700; font-size: 13.5px; transition: background var(--ayt-fast); }
+    .newsletter-form button:hover { background: var(--ayt-gold-light); }
+
+    /* ---------- Trust strip ---------- */
+    .trust-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--ayt-sp-4); }
+    .trust-chip { display: flex; align-items: center; gap: 10px; padding: var(--ayt-sp-4); background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); }
+    .trust-chip svg { width: 22px; height: 22px; stroke: var(--ayt-primary); fill: none; stroke-width: 1.6; flex-shrink: 0; }
+    .trust-chip span { font-size: 12px; font-weight: 600; line-height: 1.4; }
+
+    #recently-viewed-section { display: none; }
+    #recently-viewed-section.has-items { display: block; }
+
+    /* ---------- Compare bar ---------- */
+    .compare-bar { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 140%); z-index: 150; background: var(--ayt-ink); color: #fff; border-radius: var(--ayt-radius-lg); padding: var(--ayt-sp-3) var(--ayt-sp-5); display: flex; align-items: center; gap: var(--ayt-sp-4); box-shadow: var(--ayt-shadow-lg); transition: transform var(--ayt-normal); max-width: 92vw; flex-wrap: wrap; }
+    .compare-bar.is-visible { transform: translate(-50%, 0); }
+    .compare-bar span { font-size: 13px; font-weight: 600; }
+    .compare-bar button.cta { background: var(--ayt-gold); color: #241A03; border: none; padding: 8px 18px; border-radius: var(--ayt-radius-full); font-weight: 700; font-size: 12.5px; }
+    .compare-bar button.clear { background: none; border: 1px solid rgba(255,255,255,.4); color: #fff; padding: 8px 14px; border-radius: var(--ayt-radius-full); font-size: 12.5px; }
+
+    /* ---------- Quick view modal ---------- */
+    .ayt-modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: var(--ayt-sp-5); }
+    .ayt-modal.is-open { display: flex; }
+    .ayt-modal-backdrop { position: absolute; inset: 0; background: rgba(11, 20, 17, .55); backdrop-filter: blur(2px); }
+    .ayt-modal-panel { position: relative; background: var(--ayt-surface); border-radius: var(--ayt-radius-lg); max-width: 640px; width: 100%; max-height: 86vh; overflow: auto; padding: var(--ayt-sp-6); box-shadow: var(--ayt-shadow-lg); }
+    .ayt-modal-close { position: absolute; top: var(--ayt-sp-3); right: var(--ayt-sp-3); width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--ayt-border); background: var(--ayt-surface); font-size: 16px; }
+    .qv-layout { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ayt-sp-6); }
+    .qv-layout img { border-radius: var(--ayt-radius-md); aspect-ratio: 1; object-fit: cover; }
+    .qv-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    @media (max-width: 560px) { .qv-layout { grid-template-columns: 1fr; } }
+
+    .ayt-toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 16px); z-index: 200; background: var(--ayt-ink); color: #fff; padding: 12px 22px; border-radius: var(--ayt-radius-full); font-size: 13.5px; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity var(--ayt-fast), transform var(--ayt-fast); }
+    .ayt-toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+    .ayt-section { padding: var(--ayt-sp-12) 0; }
+    .ayt-section-alt { background: var(--ayt-surface-alt); }
+    .ayt-head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--ayt-sp-4); flex-wrap: wrap; margin-bottom: var(--ayt-sp-6); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 900px) {
+      .catalog-layout { grid-template-columns: 1fr; }
+      .filter-sidebar {
+        position: fixed; inset: 0 12% 0 auto; width: min(320px, 84vw); max-height: 100vh; z-index: 120;
+        border-radius: 0; transform: translateX(100%); transition: transform var(--ayt-normal);
+        box-shadow: var(--ayt-shadow-lg);
+      }
+      .filter-sidebar.is-open { transform: translateX(0); right: 0; }
+      .filter-toggle-btn { display: flex; }
+      .is-list .product-img-wrapper { width: 140px; }
+    }
+    @media (max-width: 560px) {
+      .ayt-section { padding: var(--ayt-sp-8) 0; }
+      .trust-strip { grid-template-columns: 1fr 1fr; }
+      .cat-toolbar { flex-direction: column; align-items: stretch; }
+      .is-list .product-card { flex-direction: column; }
+      .is-list .product-img-wrapper { width: 100%; aspect-ratio: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Header Injection Placeholder -->
+  <header id="global-header"></header>
+
+  <div class="ayt-ticker" aria-hidden="true">
+    <div class="ayt-ticker-track">
+      <span>সারাদেশে হোম ডেলিভারি</span><span>ক্যাশ অন ডেলিভারি</span><span>১০০% অরিজিনাল পণ্য</span><span>৭ দিনের সহজ রিটার্ন</span>
+      <span>সারাদেশে হোম ডেলিভারি</span><span>ক্যাশ অন ডেলিভারি</span><span>১০০% অরিজিনাল পণ্য</span><span>৭ দিনের সহজ রিটার্ন</span>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="cat-hero">
+    <div class="cat-hero-inner">
+      <p class="cat-hero-eyebrow">AYT MART · সম্পূর্ণ কালেকশন</p>
+      <h1 class="cat-hero-title">আমাদের সকল প্রোডাক্ট</h1>
+      <p class="cat-hero-sub">সেরা মূল্যে প্রিমিয়াম কোয়ালিটির দেশীয় পণ্য — ফিল্টার করে খুঁজে নিন আপনার পছন্দেরটি</p>
+    </div>
+  </section>
+
+  <main class="main-container">
+    <div class="ayt-container">
+
+      <!-- Breadcrumb -->
+      <nav class="pd-breadcrumb" aria-label="ব্রেডক্রাম্ব">
+        <a href="index.html">হোম</a><span class="sep">/</span>
+        <span class="current">প্রোডাক্টস</span>
+      </nav>
+
+      <!-- Toolbar -->
+      <div class="cat-toolbar">
+        <div class="cat-search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="search" id="catalog-search" placeholder="প্রোডাক্ট খুঁজুন..." autocomplete="off">
+        </div>
+        <span class="results-count" id="results-count">প্রোডাক্ট লোড হচ্ছে...</span>
+        <button type="button" class="filter-toggle-btn" id="filter-toggle-btn">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+          ফিল্টার
+        </button>
+        <div class="view-toggle" role="group" aria-label="গ্রিড বা লিস্ট ভিউ">
+          <button type="button" id="view-grid-btn" class="is-active" aria-label="গ্রিড ভিউ"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></button>
+          <button type="button" id="view-list-btn" aria-label="লিস্ট ভিউ"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        </div>
+        <div>
+          <label for="sort-by" style="font-size:12.5px; font-weight:600;">সাজান:</label>
+          <select id="sort-by" class="sort-select">
+            <option value="default">ডিফল্ট</option>
+            <option value="newest">নতুন প্রথমে</option>
+            <option value="best-selling">বেস্ট সেলিং</option>
+            <option value="popularity">জনপ্রিয়তা</option>
+            <option value="price-low">মূল্য: কম থেকে বেশি</option>
+            <option value="price-high">মূল্য: বেশি থেকে কম</option>
+            <option value="rating">সর্বোচ্চ রেটিং</option>
+            <option value="discount">সর্বোচ্চ ছাড়</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Active filter chips -->
+      <div class="active-filters-row" id="active-filters-row"></div>
+
+      <div class="catalog-layout">
+        <!-- Sidebar Filters -->
+        <aside class="filter-sidebar" id="filter-sidebar">
+          <div>
+            <h3 class="filter-group-title">ক্যাটাগরি সমূহ</h3>
+            <div class="filter-list" id="category-filters">
+              <!-- Dynamic categories list -->
+            </div>
+          </div>
+
+          <div>
+            <h3 class="filter-group-title">ব্র্যান্ড</h3>
+            <div class="filter-list" id="brand-filters">
+              <!-- Dynamic brands list -->
+            </div>
+          </div>
+
+          <div>
+            <h3 class="filter-group-title">মূল্য পরিসীমা</h3>
+            <div class="price-range-wrap">
+              <input type="range" id="price-range-slider" min="0" max="50000" step="100" value="50000">
+              <div class="price-range-inputs">
+                <input type="number" id="price-min-input" placeholder="সর্বনিম্ন" min="0">
+                <span>—</span>
+                <input type="number" id="price-max-input" placeholder="সর্বোচ্চ" min="0">
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="filter-group-title">রেটিং</h3>
+            <div class="filter-list" id="rating-filters">
+              <label class="filter-item rating-filter-item"><input type="radio" name="rating-filter" class="filter-checkbox" value="0" checked><span>সকল রেটিং</span></label>
+              <label class="filter-item rating-filter-item"><input type="radio" name="rating-filter" class="filter-checkbox" value="4"><span>⭐ ৪ ও তার বেশি</span></label>
+              <label class="filter-item rating-filter-item"><input type="radio" name="rating-filter" class="filter-checkbox" value="3"><span>⭐ ৩ ও তার বেশি</span></label>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="filter-group-title">স্টক অবস্থা</h3>
+            <div class="filter-list" id="availability-filters">
+              <label class="filter-item"><input type="checkbox" id="filter-in-stock" class="filter-checkbox"><span>স্টকে আছে</span></label>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="filter-group-title">ছাড়</h3>
+            <div class="filter-list" id="discount-filters">
+              <label class="filter-item"><input type="checkbox" id="filter-on-sale" class="filter-checkbox"><span>শুধু ছাড়ের প্রোডাক্ট</span></label>
+            </div>
+          </div>
+
+          <div class="filter-actions">
+            <button type="button" class="btn-clear-filters" id="btn-clear-filters">রিসেট</button>
+            <button type="button" class="btn-apply-filters" id="btn-apply-filters">প্রয়োগ করুন</button>
+          </div>
+        </aside>
+
+        <!-- Catalog Main Grid Section -->
+        <section class="catalog-products-wrapper">
+          <div class="product-grid-catalog" id="catalog-products-grid">
+            <div class="ayt-skel skel-card"></div><div class="ayt-skel skel-card"></div>
+            <div class="ayt-skel skel-card"></div><div class="ayt-skel skel-card"></div>
+            <div class="ayt-skel skel-card"></div><div class="ayt-skel skel-card"></div>
+          </div>
+
+          <nav class="cat-pagination" id="cat-pagination" aria-label="পেজিনেশন"></nav>
+        </section>
+      </div>
+
+      <div class="ayt-divider" aria-hidden="true"></div>
+
+      <!-- Featured brands -->
+      <section class="ayt-section" style="padding-top: var(--ayt-sp-8); padding-bottom: var(--ayt-sp-8);">
+        <div style="text-align:center; margin-bottom: var(--ayt-sp-6);">
+          <p class="ayt-eyebrow" style="display:flex; justify-content:center;">জনপ্রিয় ব্র্যান্ড</p>
+          <h2 class="ayt-section-title">ফিচার্ড ব্র্যান্ডস</h2>
+        </div>
+        <div class="brand-marquee">
+          <div class="brand-track" id="brand-marquee-track"></div>
+        </div>
+      </section>
+
+      <!-- Recommended -->
+      <section class="ayt-section ayt-section-alt" id="recommended-section" style="border-radius:var(--ayt-radius-lg);" hidden>
+        <div class="ayt-head-row">
+          <div><p class="ayt-eyebrow">আপনার জন্য নির্বাচিত</p><h2 class="ayt-section-title">রিকমেন্ডেড প্রোডাক্টস</h2></div>
+        </div>
+        <div class="product-grid-catalog" id="recommended-grid"></div>
+      </section>
+
+      <!-- Recently viewed -->
+      <section class="ayt-section" id="recently-viewed-section">
+        <div class="ayt-head-row">
+          <div><p class="ayt-eyebrow">আপনার ইতিহাস</p><h2 class="ayt-section-title">সম্প্রতি দেখেছেন</h2></div>
+        </div>
+        <div class="product-grid-catalog" id="recently-viewed-grid"></div>
+      </section>
+
+      <!-- Why shop -->
+      <section class="ayt-section ayt-section-alt" style="border-radius:var(--ayt-radius-lg);">
+        <div style="text-align:center; margin-bottom: var(--ayt-sp-8);">
+          <p class="ayt-eyebrow" style="display:flex; justify-content:center;">কেন আমরা</p>
+          <h2 class="ayt-section-title">কেন AYT Mart থেকে কিনবেন</h2>
+        </div>
+        <div class="why-grid">
+          <div class="why-card ayt-reveal">
+            <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="18.5" r="1.6"/><circle cx="17.5" cy="18.5" r="1.6"/></svg></div>
+            <h3>দ্রুত ডেলিভারি</h3><p>নির্ভরযোগ্য পার্টনারের মাধ্যমে দ্রুততম হোম ডেলিভারি।</p>
+          </div>
+          <div class="why-card ayt-reveal">
+            <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5z"/></svg></div>
+            <h3>ক্যাশ অন ডেলিভারি</h3><p>পণ্য হাতে পেয়ে তবেই মূল্য পরিশোধ করুন।</p>
+          </div>
+          <div class="why-card ayt-reveal">
+            <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <h3>১০০% অথেনটিক পণ্য</h3><p>প্রতিটি পণ্য যাচাই করে মানসম্পন্নতা নিশ্চিত করা হয়।</p>
+          </div>
+          <div class="why-card ayt-reveal">
+            <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg></div>
+            <h3>সহজ রিটার্ন</h3><p>৭ দিনের মধ্যে ঝামেলাহীন রিটার্ন সুবিধা।</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Newsletter -->
+      <section class="ayt-section">
+        <div class="newsletter-box ayt-reveal">
+          <h2>বিশেষ অফার সবার আগে পান</h2>
+          <p>আমাদের নিউজলেটার সাবস্ক্রাইব করুন এবং নতুন পণ্য ও এক্সক্লুসিভ ছাড়ের খবর সরাসরি ইমেইলে পান।</p>
+          <form class="newsletter-form" id="newsletter-form" novalidate>
+            <input type="email" id="newsletter-email" name="email" placeholder="আপনার ইমেইল ঠিকানা" required autocomplete="email">
+            <button type="submit">সাবস্ক্রাইব করুন</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Trust badges -->
+      <section class="ayt-section" style="padding-top:0;">
+        <div class="trust-strip">
+          <div class="trust-chip"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5z"/></svg><span>SSL সুরক্ষিত চেকআউট</span></div>
+          <div class="trust-chip"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><span>যাচাইকৃত বিক্রেতা</span></div>
+          <div class="trust-chip"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg><span>সহজ রিটার্ন নীতি</span></div>
+          <div class="trust-chip"><svg viewBox="0 0 24 24"><path d="M4 4h4v4H4zM16 4h4v4h-4zM4 16h4v4H4zM14 14h6v6h-6z"/></svg><span>২৪/৭ গ্রাহক সহায়তা</span></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="filter-sidebar-backdrop" id="filter-sidebar-backdrop" style="position:fixed; inset:0; background:rgba(11,20,17,.5); z-index:110; display:none;"></div>
+
+  <!-- Quick View Modal -->
+  <div class="ayt-modal" id="ayt-quickview-modal" role="dialog" aria-modal="true" aria-labelledby="qv-title">
+    <div class="ayt-modal-backdrop" data-modal-close></div>
+    <div class="ayt-modal-panel">
+      <button type="button" class="ayt-modal-close" data-modal-close aria-label="বন্ধ করুন">✕</button>
+      <div id="ayt-quickview-body"></div>
+    </div>
+  </div>
+
+  <!-- Compare bar -->
+  <div class="compare-bar" id="compare-bar">
+    <span id="compare-count-label">০টি পণ্য তুলনায়</span>
+    <button type="button" class="cta" id="compare-view-btn">তুলনা দেখুন</button>
+    <button type="button" class="clear" id="compare-clear-btn">মুছুন</button>
+  </div>
+
+  <!-- Toast -->
+  <div class="ayt-toast" id="ayt-toast" role="status" aria-live="polite"></div>
+
+  <!-- Dynamic Footer Injection Placeholder -->
+  <footer id="global-footer"></footer>
+
+  <!-- App Services & Scripts -->
+  <script src="config/environment/env.js"></script>
+  <script src="utils/storage/storage.js"></script>
+  <script src="api/shared/api-client.js"></script>
+  <script src="components/header/header.js"></script>
+  <script src="components/footer/footer.js"></script>
+  <script src="components/whatsapp/whatsapp.js"></script>
+  <script src="services/products/product-service.js"></script>
+
+  <script>
+    /* ==========================================================================
+       AYT MART — Catalog Page runtime
+       Compatibility notes:
+       - activeFilters, loadFiltersAndCatalog(), and loadCatalog() are preserved
+         as the original entry points and still call ProductService.getCategories()
+         and ProductService.getAll(activeFilters) exactly as before.
+       - #category-filters, #results-count, #sort-by, #catalog-products-grid
+         keep their original ids and are still populated the same way.
+       - Extra filters (brand/price/rating/stock/discount/search) and sorting
+         options are applied client-side on top of whatever ProductService.getAll
+         returns, so the page works fully even if the backend only supports the
+         original category filter — swap in real query params whenever ready.
+       ========================================================================== */
+    let activeFilters = { category: null, brand: null, minPrice: null, maxPrice: null, minRating: 0, inStockOnly: false, onSaleOnly: false, search: '' };
+    let currentView = 'grid';
+    let currentPage = 1;
+    const PAGE_SIZE = 12;
+    const CAT = { rawProducts: [], filteredProducts: [], productCache: new Map(), compareIds: new Set() };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Parse category filter from URL params
+      const params = new URLSearchParams(window.location.search);
+      activeFilters.category = params.get('category') || null;
+      activeFilters.search = params.get('q') || '';
+      if (params.get('sale') === '1') activeFilters.onSaleOnly = true;
+      if (activeFilters.search) {
+        const searchInput = document.querySelector('#catalog-search');
+        if (searchInput) searchInput.value = activeFilters.search;
+      }
+      if (activeFilters.onSaleOnly) {
+        const saleCheckbox = document.querySelector('#filter-on-sale');
+        if (saleCheckbox) saleCheckbox.checked = true;
+      }
+
+      initToolbar();
+      initSidebarToggle();
+      initModal();
+      initCompareBar();
+      initNewsletterForm();
+
+      await loadFiltersAndCatalog();
+
+      const sortSelect = document.querySelector('#sort-by');
+      sortSelect.addEventListener('change', () => { currentPage = 1; loadCatalog(); });
+
+      loadRecentlyViewed();
+      initScrollReveal();
+    });
+
+    /* ---------- Original entry point (kept intact) ---------- */
+    async function loadFiltersAndCatalog() {
+      const filtersContainer = document.querySelector('#category-filters');
+      try {
+        const categories = await ProductService.getCategories();
+        filtersContainer.innerHTML = categories.map(cat => `
+          <label class="filter-item">
+            <input type="radio" name="cat-filter" class="filter-checkbox" value="${cat.id}" ${activeFilters.category === cat.id ? 'checked' : ''}/>
+            <span>${cat.name}</span>
+          </label>
+        `).join('');
+
+        // Wire event listeners on checkboxes
+        document.querySelectorAll('input[name="cat-filter"]').forEach(input => {
+          input.addEventListener('change', (e) => {
+            activeFilters.category = e.target.value;
+            currentPage = 1;
+            loadCatalog();
+          });
+        });
+
+        await loadCatalog();
+      } catch (err) {
+        console.error('Failed loading layout controls:', err);
+      }
+    }
+
+    async function loadCatalog() {
+      const grid = document.querySelector('#catalog-products-grid');
+      const counter = document.querySelector('#results-count');
+      const sortVal = document.querySelector('#sort-by').value;
+
+      try {
+        let products = await ProductService.getAll(activeFilters);
+        CAT.rawProducts = Array.isArray(products) ? products : [];
+        cacheProducts(CAT.rawProducts);
+        buildBrandFilters(CAT.rawProducts);
+        buildBrandMarquee(CAT.rawProducts);
+
+        // Client-side layer for filters the backend may not yet support
+        let filtered = CAT.rawProducts.filter(prod => {
+          const price = Number(prod.sale_price || prod.price || 0);
+          if (activeFilters.brand && (prod.brand || '') !== activeFilters.brand) return false;
+          if (activeFilters.minPrice != null && price < activeFilters.minPrice) return false;
+          if (activeFilters.maxPrice != null && price > activeFilters.maxPrice) return false;
+          if (activeFilters.minRating && !(Number(prod.rating || 0) >= activeFilters.minRating)) return false;
+          if (activeFilters.inStockOnly && !(prod.stock > 0 || typeof prod.stock !== 'number')) return false;
+          if (activeFilters.onSaleOnly && !prod.sale_price) return false;
+          if (activeFilters.search) {
+            const q = activeFilters.search.toLowerCase();
+            if (!(prod.name || '').toLowerCase().includes(q) && !(prod.sku || '').toLowerCase().includes(q)) return false;
+          }
+          return true;
+        });
+
+        // Handle sorting options
+        if (sortVal === 'price-low') {
+          filtered.sort((a, b) => (a.sale_price || a.price) - (b.sale_price || b.price));
+        } else if (sortVal === 'price-high') {
+          filtered.sort((a, b) => (b.sale_price || b.price) - (a.sale_price || a.price));
+        } else if (sortVal === 'newest') {
+          filtered.sort((a, b) => (b.created_at ? new Date(b.created_at) - new Date(a.created_at) : (b.id - a.id)));
+        } else if (sortVal === 'best-selling') {
+          filtered.sort((a, b) => (b.soldCount ?? b.sold_count ?? 0) - (a.soldCount ?? a.sold_count ?? 0));
+        } else if (sortVal === 'popularity') {
+          filtered.sort((a, b) => (b.reviewCount ?? b.review_count ?? 0) - (a.reviewCount ?? a.review_count ?? 0));
+        } else if (sortVal === 'rating') {
+          filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+        } else if (sortVal === 'discount') {
+          filtered.sort((a, b) => (computeDiscount(b.price, b.sale_price) || 0) - (computeDiscount(a.price, a.sale_price) || 0));
+        }
+
+        CAT.filteredProducts = filtered;
+        renderActiveFilterChips();
+
+        const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+        currentPage = Math.min(currentPage, totalPages);
+        const pageItems = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
+        counter.innerText = `মোট ${filtered.length} টি পণ্য পাওয়া গেছে।`;
+        grid.classList.toggle('is-list', currentView === 'list');
+
+        grid.innerHTML = pageItems.length
+          ? pageItems.map(prod => renderProductCard(prod)).join('')
+          : `<div class="catalog-empty"><div class="icon">🔍</div><h3>কোনো প্রোডাক্ট পাওয়া যায়নি</h3><p>ফিল্টার পরিবর্তন করে আবার চেষ্টা করুন।</p></div>`;
+
+        renderPagination(totalPages);
+        initScrollReveal();
+        loadRecommended();
+      } catch (err) {
+        console.error('Failed mapping catalog products:', err);
+      }
+    }
+
+    /* ---------- Toolbar (search / sort / view toggle / mobile filter) ---------- */
+    function initToolbar() {
+      const searchInput = document.getElementById('catalog-search');
+      let searchTimer;
+      searchInput.addEventListener('input', (e) => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => { activeFilters.search = e.target.value.trim(); currentPage = 1; loadCatalog(); }, 320);
+      });
+
+      document.getElementById('view-grid-btn').addEventListener('click', () => setView('grid'));
+      document.getElementById('view-list-btn').addEventListener('click', () => setView('list'));
+
+      document.getElementById('btn-apply-filters').addEventListener('click', () => {
+        const min = parseFloat(document.getElementById('price-min-input').value);
+        const max = parseFloat(document.getElementById('price-max-input').value);
+        activeFilters.minPrice = isNaN(min) ? null : min;
+        activeFilters.maxPrice = isNaN(max) ? null : max;
+        activeFilters.minRating = parseFloat(document.querySelector('input[name="rating-filter"]:checked')?.value || '0');
+        activeFilters.inStockOnly = document.getElementById('filter-in-stock').checked;
+        activeFilters.onSaleOnly = document.getElementById('filter-on-sale').checked;
+        currentPage = 1;
+        loadCatalog();
+        closeSidebarOnMobile();
+      });
+
+      document.getElementById('btn-clear-filters').addEventListener('click', () => {
+        activeFilters = { category: null, brand: null, minPrice: null, maxPrice: null, minRating: 0, inStockOnly: false, onSaleOnly: false, search: '' };
+        document.getElementById('catalog-search').value = '';
+        document.getElementById('price-min-input').value = '';
+        document.getElementById('price-max-input').value = '';
+        document.getElementById('price-range-slider').value = 50000;
+        document.getElementById('filter-in-stock').checked = false;
+        document.getElementById('filter-on-sale').checked = false;
+        document.querySelectorAll('input[name="cat-filter"]').forEach(i => i.checked = false);
+        const allRating = document.querySelector('input[name="rating-filter"][value="0"]');
+        if (allRating) allRating.checked = true;
+        currentPage = 1;
+        loadCatalog();
+      });
+
+      document.getElementById('price-range-slider').addEventListener('input', (e) => {
+        document.getElementById('price-max-input').value = e.target.value;
+      });
+    }
+
+    function setView(view) {
+      currentView = view;
+      document.getElementById('view-grid-btn').classList.toggle('is-active', view === 'grid');
+      document.getElementById('view-list-btn').classList.toggle('is-active', view === 'list');
+      document.getElementById('catalog-products-grid').classList.toggle('is-list', view === 'list');
+    }
+
+    function initSidebarToggle() {
+      const sidebar = document.getElementById('filter-sidebar');
+      const backdrop = document.getElementById('filter-sidebar-backdrop');
+      const toggleBtn = document.getElementById('filter-toggle-btn');
+      toggleBtn.addEventListener('click', () => { sidebar.classList.add('is-open'); backdrop.style.display = 'block'; });
+      backdrop.addEventListener('click', closeSidebarOnMobile);
+    }
+    function closeSidebarOnMobile() {
+      document.getElementById('filter-sidebar').classList.remove('is-open');
+      document.getElementById('filter-sidebar-backdrop').style.display = 'none';
+    }
+
+    /* ---------- Active filter chips ---------- */
+    function renderActiveFilterChips() {
+      const row = document.getElementById('active-filters-row');
+      const chips = [];
+      if (activeFilters.category) chips.push({ key: 'category', label: `ক্যাটাগরি নির্বাচিত` });
+      if (activeFilters.brand) chips.push({ key: 'brand', label: `ব্র্যান্ড: ${activeFilters.brand}` });
+      if (activeFilters.search) chips.push({ key: 'search', label: `সার্চ: "${activeFilters.search}"` });
+      if (activeFilters.minPrice != null || activeFilters.maxPrice != null) chips.push({ key: 'price', label: `মূল্য: ৳${activeFilters.minPrice || 0} - ৳${activeFilters.maxPrice || '∞'}` });
+      if (activeFilters.minRating) chips.push({ key: 'rating', label: `রেটিং: ${activeFilters.minRating}+` });
+      if (activeFilters.inStockOnly) chips.push({ key: 'stock', label: 'স্টকে আছে' });
+      if (activeFilters.onSaleOnly) chips.push({ key: 'sale', label: 'ছাড়ের প্রোডাক্ট' });
+
+      row.innerHTML = chips.map(c => `<span class="filter-chip">${c.label}<button type="button" data-chip-remove="${c.key}" aria-label="সরান">✕</button></span>`).join('')
+        + (chips.length ? `<button type="button" class="filter-chip-clear" id="chip-clear-all">সব মুছুন</button>` : '');
+
+      row.querySelectorAll('[data-chip-remove]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const key = btn.dataset.chipRemove;
+          if (key === 'category') { activeFilters.category = null; document.querySelectorAll('input[name="cat-filter"]').forEach(i => i.checked = false); }
+          if (key === 'brand') { activeFilters.brand = null; }
+          if (key === 'search') { activeFilters.search = ''; document.getElementById('catalog-search').value = ''; }
+          if (key === 'price') { activeFilters.minPrice = null; activeFilters.maxPrice = null; document.getElementById('price-min-input').value = ''; document.getElementById('price-max-input').value = ''; }
+          if (key === 'rating') { activeFilters.minRating = 0; document.querySelector('input[name="rating-filter"][value="0"]').checked = true; }
+          if (key === 'stock') { activeFilters.inStockOnly = false; document.getElementById('filter-in-stock').checked = false; }
+          if (key === 'sale') { activeFilters.onSaleOnly = false; document.getElementById('filter-on-sale').checked = false; }
+          currentPage = 1;
+          loadCatalog();
+        });
+      });
+      document.getElementById('chip-clear-all')?.addEventListener('click', () => document.getElementById('btn-clear-filters').click());
+    }
+
+    /* ---------- Brand filters + marquee (derived from fetched products) ---------- */
+    function buildBrandFilters(products) {
+      const container = document.getElementById('brand-filters');
+      const brands = Array.from(new Set(products.map(p => p.brand).filter(Boolean)));
+      if (!brands.length) { container.innerHTML = `<p style="font-size:12px; color:var(--ayt-muted);">কোনো ব্র্যান্ড তথ্য নেই</p>`; return; }
+      container.innerHTML = brands.map(b => `
+        <label class="filter-item">
+          <input type="radio" name="brand-filter" class="filter-checkbox" value="${b}" ${activeFilters.brand === b ? 'checked' : ''}/>
+          <span>${b}</span>
+        </label>
+      `).join('');
+      container.querySelectorAll('input[name="brand-filter"]').forEach(input => {
+        input.addEventListener('change', (e) => { activeFilters.brand = e.target.value; currentPage = 1; loadCatalog(); });
+      });
+    }
+    function buildBrandMarquee(products) {
+      const track = document.getElementById('brand-marquee-track');
+      const brands = Array.from(new Set(products.map(p => p.brand).filter(Boolean)));
+      if (!brands.length) { track.parentElement.style.display = 'none'; return; }
+      const list = [...brands, ...brands];
+      track.innerHTML = list.map(b => `<span class="brand-item" data-brand="${b}">${b}</span>`).join('');
+      track.querySelectorAll('.brand-item').forEach(el => {
+        el.addEventListener('click', () => { activeFilters.brand = el.dataset.brand; currentPage = 1; loadCatalog(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      });
+    }
+
+    /* ---------- Pagination ---------- */
+    function renderPagination(totalPages) {
+      const nav = document.getElementById('cat-pagination');
+      if (totalPages <= 1) { nav.innerHTML = ''; return; }
+      let html = `<button type="button" class="page-btn" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>‹ আগে</button>`;
+      for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 1) {
+          html += `<button type="button" class="page-btn ${i === currentPage ? 'is-active' : ''}" data-page="${i}">${i}</button>`;
+        } else if (Math.abs(i - currentPage) === 2) {
+          html += `<span style="padding:0 4px; color:var(--ayt-muted);">…</span>`;
+        }
+      }
+      html += `<button type="button" class="page-btn" data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>পরে ›</button>`;
+      nav.innerHTML = html;
+      nav.querySelectorAll('[data-page]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const page = parseInt(btn.dataset.page, 10);
+          if (page >= 1 && page <= totalPages) { currentPage = page; loadCatalog(); window.scrollTo({ top: document.querySelector('.catalog-layout').offsetTop - 90, behavior: 'smooth' }); }
+        });
+      });
+    }
+
+    /* ---------- Recommended / Recently viewed ---------- */
+    async function loadRecommended() {
+      const section = document.getElementById('recommended-section');
+      const grid = document.getElementById('recommended-grid');
+      if (!section || !grid) return;
+      try {
+        let items = [];
+        if (typeof ProductService.getRecommended === 'function') {
+          items = await ProductService.getRecommended();
+        } else if (typeof ProductService.getBestSellers === 'function') {
+          items = await ProductService.getBestSellers();
+        } else if (typeof ProductService.getFeatured === 'function') {
+          items = await ProductService.getFeatured();
+        }
+        items = (Array.isArray(items) ? items : []).slice(0, 4);
+        cacheProducts(items);
+        if (items.length) {
+          grid.innerHTML = items.map(p => renderProductCard(p)).join('');
+          section.hidden = false;
+        }
+      } catch (err) { /* optional section — fail silently */ }
+    }
+
+    function loadRecentlyViewed() {
+      const section = document.querySelector('#recently-viewed-section');
+      const grid = document.querySelector('#recently-viewed-grid');
+      if (!section || !grid) return;
+      try {
+        const raw = readStorage('ayt_recent');
+        const ids = Array.isArray(raw) ? raw : [];
+        const items = ids.map(id => CAT.productCache.get(String(id))).filter(Boolean).slice(0, 4);
+        if (items.length) {
+          grid.innerHTML = items.map(p => renderProductCard(p)).join('');
+          section.classList.add('has-items');
+        }
+      } catch (err) { console.warn('Recently viewed data unavailable.', err); }
+    }
+
+    function cacheProducts(list) {
+      (list || []).forEach(p => { if (p && p.id != null) CAT.productCache.set(String(p.id), p); });
+    }
+
+    /* ---------- Product card renderer (grid + list share the same markup) ---------- */
+    function computeDiscount(price, salePrice) {
+      if (!salePrice || !price || Number(salePrice) >= Number(price)) return null;
+      return Math.round((1 - Number(salePrice) / Number(price)) * 100);
+    }
+    function renderStars(rating) {
+      const full = Math.round(rating || 0);
+      let html = '';
+      for (let i = 1; i <= 5; i++) {
+        html += `<svg class="star-icon ${i <= full ? 'is-filled' : ''}" viewBox="0 0 20 20" aria-hidden="true" width="13" height="13"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5z"/></svg>`;
+      }
+      return html;
+    }
+
+    function renderProductCard(prod) {
+      if (!prod) return '';
+      const discount = computeDiscount(prod.price, prod.sale_price);
+      const hasRating = typeof prod.rating === 'number';
+      const reviewCount = prod.reviewCount ?? prod.review_count ?? 0;
+      const sold = prod.soldCount ?? prod.sold_count;
+      const hasSold = typeof sold === 'number';
+      const stockRaw = prod.stock ?? prod.stock_qty;
+
+      let stockLabel = 'স্টকে আছে', stockClass = 'in-stock';
+      if (stockRaw === 0) { stockLabel = 'স্টক শেষ'; stockClass = 'out-of-stock'; }
+      else if (typeof stockRaw === 'number' && stockRaw <= 5) { stockLabel = `মাত্র ${stockRaw}টি বাকি`; stockClass = 'low-stock'; }
+
+      const secondaryImg = prod.image_hover || prod.second_image || prod.image;
+      const isWished = (readStorage('ayt_wishlist') || []).map(String).includes(String(prod.id));
+      const isCompared = CAT.compareIds.has(String(prod.id));
+
+      return `
+        <div class="product-card ayt-reveal" data-product-id="${prod.id}">
+          <div class="product-img-wrapper">
+            <div class="badges-col">
+              ${prod.is_new || prod.isNew ? `<span class="product-badge">নতুন</span>` : ''}
+              ${prod.sale_price ? `<span class="product-badge badge-sale">সেল</span>` : ''}
+              ${prod.is_hot || prod.isHot ? `<span class="product-badge badge-hot">হট</span>` : ''}
+              ${prod.free_shipping || prod.freeShipping ? `<span class="product-badge badge-shipping">ফ্রি শিপিং</span>` : ''}
+            </div>
+            ${discount ? `<span class="discount-pill">-${discount}%</span>` : ''}
+            <img src="${prod.image}" alt="${prod.name}" class="product-img product-img-primary" loading="lazy" />
+            <img src="${secondaryImg}" alt="" class="product-img product-img-secondary" loading="lazy" aria-hidden="true" />
+            <button type="button" class="quickview-btn" data-quickview-id="${prod.id}">দ্রুত দেখুন</button>
+            <div class="card-side-actions">
+              <button type="button" class="icon-action-btn ${isWished ? 'is-active' : ''}" data-wishlist-id="${prod.id}" aria-label="পছন্দের তালিকায় যোগ করুন">
+                <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.1C.4 8.7 1.8 5 5.4 4.2c2-.4 4 .5 5.1 2.2 1.1-1.7 3.1-2.6 5.1-2.2C19.2 5 20.6 8.7 19 11.9 16.5 16.4 12 21 12 21z"/></svg>
+              </button>
+              <button type="button" class="icon-action-btn ${isCompared ? 'compare-active' : ''}" data-compare-id="${prod.id}" aria-label="তুলনা করুন">
+                <svg viewBox="0 0 24 24"><path d="M4 4v16M20 4v16M8 8h8M8 12h8M8 16h4"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            ${prod.brand ? `<span class="product-brand">${prod.brand}</span>` : ''}
+            <h3 class="product-title">${prod.name}</h3>
+            <p class="product-desc">${(prod.description || '').slice(0, 90)}</p>
+            ${hasRating ? `
+            <div class="product-rating" aria-label="রেটিং ৫ এর মধ্যে ${prod.rating}">
+              <span class="stars">${renderStars(prod.rating)}</span>
+              <span class="review-count">(${reviewCount})</span>
+            </div>` : ''}
+            <div class="product-pricing">
+              <span class="price-sale">৳${prod.sale_price || prod.price}</span>
+              ${prod.sale_price ? `<span class="price-regular">৳${prod.price}</span>` : ''}
+            </div>
+            <div class="product-meta-row">
+              <span class="stock-status ${stockClass}">${stockLabel}</span>
+              ${hasSold ? `<span class="sold-count">${sold}+ বিক্রি হয়েছে</span>` : ''}
+            </div>
+            <div class="product-actions">
+              <button type="button" class="mini-add-cart" data-cart-id="${prod.id}" ${stockClass === 'out-of-stock' ? 'disabled' : ''}>
+                <svg viewBox="0 0 24 24" class="cart-icon" aria-hidden="true"><path d="M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+                কার্ট
+              </button>
+              <a href="product.html?id=${prod.id}" class="mini-buy-now">কিনুন</a>
+              <button type="button" class="mini-whatsapp" data-whatsapp-id="${prod.id}" aria-label="হোয়াটসঅ্যাপে অর্ডার করুন">
+                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.6 8.6 0 0 1-4-1L3 20l1.2-5.1a8.5 8.5 0 1 1 16.8-3.4z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    /* ---------- Global card actions (event delegation) ---------- */
+    document.addEventListener('click', (e) => {
+      const wishBtn = e.target.closest('[data-wishlist-id]');
+      if (wishBtn) { toggleWishlist(wishBtn); return; }
+
+      const compareBtn = e.target.closest('[data-compare-id]');
+      if (compareBtn) { toggleCompare(compareBtn); return; }
+
+      const cartBtn = e.target.closest('[data-cart-id]');
+      if (cartBtn && !cartBtn.disabled) { addToCart(cartBtn.dataset.cartId); return; }
+
+      const qvBtn = e.target.closest('[data-quickview-id]');
+      if (qvBtn) { openModal(CAT.productCache.get(String(qvBtn.dataset.quickviewId))); return; }
+
+      const waBtn = e.target.closest('[data-whatsapp-id]');
+      if (waBtn) { orderProductOnWhatsApp(CAT.productCache.get(String(waBtn.dataset.whatsappId))); return; }
+    });
+
+    function toggleWishlist(btn) {
+      btn.classList.toggle('is-active');
+      const id = btn.dataset.wishlistId;
+      try {
+        const list = readStorage('ayt_wishlist') || [];
+        const set = new Set(list.map(String));
+        if (set.has(String(id))) set.delete(String(id)); else set.add(String(id));
+        writeStorage('ayt_wishlist', Array.from(set));
+      } catch (err) { /* storage optional — UI toggle still works */ }
+      showToast(btn.classList.contains('is-active') ? 'পছন্দের তালিকায় যোগ করা হয়েছে' : 'পছন্দের তালিকা থেকে সরানো হয়েছে');
+    }
+
+    function toggleCompare(btn) {
+      const id = String(btn.dataset.compareId);
+      if (CAT.compareIds.has(id)) {
+        CAT.compareIds.delete(id);
+        btn.classList.remove('compare-active');
+      } else {
+        if (CAT.compareIds.size >= 4) { showToast('সর্বোচ্চ ৪টি পণ্য তুলনা করা যাবে'); return; }
+        CAT.compareIds.add(id);
+        btn.classList.add('compare-active');
+      }
+      updateCompareBar();
+    }
+
+    function initCompareBar() {
+      document.getElementById('compare-clear-btn').addEventListener('click', () => {
+        CAT.compareIds.clear();
+        document.querySelectorAll('[data-compare-id].compare-active').forEach(b => b.classList.remove('compare-active'));
+        updateCompareBar();
+      });
+      document.getElementById('compare-view-btn').addEventListener('click', () => {
+        const names = Array.from(CAT.compareIds).map(id => CAT.productCache.get(id)?.name).filter(Boolean);
+        showToast(names.length ? `তুলনায়: ${names.join(', ')}` : 'কোনো প্রোডাক্ট নির্বাচিত নেই');
+      });
+    }
+    function updateCompareBar() {
+      const bar = document.getElementById('compare-bar');
+      document.getElementById('compare-count-label').textContent = `${CAT.compareIds.size}টি পণ্য তুলনায়`;
+      bar.classList.toggle('is-visible', CAT.compareIds.size > 0);
+    }
+
+    function addToCart(id) {
+      const prod = CAT.productCache.get(String(id));
+      try {
+        const cart = StorageHelper.get(ENV.STORAGE_KEYS.CART, { items: [] });
+        const existingItem = cart.items.find(item => item.Product_ID === (prod ? prod.id : id));
+        if (existingItem) {
+          existingItem.Quantity = (parseInt(existingItem.Quantity, 10) || 0) + 1;
+        } else if (prod) {
+          cart.items.push({ Product_ID: prod.id, Product_Name: prod.name, SKU: prod.sku, Price: prod.sale_price || prod.price, Quantity: 1, Image: prod.image });
+        }
+        StorageHelper.set(ENV.STORAGE_KEYS.CART, cart);
+        window.dispatchEvent(new CustomEvent('cart-updated'));
+      } catch (err) {
+        console.warn('Cart storage unavailable, showing UI feedback only.', err);
+      }
+      showToast(prod ? `${prod.name} কার্টে যোগ করা হয়েছে` : 'পণ্যটি কার্টে যোগ করা হয়েছে');
+    }
+
+    function orderProductOnWhatsApp(prod) {
+      if (!prod || !window.ENV) return;
+      const cleanPhone = ENV.CONTACT_WHATSAPP.replace(/\+/g, '');
+      const price = prod.sale_price || prod.price;
+      const orderMessage =
+        `আসসালামু আলাইকুম! আমি সরাসরি অর্ডার করতে চাচ্ছি:\n\n` +
+        `📦 প্রোডাক্ট: ${prod.name}\n` +
+        `🏷️ SKU: ${prod.sku}\n` +
+        `💰 মূল্য: ৳${price}\n` +
+        `🔗 লিংক: ${window.location.origin}${window.location.pathname.replace('products.html', '')}product.html?id=${prod.id}`;
+      window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(orderMessage)}`, '_blank');
+    }
+
+    /* ---------- Quick view modal ---------- */
+    function initModal() {
+      const modal = document.getElementById('ayt-quickview-modal');
+      modal.querySelectorAll('[data-modal-close]').forEach(el => el.addEventListener('click', closeModal));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    }
+    function openModal(prod) {
+      const modal = document.getElementById('ayt-quickview-modal');
+      const body = document.getElementById('ayt-quickview-body');
+      if (!modal || !body || !prod) return;
+      const discount = computeDiscount(prod.price, prod.sale_price);
+      body.innerHTML = `
+        <div class="qv-layout">
+          <img src="${prod.image}" alt="${prod.name}">
+          <div>
+            <h2 id="qv-title" class="qv-title">${prod.name}</h2>
+            ${typeof prod.rating === 'number' ? `<div class="product-rating" style="margin-bottom:10px;"><span class="stars">${renderStars(prod.rating)}</span><span class="review-count">(${prod.reviewCount ?? prod.review_count ?? 0})</span></div>` : ''}
+            <div class="product-pricing" style="margin-bottom:12px;">
+              <span class="price-sale">৳${prod.sale_price || prod.price}</span>
+              ${prod.sale_price ? `<span class="price-regular">৳${prod.price}</span>` : ''}
+              ${discount ? `<span class="discount-pill" style="position:static;">-${discount}%</span>` : ''}
+            </div>
+            <p style="font-size:13px; color:var(--ayt-muted); line-height:1.7; margin-bottom:16px;">${(prod.description || '').slice(0, 180)}</p>
+            <div class="product-actions">
+              <button type="button" class="mini-add-cart" data-cart-id="${prod.id}">কার্টে যোগ করুন</button>
+              <a href="product.html?id=${prod.id}" class="mini-buy-now">বিস্তারিত দেখুন</a>
+            </div>
+          </div>
+        </div>`;
+      modal.classList.add('is-open');
+      modal.querySelector('.ayt-modal-close')?.focus();
+    }
+    function closeModal() {
+      document.getElementById('ayt-quickview-modal')?.classList.remove('is-open');
+    }
+
+    /* ---------- Newsletter ---------- */
+    function initNewsletterForm() {
+      const form = document.getElementById('newsletter-form');
+      if (!form) return;
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = document.getElementById('newsletter-email');
+        const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+        if (!valid) { showToast('সঠিক ইমেইল ঠিকানা দিন'); return; }
+        showToast('সাবস্ক্রাইব করার জন্য ধন্যবাদ!');
+        form.reset();
+      });
+    }
+
+    /* ---------- Storage helper wrapper ---------- */
+    function readStorage(key) {
+      try {
+        if (window.StorageHelper) {
+          if (typeof StorageHelper.get === 'function') return StorageHelper.get(key);
+          if (typeof StorageHelper.getItem === 'function') {
+            const raw = StorageHelper.getItem(key);
+            return raw ? JSON.parse(raw) : null;
+          }
+        }
+      } catch (err) { /* ignore */ }
+      return null;
+    }
+    function writeStorage(key, value) {
+      try {
+        if (window.StorageHelper) {
+          if (typeof StorageHelper.set === 'function') return StorageHelper.set(key, value);
+          if (typeof StorageHelper.setItem === 'function') return StorageHelper.setItem(key, JSON.stringify(value));
+        }
+      } catch (err) { /* ignore */ }
+    }
+
+    /* ---------- Scroll reveal ---------- */
+    function initScrollReveal() {
+      const items = document.querySelectorAll('.ayt-reveal:not(.is-visible)');
+      if (!items.length) return;
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(i => i.classList.add('is-visible'));
+        return;
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+      items.forEach(i => io.observe(i));
+    }
+
+    /* ---------- Toast ---------- */
+    let toastTimer;
+    function showToast(message) {
+      const toast = document.getElementById('ayt-toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2600);
+    }
+  </script>
+</body>
+</html>

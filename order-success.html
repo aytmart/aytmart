@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>অর্ডার সম্পন্ন হয়েছে | AYT Mart</title>
+  <link rel="stylesheet" href="styles/themes/variables.css">
+  <link rel="stylesheet" href="styles/base/reset.css">
+  <link rel="stylesheet" href="styles/layout/layout.css">
+  <style>
+    .success-panel {
+      max-width: 600px;
+      margin: var(--space-12) auto;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-8);
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .success-icon {
+      font-size: 4.5rem;
+      color: var(--color-accent);
+    }
+    .order-id-badge {
+      background-color: var(--bg-surface-alt);
+      border: 1px dashed var(--color-accent);
+      color: var(--text-color);
+      padding: var(--space-2) var(--space-6);
+      font-size: var(--font-lg);
+      font-weight: var(--weight-bold);
+      border-radius: var(--border-radius-sm);
+      letter-spacing: 1px;
+    }
+    .details-box {
+      width: 100%;
+      background-color: var(--bg-surface-alt);
+      border-radius: var(--border-radius-md);
+      padding: var(--space-4);
+      text-align: left;
+      font-size: var(--font-sm);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .btn-action-row {
+      display: flex;
+      gap: var(--space-4);
+      width: 100%;
+      margin-top: var(--space-4);
+    }
+    .btn-nav {
+      flex: 1;
+      padding: var(--space-3);
+      border-radius: var(--border-radius-sm);
+      font-weight: var(--weight-bold);
+      font-size: var(--font-sm);
+      text-align: center;
+      transition: opacity var(--transition-fast);
+    }
+    .btn-nav:hover {
+      opacity: 0.9;
+    }
+    .btn-return-shop {
+      background-color: var(--color-primary);
+      color: #ffffff;
+    }
+    .btn-whatsapp-support {
+      background-color: #25d366;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Header Injection Placeholder -->
+  <header id="global-header"></header>
+
+  <main class="main-container">
+    <div class="success-panel" id="success-view">
+      <p style="color: var(--text-muted)">অর্ডার বিবরণী লোড হচ্ছে...</p>
+    </div>
+  </main>
+
+  <!-- Dynamic Footer Injection Placeholder -->
+  <footer id="global-footer"></footer>
+
+  <!-- App Services & Scripts -->
+  <script src="config/environment/env.js"></script>
+  <script src="utils/storage/storage.js"></script>
+  <script src="api/shared/api-client.js"></script>
+  <script src="components/header/header.js"></script>
+  <script src="components/footer/footer.js"></script>
+  <script src="components/whatsapp/whatsapp.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const order = StorageHelper.get('ayt_last_order', null);
+
+      if (!order) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      const view = document.querySelector('#success-view');
+      const cleanPhone = ENV.CONTACT_WHATSAPP.replace(/\+/g, '');
+      const isPending = order.Order_Status === 'pending_sync';
+
+      const waMessage = isPending
+        ? `আসসালামু আলাইকুম! আমি একটি অর্ডার করেছি কিন্তু নিশ্চিতকরণ পাইনি। অর্ডার আইডি: ${order.Order_ID}`
+        : `আসসালামু আলাইকুম! আমি এই অর্ডারটি সম্পর্কে জানতে চাচ্ছি। অর্ডার আইডি: ${order.Order_ID}`;
+
+      const heading = isPending
+        ? 'আপনার অর্ডারটি সংরক্ষণ করা হয়েছে, নিশ্চিতকরণ বাকি'
+        : 'ধন্যবাদ! আপনার অর্ডারটি গৃহীত হয়েছে।';
+
+      const subMessage = isPending
+        ? 'আমাদের সার্ভারে সাময়িক সংযোগ সমস্যার কারণে অর্ডারটি এখনো স্বয়ংক্রিয়ভাবে নিশ্চিত হয়নি। অনুগ্রহ করে নিচের WhatsApp বাটনে চাপ দিয়ে অর্ডার আইডিটি জানিয়ে নিশ্চিত করুন, যাতে ডেলিভারিতে বিলম্ব না হয়।'
+        : 'আমাদের একজন প্রতিনিধি আপনার ডেলিভারি ঠিকানা যাচাই করার জন্য শীঘ্রই আপনার সাথে যোগাযোগ করবেন।';
+
+      view.innerHTML = `
+        <div class="success-icon">${isPending ? '⏳' : '✔️'}</div>
+        <h1 style="font-size: var(--font-2xl); font-weight: var(--weight-bold)">${heading}</h1>
+        <p style="color: var(--text-muted); font-size: var(--font-sm);">
+          ${subMessage}
+        </p>
+
+        <!-- Order key badge -->
+        <span class="order-id-badge">${order.Order_ID}</span>
+
+        <!-- Order Summary breakdown details box -->
+        <div class="details-box">
+          <p>👤 <strong>গ্রাহকের নাম:</strong> ${order.Customer_Name}</p>
+          <p>📞 <strong>মোবাইল নাম্বার:</strong> ${order.Customer_Phone}</p>
+          <p>📍 <strong>শিপিং ঠিকানা:</strong> ${order.Shipping_Address}</p>
+          <p>💵 <strong>মোট বিল (COD):</strong> ৳${parseFloat(order.Grand_Total || 0).toFixed(2)}</p>
+          <p>🚚 <strong>ডেলিভারি সময়সীমা:</strong> ২-৩ কার্যদিবস</p>
+        </div>
+
+        <div class="btn-action-row">
+          <a href="products.html" class="btn-nav btn-return-shop">কেনাকাটা চালিয়ে যান</a>
+          <a href="https://wa.me/${cleanPhone}?text=${encodeURIComponent(waMessage)}" target="_blank" rel="noopener" class="btn-nav btn-whatsapp-support">
+            💬 ডেলিভারি আপডেট জানুন
+          </a>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>

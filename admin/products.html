@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0B4238">
+  <title>প্রোডাক্ট ম্যানেজমেন্ট | AYT Mart Control Panel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../styles/themes/variables.css">
+  <link rel="stylesheet" href="../styles/base/reset.css">
+  <style>
+    /* ==========================================================================
+       AYT MART CONTROL — ADMIN PRODUCTS DESIGN SYSTEM
+       Shares tokens + shell with dashboard.html / login.html so the console
+       reads as one continuous premium ERP ecosystem.
+       ========================================================================== */
+    :root {
+      --ayt-primary:        var(--color-primary, #0B4238);
+      --ayt-primary-dark:   #072722;
+      --ayt-primary-light:  var(--color-primary-light, #14614F);
+      --ayt-gold:           var(--color-gold, #C9A227);
+      --ayt-gold-light:     #E7CD73;
+      --ayt-gold-dark:      #96751A;
+      --ayt-cream:          #FBF7EF;
+      --ayt-ink:            #1C2420;
+      --ayt-rose:           #B23B3B;
+      --ayt-rose-dark:      #8E2E2E;
+      --ayt-amber:          #B5750F;
+      --ayt-emerald:        #1E7A5F;
+      --ayt-blue:           #2563A8;
+      --ayt-surface:        var(--bg-surface, #FFFFFF);
+      --ayt-surface-alt:    var(--bg-surface-alt, #F5F2E9);
+      --ayt-border:         var(--border-color, #E5E0D2);
+      --ayt-muted:          var(--text-muted, #756F62);
+
+      --ayt-sp-1: var(--space-1, 4px);  --ayt-sp-2: var(--space-2, 8px);
+      --ayt-sp-3: var(--space-3, 12px); --ayt-sp-4: var(--space-4, 16px);
+      --ayt-sp-5: var(--space-5, 20px); --ayt-sp-6: var(--space-6, 24px);
+      --ayt-sp-8: var(--space-8, 32px); --ayt-sp-10: var(--space-10, 40px);
+
+      --ayt-radius-sm: var(--border-radius-sm, 6px);
+      --ayt-radius-md: var(--border-radius-md, 12px);
+      --ayt-radius-lg: var(--border-radius-lg, 18px);
+      --ayt-radius-full: var(--border-radius-full, 999px);
+      --ayt-shadow-sm: 0 2px 8px rgba(15, 35, 30, .06);
+      --ayt-shadow-md: var(--shadow-md, 0 10px 30px rgba(15, 35, 30, .10));
+      --ayt-shadow-lg: 0 24px 60px rgba(15, 35, 30, .16);
+      --ayt-shadow-gold: 0 8px 20px rgba(201, 162, 39, .22);
+      --ayt-fast: var(--transition-fast, 150ms ease);
+      --ayt-normal: var(--transition-normal, 320ms cubic-bezier(.22,.61,.36,1));
+
+      --ayt-font-display: 'Tiro Bangla', 'Noto Serif Bengali', serif;
+      --ayt-font-body: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+      --ayt-font-num: 'Poppins', 'Hind Siliguri', sans-serif;
+
+      --sidebar-w: 264px;
+      --sidebar-w-collapsed: 84px;
+      --topbar-h: 72px;
+    }
+
+    html[data-theme="dark"] {
+      --ayt-cream: #0F1613;
+      --ayt-ink: #EDEAE0;
+      --ayt-surface: #16201C;
+      --ayt-surface-alt: #1B2622;
+      --ayt-border: #263129;
+      --ayt-muted: #93998F;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+    }
+
+    * { box-sizing: border-box; }
+    body { font-family: var(--ayt-font-body); color: var(--ayt-ink); background: var(--ayt-cream); }
+    :focus-visible { outline: 2px solid var(--ayt-gold-dark); outline-offset: 2px; }
+    button { font-family: inherit; cursor: pointer; }
+    a { text-decoration: none; color: inherit; }
+    ::selection { background: rgba(201,162,39,.28); }
+    .num { font-family: var(--ayt-font-num); }
+
+    /* ---------- Layout shell (shared with dashboard.html) ---------- */
+    .admin-layout { display: grid; grid-template-columns: var(--sidebar-w) 1fr; min-height: 100vh; transition: grid-template-columns var(--ayt-normal); }
+    .admin-layout.is-collapsed { grid-template-columns: var(--sidebar-w-collapsed) 1fr; }
+
+    .admin-sidebar {
+      position: sticky; top: 0; height: 100vh;
+      background: linear-gradient(190deg, var(--ayt-primary-dark) 0%, var(--ayt-primary) 100%);
+      color: rgba(243,239,226,.72);
+      padding: var(--ayt-sp-5) var(--ayt-sp-4);
+      display: flex; flex-direction: column; gap: var(--ayt-sp-6);
+      overflow: hidden; z-index: 20;
+    }
+    .sidebar-brand { display: flex; align-items: center; gap: var(--ayt-sp-3); padding-bottom: var(--ayt-sp-4); border-bottom: 1px solid rgba(251,247,239,.12); white-space: nowrap; }
+    .sidebar-brand .mark { width: 38px; height: 38px; flex-shrink: 0; border-radius: var(--ayt-radius-sm); background: linear-gradient(150deg, var(--ayt-gold-light), var(--ayt-gold) 60%, var(--ayt-gold-dark)); display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: var(--ayt-shadow-gold); }
+    .sidebar-brand .txt { color: #fff; font-family: var(--ayt-font-display); font-size: 16px; font-weight: 700; overflow: hidden; }
+    .sidebar-brand .txt small { display: block; font-family: var(--ayt-font-num); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ayt-gold-light); font-weight: 500; }
+    .is-collapsed .sidebar-brand .txt { display: none; }
+
+    .sidebar-menu { display: flex; flex-direction: column; gap: var(--ayt-sp-1); }
+    .menu-section-label { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(243,239,226,.4); padding: var(--ayt-sp-3) var(--ayt-sp-3) var(--ayt-sp-1); white-space: nowrap; }
+    .is-collapsed .menu-section-label { opacity: 0; height: 0; padding: 0; overflow: hidden; }
+
+    .menu-link { position: relative; display: flex; align-items: center; gap: var(--ayt-sp-3); padding: 11px var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 13.5px; font-weight: 500; white-space: nowrap; overflow: hidden; transition: background-color var(--ayt-fast), color var(--ayt-fast); }
+    .menu-link svg { width: 19px; height: 19px; flex-shrink: 0; opacity: .85; }
+    .menu-link:hover { background-color: rgba(251,247,239,.08); color: #fff; }
+    .menu-link.active { background: linear-gradient(135deg, var(--ayt-gold) 0%, var(--ayt-gold-dark) 100%); color: #241C05; font-weight: 700; box-shadow: var(--ayt-shadow-gold); }
+    .menu-link.active svg { opacity: 1; }
+    .menu-link .badge-mini { margin-left: auto; font-family: var(--ayt-font-num); font-size: 10px; font-weight: 700; background: rgba(251,247,239,.16); color: #fff; padding: 1px 7px; border-radius: var(--ayt-radius-full); }
+    .menu-link.active .badge-mini { background: rgba(36,28,5,.18); color: #241C05; }
+    .is-collapsed .menu-link .label-txt, .is-collapsed .menu-link .badge-mini { display: none; }
+    .is-collapsed .menu-link { justify-content: center; }
+
+    .sidebar-foot { margin-top: auto; padding-top: var(--ayt-sp-4); border-top: 1px solid rgba(251,247,239,.12); }
+    .sidebar-collapse-btn { display: flex; align-items: center; gap: var(--ayt-sp-2); width: 100%; background: rgba(251,247,239,.06); border: 1px solid rgba(251,247,239,.14); color: rgba(243,239,226,.75); padding: var(--ayt-sp-2) var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 12.5px; transition: background var(--ayt-fast); }
+    .sidebar-collapse-btn:hover { background: rgba(251,247,239,.12); }
+    .sidebar-collapse-btn svg { width: 16px; height: 16px; transition: transform var(--ayt-normal); flex-shrink: 0; }
+    .is-collapsed .sidebar-collapse-btn svg { transform: rotate(180deg); }
+    .is-collapsed .sidebar-collapse-btn .label-txt { display: none; }
+    .is-collapsed .sidebar-collapse-btn { justify-content: center; }
+
+    .admin-console { display: flex; flex-direction: column; min-width: 0; }
+    .console-header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(251,247,239,.86); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
+      height: var(--topbar-h); border-bottom: 1px solid var(--ayt-border);
+      display: flex; align-items: center; justify-content: space-between; padding: 0 var(--ayt-sp-6); gap: var(--ayt-sp-4);
+    }
+    html[data-theme="dark"] .console-header { background: rgba(15,22,19,.86); }
+    .header-left { display: flex; align-items: center; gap: var(--ayt-sp-4); min-width: 0; }
+    .icon-btn.mobile-menu-btn { display: none; }
+    .breadcrumb { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .breadcrumb .crumb-trail { font-size: 11px; color: var(--ayt-muted); display: flex; align-items: center; gap: 6px; }
+    .breadcrumb .crumb-trail .sep { opacity: .5; }
+    .breadcrumb h1 { font-family: var(--ayt-font-display); font-size: 19px; font-weight: 700; color: var(--ayt-primary-dark); }
+    html[data-theme="dark"] .breadcrumb h1 { color: var(--ayt-gold-light); }
+
+    .header-search { display: flex; align-items: center; gap: var(--ayt-sp-2); background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-full); padding: 9px 16px; width: 260px; transition: border-color var(--ayt-fast), box-shadow var(--ayt-fast); }
+    .header-search:focus-within { border-color: var(--ayt-gold); box-shadow: 0 0 0 4px rgba(201,162,39,.12); }
+    .header-search svg { width: 16px; height: 16px; color: var(--ayt-muted); flex-shrink: 0; }
+    .header-search input { border: none; background: none; outline: none; font-size: 13px; width: 100%; color: var(--ayt-ink); font-family: var(--ayt-font-body); }
+    .header-search input::placeholder { color: #A79F8E; }
+
+    .header-right { display: flex; align-items: center; gap: var(--ayt-sp-2); }
+    .icon-btn { position: relative; width: 40px; height: 40px; border-radius: var(--ayt-radius-full); display: flex; align-items: center; justify-content: center; background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); color: var(--ayt-ink); transition: background var(--ayt-fast), border-color var(--ayt-fast), transform var(--ayt-fast); }
+    .icon-btn:hover { background: var(--ayt-surface); border-color: var(--ayt-gold); transform: translateY(-1px); }
+    .icon-btn svg { width: 17px; height: 17px; }
+    #theme-toggle .icon-moon { display: none; }
+    html[data-theme="dark"] #theme-toggle .icon-sun { display: none; }
+    html[data-theme="dark"] #theme-toggle .icon-moon { display: block; }
+
+    .profile-menu { position: relative; }
+    .admin-profile-badge { display: flex; align-items: center; gap: var(--ayt-sp-2); padding: 6px 10px 6px 6px; border-radius: var(--ayt-radius-full); border: 1px solid var(--ayt-border); background: var(--ayt-surface-alt); transition: border-color var(--ayt-fast); }
+    .admin-profile-badge:hover { border-color: var(--ayt-gold); }
+    .admin-profile-badge .avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(150deg, var(--ayt-gold-light), var(--ayt-gold-dark)); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #241C05; }
+    .admin-profile-badge .who { display: flex; flex-direction: column; line-height: 1.25; }
+    .admin-profile-badge .who b { font-size: 12.5px; font-weight: 700; }
+    .admin-profile-badge .who span { font-size: 10.5px; color: var(--ayt-muted); }
+    .admin-profile-badge .chev { width: 14px; height: 14px; color: var(--ayt-muted); transition: transform var(--ayt-fast); }
+    .profile-menu.is-open .chev { transform: rotate(180deg); }
+    .profile-dropdown { position: absolute; right: 0; top: calc(100% + 10px); width: 220px; background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); box-shadow: var(--ayt-shadow-lg); padding: var(--ayt-sp-2); display: none; z-index: 30; }
+    .profile-menu.is-open .profile-dropdown { display: block; animation: aytFadeDown 160ms ease both; }
+    @keyframes aytFadeDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    .profile-dropdown a, .profile-dropdown .btn-logout { display: flex; align-items: center; gap: var(--ayt-sp-2); padding: var(--ayt-sp-2) var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 13px; color: var(--ayt-ink); transition: background var(--ayt-fast); }
+    .profile-dropdown a:hover, .profile-dropdown .btn-logout:hover { background: var(--ayt-surface-alt); }
+    .profile-dropdown svg { width: 15px; height: 15px; color: var(--ayt-muted); }
+    .profile-dropdown hr { border: none; border-top: 1px solid var(--ayt-border); margin: var(--ayt-sp-1) 0; }
+    .btn-logout { width: 100%; background: none; border: none; text-align: left; color: var(--ayt-rose-dark) !important; }
+    .btn-logout svg { color: var(--ayt-rose-dark); }
+
+    .console-body { padding: var(--ayt-sp-6); display: flex; flex-direction: column; gap: var(--ayt-sp-6); }
+
+    .page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--ayt-sp-4); flex-wrap: wrap; }
+    .page-head .eyebrow { font-family: var(--ayt-font-num); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ayt-gold-dark); }
+    .page-head h1 { font-family: var(--ayt-font-display); font-size: 24px; font-weight: 700; color: var(--ayt-primary-dark); margin-top: 2px; }
+    html[data-theme="dark"] .page-head h1 { color: #FBF7EF; }
+    .page-head p { font-size: 13px; color: var(--ayt-muted); margin-top: 2px; }
+    .page-head-actions { display: flex; align-items: center; gap: var(--ayt-sp-2); flex-wrap: wrap; }
+
+    .btn-gold { display: flex; align-items: center; gap: 7px; background: linear-gradient(135deg, var(--ayt-gold-light) 0%, var(--ayt-gold) 55%, var(--ayt-gold-dark) 100%); color: #241C05; font-size: 13px; font-weight: 700; padding: 11px 18px; border: none; border-radius: var(--ayt-radius-sm); box-shadow: var(--ayt-shadow-gold); transition: transform var(--ayt-fast), box-shadow var(--ayt-fast); }
+    .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(201,162,39,.32); }
+    .btn-gold svg { width: 15px; height: 15px; }
+
+    .btn-ghost { display: flex; align-items: center; gap: 7px; background: var(--ayt-surface); color: var(--ayt-ink); font-size: 13px; font-weight: 600; padding: 10px 16px; border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-sm); transition: border-color var(--ayt-fast), background var(--ayt-fast), transform var(--ayt-fast); }
+    .btn-ghost:hover { border-color: var(--ayt-gold); background: var(--ayt-surface-alt); transform: translateY(-1px); }
+    .btn-ghost svg { width: 15px; height: 15px; }
+    .btn-ghost:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+    /* ---------- KPI grid ---------- */
+    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--ayt-sp-4); }
+    .metric-card { position: relative; background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); padding: var(--ayt-sp-5); display: flex; flex-direction: column; gap: var(--ayt-sp-3); box-shadow: var(--ayt-shadow-sm); overflow: hidden; transition: box-shadow var(--ayt-normal), border-color var(--ayt-normal), transform var(--ayt-normal); }
+    .metric-card:hover { box-shadow: var(--ayt-shadow-lg); border-color: var(--ayt-gold); transform: translateY(-3px); }
+    .metric-top { display: flex; align-items: flex-start; justify-content: space-between; }
+    .metric-ico { width: 38px; height: 38px; border-radius: var(--ayt-radius-sm); display: flex; align-items: center; justify-content: center; }
+    .metric-ico svg { width: 19px; height: 19px; }
+    .metric-ico.tone-gold { background: rgba(201,162,39,.14); color: var(--ayt-gold-dark); }
+    .metric-ico.tone-emerald { background: rgba(30,122,95,.12); color: var(--ayt-emerald); }
+    .metric-ico.tone-blue { background: rgba(37,99,168,.12); color: var(--ayt-blue); }
+    .metric-ico.tone-rose { background: rgba(178,59,59,.12); color: var(--ayt-rose); }
+    .metric-title { font-size: 12px; font-weight: 600; color: var(--ayt-muted); }
+    .metric-value { font-family: var(--ayt-font-num); font-size: 26px; font-weight: 700; color: var(--ayt-primary-dark); }
+    html[data-theme="dark"] .metric-value { color: #FBF7EF; }
+
+    /* ---------- Toolbar ---------- */
+    .toolbar-card { background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); padding: var(--ayt-sp-4) var(--ayt-sp-5); box-shadow: var(--ayt-shadow-sm); display: flex; align-items: center; justify-content: space-between; gap: var(--ayt-sp-4); flex-wrap: wrap; }
+    .toolbar-left { display: flex; align-items: center; gap: var(--ayt-sp-3); flex-wrap: wrap; flex: 1; min-width: 260px; }
+    .toolbar-right { display: flex; align-items: center; gap: var(--ayt-sp-2); flex-wrap: wrap; }
+
+    .search-admin { display: flex; align-items: center; gap: var(--ayt-sp-2); background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-full); padding: 9px 16px; min-width: 220px; flex: 1; max-width: 320px; transition: border-color var(--ayt-fast), box-shadow var(--ayt-fast); }
+    .search-admin:focus-within { border-color: var(--ayt-gold); box-shadow: 0 0 0 4px rgba(201,162,39,.12); }
+    .search-admin svg { width: 15px; height: 15px; color: var(--ayt-muted); flex-shrink: 0; }
+    .search-admin input { border: none; background: none; outline: none; font-size: 13px; width: 100%; color: var(--ayt-ink); font-family: var(--ayt-font-body); }
+    .search-admin input::placeholder { color: #A79F8E; }
+
+    .select-admin { background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-sm); padding: 9px 12px; font-size: 12.5px; font-family: var(--ayt-font-body); color: var(--ayt-ink); transition: border-color var(--ayt-fast); }
+    .select-admin:focus { outline: none; border-color: var(--ayt-gold); }
+
+    /* ---------- Table ---------- */
+    .table-card { background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); box-shadow: var(--ayt-shadow-sm); overflow: hidden; }
+    .table-scroll { overflow-x: auto; }
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th, .data-table td { padding: 12px var(--ayt-sp-4); font-size: 12.5px; text-align: left; white-space: nowrap; }
+    .data-table th { background: var(--ayt-surface-alt); font-weight: 700; font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--ayt-muted); }
+    .data-table tbody tr { border-top: 1px solid var(--ayt-border); transition: background var(--ayt-fast); }
+    .data-table tbody tr:hover { background: var(--ayt-surface-alt); }
+    .data-table td.price { font-family: var(--ayt-font-num); font-weight: 700; }
+    .data-table td.muted { color: var(--ayt-muted); }
+    .chk { appearance: none; width: 16px; height: 16px; border: 1.5px solid var(--ayt-border); border-radius: 4px; display: grid; place-content: center; cursor: pointer; background: var(--ayt-surface); transition: border-color var(--ayt-fast), background var(--ayt-fast); }
+    .chk::before { content: ""; width: 9px; height: 9px; transform: scale(0); transition: transform 120ms ease; clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); background: var(--ayt-surface); }
+    .chk:checked { background: var(--ayt-gold-dark); border-color: var(--ayt-gold-dark); }
+    .chk:checked::before { transform: scale(1); }
+
+    .prod-cell { display: flex; align-items: center; gap: var(--ayt-sp-3); white-space: normal; min-width: 220px; }
+    .prod-thumb { width: 44px; height: 44px; border-radius: var(--ayt-radius-sm); object-fit: cover; background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); flex-shrink: 0; }
+    .prod-info b { display: block; font-size: 13px; font-weight: 600; color: var(--ayt-ink); }
+    .prod-info span { font-size: 11px; color: var(--ayt-muted); font-family: var(--ayt-font-num); }
+
+    .status-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; padding: 4px 10px; border-radius: var(--ayt-radius-full); }
+    .status-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .status-active { background: #D1FAE5; color: #0F7A54; }
+    .status-inactive { background: #FDECEC; color: var(--ayt-rose-dark); }
+    .status-low { background: #FEF3C7; color: #B5750F; }
+    .status-out { background: #FDECEC; color: var(--ayt-rose-dark); }
+
+    .row-actions { display: flex; align-items: center; gap: var(--ayt-sp-2); }
+    .btn-row { font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: var(--ayt-radius-sm); border: 1px solid var(--ayt-border); background: var(--ayt-surface); transition: background var(--ayt-fast), border-color var(--ayt-fast), color var(--ayt-fast); }
+    .btn-row.edit { color: var(--ayt-blue); }
+    .btn-row.edit:hover { background: rgba(37,99,168,.08); border-color: var(--ayt-blue); }
+    .btn-row.del { color: var(--ayt-rose-dark); }
+    .btn-row.del:hover { background: rgba(178,59,59,.08); border-color: var(--ayt-rose); }
+
+    /* ---------- Bulk bar ---------- */
+    .bulk-bar { display: none; align-items: center; justify-content: space-between; gap: var(--ayt-sp-4); background: var(--ayt-primary-dark); color: #F3EFE2; border-radius: var(--ayt-radius-md); padding: var(--ayt-sp-3) var(--ayt-sp-5); box-shadow: var(--ayt-shadow-md); flex-wrap: wrap; }
+    .bulk-bar.is-visible { display: flex; animation: aytFadeDown 180ms ease both; }
+    .bulk-bar .count { font-size: 13px; font-weight: 600; }
+    .bulk-bar .count b { color: var(--ayt-gold-light); font-family: var(--ayt-font-num); }
+    .bulk-actions { display: flex; gap: var(--ayt-sp-2); flex-wrap: wrap; }
+    .bulk-actions button { font-size: 12px; font-weight: 600; padding: 8px 14px; border-radius: var(--ayt-radius-sm); border: 1px solid rgba(251,247,239,.25); background: rgba(251,247,239,.08); color: #F3EFE2; transition: background var(--ayt-fast); }
+    .bulk-actions button:hover { background: rgba(251,247,239,.16); }
+    .bulk-actions button.danger { border-color: rgba(178,59,59,.5); color: #F3B4B4; }
+
+    /* ---------- Pagination ---------- */
+    .pagination-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--ayt-sp-4); padding: var(--ayt-sp-4) var(--ayt-sp-5); border-top: 1px solid var(--ayt-border); flex-wrap: wrap; }
+    .pagination-info { font-size: 12px; color: var(--ayt-muted); }
+    .pagination-controls { display: flex; align-items: center; gap: var(--ayt-sp-2); }
+    .page-btn { min-width: 32px; height: 32px; padding: 0 8px; display: flex; align-items: center; justify-content: center; border-radius: var(--ayt-radius-sm); border: 1px solid var(--ayt-border); background: var(--ayt-surface); font-size: 12.5px; font-family: var(--ayt-font-num); font-weight: 600; color: var(--ayt-ink); transition: background var(--ayt-fast), border-color var(--ayt-fast); }
+    .page-btn:hover:not(:disabled) { border-color: var(--ayt-gold); background: var(--ayt-surface-alt); }
+    .page-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .page-btn.active { background: var(--ayt-primary); color: #fff; border-color: var(--ayt-primary); }
+
+    /* ---------- Empty & loading states ---------- */
+    .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--ayt-sp-10) var(--ayt-sp-6); gap: var(--ayt-sp-3); }
+    .empty-state .ico { font-size: 40px; }
+    .empty-state h3 { font-family: var(--ayt-font-display); font-size: 17px; font-weight: 700; color: var(--ayt-primary-dark); }
+    .empty-state p { font-size: 13px; color: var(--ayt-muted); max-width: 340px; }
+    .skeleton { position: relative; overflow: hidden; background: var(--ayt-surface-alt); border-radius: var(--ayt-radius-sm); display: inline-block; }
+    .skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent); animation: aytShimmer 1.5s infinite; }
+    @keyframes aytShimmer { 100% { transform: translateX(100%); } }
+    .sk-thumb { width: 44px; height: 44px; }
+    .sk-line { height: 12px; width: 120px; margin-bottom: 6px; }
+
+    .ayt-reveal { opacity: 0; transform: translateY(14px); animation: aytRevealIn 560ms cubic-bezier(.22,.61,.36,1) forwards; }
+    @keyframes aytRevealIn { to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 992px) {
+      .admin-layout, .admin-layout.is-collapsed { grid-template-columns: 1fr; }
+      .admin-sidebar { position: fixed; left: 0; top: 0; width: 264px; transform: translateX(-100%); transition: transform var(--ayt-normal); box-shadow: var(--ayt-shadow-lg); }
+      .admin-sidebar.is-open { transform: translateX(0); }
+      .icon-btn.mobile-menu-btn { display: flex; }
+      .header-search { display: none; }
+    }
+    @media (max-width: 640px) {
+      .console-header { padding: 0 var(--ayt-sp-4); }
+      .console-body { padding: var(--ayt-sp-4); }
+      .admin-profile-badge .who { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-layout" id="admin-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <div class="sidebar-brand">
+        <div class="mark">🛒</div>
+        <div class="txt">AYT Mart<small>Control Panel</small></div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <span class="menu-section-label">প্রধান মেনু</span>
+        <a href="dashboard.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          <span class="label-txt">ড্যাশবোর্ড</span>
+        </a>
+        <a href="products.html" class="menu-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>
+          <span class="label-txt">প্রোডাক্টস</span>
+        </a>
+        <a href="categories.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+          <span class="label-txt">ক্যাটাগরি</span>
+        </a>
+        <a href="orders.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+          <span class="label-txt">অর্ডারসমূহ</span>
+        </a>
+        <a href="inventory.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7Z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>
+          <span class="label-txt">ইনভেন্টরি</span>
+        </a>
+        <a href="settings.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+          <span class="label-txt">সেটিংস</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-foot">
+        <button class="sidebar-collapse-btn" id="sidebar-collapse-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
+          <span class="label-txt">সাইডবার সংকুচিত করুন</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Console -->
+    <main class="admin-console">
+      <header class="console-header">
+        <div class="header-left">
+          <button class="icon-btn mobile-menu-btn" id="mobile-menu-btn" aria-label="মেনু খুলুন">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <span class="crumb-trail">ড্যাশবোর্ড <span class="sep">/</span> প্রোডাক্টস</span>
+            <h1>প্রোডাক্ট ম্যানেজমেন্ট</h1>
+          </div>
+        </div>
+
+        <div class="header-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="দ্রুত খুঁজুন..." />
+        </div>
+
+        <div class="header-right">
+          <button class="icon-btn" id="theme-toggle" aria-label="থিম পরিবর্তন করুন">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+          </button>
+          <div class="profile-menu" id="profile-menu">
+            <button class="admin-profile-badge" id="profile-badge-btn">
+              <span class="avatar">এ</span>
+              <span class="who"><b>এডমিন</b><span>admin@aytmart.com</span></span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="profile-dropdown">
+              <a href="settings.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/></svg> প্রোফাইল সেটিংস
+              </a>
+              <hr>
+              <button class="btn-logout" onclick="performLogout()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> লগআউট
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="console-body">
+
+        <!-- Page header -->
+        <div class="page-head ayt-reveal">
+          <div>
+            <span class="eyebrow">ক্যাটালগ নিয়ন্ত্রণ</span>
+            <h1>প্রোডাক্ট ক্যাটালগ</h1>
+            <p>আপনার সম্পূর্ণ প্রোডাক্ট ইনভেন্টরি এখান থেকে পরিচালনা করুন</p>
+          </div>
+          <div class="page-head-actions">
+            <button class="btn-ghost" onclick="fetchAdminProducts()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              রিফ্রেশ
+            </button>
+            <button class="btn-ghost" onclick="exportProductsCsv()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              এক্সপোর্ট
+            </button>
+            <a href="product-add.html" class="btn-gold">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              নতুন প্রোডাক্ট
+            </a>
+          </div>
+        </div>
+
+        <!-- KPI cards -->
+        <div class="metrics-grid ayt-reveal" style="animation-delay: 60ms" id="products-kpi-grid">
+          <div class="metric-card">
+            <div class="metric-top">
+              <div class="metric-ico tone-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/></svg></div>
+            </div>
+            <span class="metric-title">মোট প্রোডাক্ট</span>
+            <span class="metric-value num" id="kpi-total">—</span>
+          </div>
+          <div class="metric-card">
+            <div class="metric-top">
+              <div class="metric-ico tone-emerald"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg></div>
+            </div>
+            <span class="metric-title">সক্রিয় প্রোডাক্ট</span>
+            <span class="metric-value num" id="kpi-active">—</span>
+          </div>
+          <div class="metric-card">
+            <div class="metric-top">
+              <div class="metric-ico tone-rose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></div>
+            </div>
+            <span class="metric-title">নিষ্ক্রিয় প্রোডাক্ট</span>
+            <span class="metric-value num" id="kpi-inactive">—</span>
+          </div>
+          <div class="metric-card">
+            <div class="metric-top">
+              <div class="metric-ico tone-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+            </div>
+            <span class="metric-title">কম স্টক</span>
+            <span class="metric-value num" id="kpi-low-stock">—</span>
+          </div>
+          <div class="metric-card">
+            <div class="metric-top">
+              <div class="metric-ico tone-rose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div>
+            </div>
+            <span class="metric-title">স্টক আউট</span>
+            <span class="metric-value num" id="kpi-out-of-stock">—</span>
+          </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar-card ayt-reveal" style="animation-delay: 100ms">
+          <div class="toolbar-left">
+            <div class="search-admin">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="admin-search" placeholder="প্রোডাক্ট বা SKU খুঁজুন..." oninput="filterCatalog()"/>
+            </div>
+
+            <select id="admin-cat-filter" class="select-admin" onchange="filterCatalog()">
+              <option value="all">সকল ক্যাটাগরি</option>
+              <!-- Dynamic category filters -->
+            </select>
+
+            <select id="admin-status-filter" class="select-admin" onchange="filterCatalog()">
+              <option value="all">সকল স্ট্যাটাস</option>
+              <option value="active">Active (সক্রিয়)</option>
+              <option value="inactive">Inactive (নিষ্ক্রিয়)</option>
+              <option value="low-stock">Low Stock (কম স্টক)</option>
+              <option value="out-of-stock">Out of Stock (স্টক আউট)</option>
+            </select>
+
+            <select id="admin-page-size" class="select-admin" onchange="changePageSize()">
+              <option value="10">প্রতি পৃষ্ঠায় ১০টি</option>
+              <option value="25">প্রতি পৃষ্ঠায় ২৫টি</option>
+              <option value="50">প্রতি পৃষ্ঠায় ৫০টি</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Bulk action bar -->
+        <div class="bulk-bar" id="bulk-bar">
+          <span class="count"><b id="bulk-count">0</b>টি প্রোডাক্ট নির্বাচিত</span>
+          <div class="bulk-actions">
+            <button onclick="bulkDeactivateSelected()">নিষ্ক্রিয় করুন</button>
+            <button class="danger" onclick="clearSelection()">নির্বাচন বাতিল</button>
+          </div>
+        </div>
+
+        <!-- Product table -->
+        <div class="table-card ayt-reveal" style="animation-delay: 140ms">
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 34px;"><input type="checkbox" class="chk" id="chk-select-all" onchange="toggleSelectAll(this)"/></th>
+                  <th>প্রোডাক্ট</th>
+                  <th>SKU</th>
+                  <th>ক্যাটাগরি</th>
+                  <th>রেগুলার মূল্য</th>
+                  <th>অফার মূল্য</th>
+                  <th>স্টক</th>
+                  <th>স্ট্যাটাস</th>
+                  <th>অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody id="admin-products-table">
+                <tr><td colspan="9"><span class="skeleton sk-line"></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pagination-bar" id="pagination-bar" style="display:none;">
+            <span class="pagination-info" id="pagination-info"></span>
+            <div class="pagination-controls" id="pagination-controls"></div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- App Services & Scripts -->
+  <script src="../config/environment/env.js"></script>
+  <script src="../utils/storage/storage.js"></script>
+  <script src="../api/shared/api-client.js"></script>
+  <script src="../services/products/product-service.js"></script>
+
+  <script>
+    let localProductsList = [];
+    let localCategoriesRef = [];
+    let currentFilteredList = [];
+    let selectedIds = new Set();
+    let currentPage = 1;
+    let pageSize = 10;
+
+    // Guard: Validate session as Admin
+    document.addEventListener('DOMContentLoaded', async () => {
+      const session = StorageHelper.get(ENV.STORAGE_KEYS.SESSION, null);
+      if (!session || session.role !== 'Admin') {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      await loadCategorySelectors();
+      await fetchAdminProducts();
+    });
+
+    async function loadCategorySelectors() {
+      const selector = document.querySelector('#admin-cat-filter');
+      try {
+        const categories = await ProductService.getCategories();
+        localCategoriesRef = categories || [];
+        selector.innerHTML += localCategoriesRef.map(cat => `
+          <option value="${cat.id}">${cat.name}</option>
+        `).join('');
+      } catch (err) {
+        console.error('Failed appending admin categories filters:', err);
+      }
+    }
+
+    function categoryNameFor(categoryId) {
+      const found = localCategoriesRef.find(c => c.id === categoryId);
+      return found ? found.name : (categoryId || '—');
+    }
+
+    async function fetchAdminProducts() {
+      const tbody = document.querySelector('#admin-products-table');
+      tbody.innerHTML = Array.from({length: 5}).map(() => `
+        <tr>
+          <td><span class="skeleton" style="width:16px;height:16px;display:inline-block;"></span></td>
+          <td><div class="prod-cell"><span class="skeleton sk-thumb"></span><div><span class="skeleton sk-line"></span></div></div></td>
+          <td><span class="skeleton sk-line" style="width:70px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:80px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:60px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:60px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:40px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:70px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:90px;"></span></td>
+        </tr>
+      `).join('');
+
+      try {
+        // Fetch products, including inactive records for administrative audit [2]
+        const apiPayload = { includeInactive: true };
+        const response = await ApiClient.request('products.list', apiPayload, 'GET');
+
+        if (response && response.success && response.data && response.data.items) {
+          localProductsList = response.data.items.map(item => ProductService.mapProductSchema_(item));
+        } else {
+          localProductsList = [...ProductService.MOCK_PRODUCTS].map(item => {
+            const mapped = ProductService.mapProductSchema_(item);
+            mapped.status = item.status || 'Active'; // Simulated audit status
+            return mapped;
+          });
+        }
+        currentPage = 1;
+        selectedIds.clear();
+        updateKpis(localProductsList);
+        filterCatalog();
+      } catch (e) {
+        console.warn('Backend API disconnected. Bypassing to local fallback.', e);
+        localProductsList = [...ProductService.MOCK_PRODUCTS].map(item => {
+          const mapped = ProductService.mapProductSchema_(item);
+          mapped.status = item.status || 'Active';
+          return mapped;
+        });
+        currentPage = 1;
+        selectedIds.clear();
+        updateKpis(localProductsList);
+        filterCatalog();
+      }
+    }
+
+    function updateKpis(list) {
+      const total = list.length;
+      const active = list.filter(p => (p.status || 'Active').toLowerCase() === 'active').length;
+      const inactive = total - active;
+      const lowStock = list.filter(p => p.stock > 0 && p.stock <= 5).length;
+      const outOfStock = list.filter(p => p.stock <= 0).length;
+      document.querySelector('#kpi-total').textContent = total;
+      document.querySelector('#kpi-active').textContent = active;
+      document.querySelector('#kpi-inactive').textContent = inactive;
+      document.querySelector('#kpi-low-stock').textContent = lowStock;
+      document.querySelector('#kpi-out-of-stock').textContent = outOfStock;
+    }
+
+    function renderTable(list) {
+      const tbody = document.querySelector('#admin-products-table');
+      if (list.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="9">
+              <div class="empty-state">
+                <span class="ico">📦</span>
+                <h3>কোনো প্রোডাক্ট পাওয়া যায়নি</h3>
+                <p>আপনার সার্চ বা ফিল্টার শর্তের সাথে মিলে এমন কোনো প্রোডাক্ট নেই। ফিল্টার পরিবর্তন করে আবার চেষ্টা করুন অথবা নতুন প্রোডাক্ট যোগ করুন।</p>
+                <a href="product-add.html" class="btn-gold">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="15" height="15"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  নতুন প্রোডাক্ট তৈরি করুন
+                </a>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = list.map(prod => {
+        const isOutOfStock = prod.stock <= 0;
+        const isLowStock = !isOutOfStock && prod.stock <= 5; // Configurable threshold level [1]
+        const statusText = prod.status || 'Active';
+        const isActive = statusText.toLowerCase() === 'active';
+        const checked = selectedIds.has(prod.id) ? 'checked' : '';
+
+        let stockBadge = '';
+        if (isOutOfStock) stockBadge = `<span class="status-badge status-out">স্টক আউট</span>`;
+        else if (isLowStock) stockBadge = `<span class="status-badge status-low">${prod.stock} টি বাকি</span>`;
+        else stockBadge = `<span class="num">${prod.stock} টি</span>`;
+
+        return `
+          <tr>
+            <td><input type="checkbox" class="chk row-chk" data-id="${prod.id}" ${checked} onchange="toggleRowSelect('${prod.id}', this.checked)"/></td>
+            <td>
+              <div class="prod-cell">
+                <img src="${prod.image}" alt="${prod.name}" class="prod-thumb" onerror="this.style.visibility='hidden'"/>
+                <div class="prod-info">
+                  <b>${prod.name}</b>
+                  <span>${prod.id}</span>
+                </div>
+              </div>
+            </td>
+            <td><code>${prod.sku}</code></td>
+            <td class="muted">${categoryNameFor(prod.category_id)}</td>
+            <td class="price">৳${prod.price.toFixed(2)}</td>
+            <td class="price">${prod.sale_price ? `৳${prod.sale_price.toFixed(2)}` : '<span class="muted">N/A</span>'}</td>
+            <td>${stockBadge}</td>
+            <td>
+              <span class="status-badge ${isActive ? 'status-active' : 'status-inactive'}">
+                ${statusText}
+              </span>
+            </td>
+            <td>
+              <div class="row-actions">
+                <button class="btn-row edit" onclick="editProduct('${prod.id}')">সম্পাদনা</button>
+                <button class="btn-row del" onclick="softDeleteProduct('${prod.id}')">বাদ দিন</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      syncSelectAllState();
+    }
+
+    function filterCatalog() {
+      const searchVal = document.querySelector('#admin-search').value.trim().toLowerCase();
+      const catVal = document.querySelector('#admin-cat-filter').value;
+      const statusVal = document.querySelector('#admin-status-filter').value;
+
+      let filtered = [...localProductsList];
+
+      if (searchVal) {
+        filtered = filtered.filter(p =>
+          p.name.toLowerCase().includes(searchVal) ||
+          p.sku.toLowerCase().includes(searchVal) ||
+          p.id.toLowerCase().includes(searchVal)
+        );
+      }
+
+      if (catVal !== 'all') {
+        filtered = filtered.filter(p => p.category_id === catVal);
+      }
+
+      if (statusVal === 'active') {
+        filtered = filtered.filter(p => p.status.toLowerCase() === 'active');
+      } else if (statusVal === 'inactive') {
+        filtered = filtered.filter(p => p.status.toLowerCase() === 'inactive');
+      } else if (statusVal === 'low-stock') {
+        filtered = filtered.filter(p => p.stock > 0 && p.stock <= 5);
+      } else if (statusVal === 'out-of-stock') {
+        filtered = filtered.filter(p => p.stock <= 0);
+      }
+
+      currentFilteredList = filtered;
+      currentPage = 1;
+      renderPage();
+    }
+
+    function renderPage() {
+      const totalItems = currentFilteredList.length;
+      const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const start = (currentPage - 1) * pageSize;
+      const pageItems = currentFilteredList.slice(start, start + pageSize);
+
+      renderTable(pageItems);
+      renderPagination(totalItems, totalPages);
+    }
+
+    function renderPagination(totalItems, totalPages) {
+      const bar = document.querySelector('#pagination-bar');
+      const info = document.querySelector('#pagination-info');
+      const controls = document.querySelector('#pagination-controls');
+
+      if (totalItems === 0) { bar.style.display = 'none'; return; }
+      bar.style.display = 'flex';
+
+      const start = totalItems === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+      const end = Math.min(currentPage * pageSize, totalItems);
+      info.textContent = `${totalItems} টির মধ্যে ${start}–${end} দেখানো হচ্ছে`;
+
+      let html = `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="goToPage(${currentPage - 1})">‹</button>`;
+      for (let i = 1; i <= totalPages; i++) {
+        if (totalPages > 7 && i !== 1 && i !== totalPages && Math.abs(i - currentPage) > 1) {
+          if (i === 2 || i === totalPages - 1) html += `<span class="pagination-info">…</span>`;
+          continue;
+        }
+        html += `<button class="page-btn num ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+      }
+      html += `<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="goToPage(${currentPage + 1})">›</button>`;
+      controls.innerHTML = html;
+    }
+
+    function goToPage(page) {
+      currentPage = page;
+      renderPage();
+    }
+
+    function changePageSize() {
+      pageSize = parseInt(document.querySelector('#admin-page-size').value, 10) || 10;
+      currentPage = 1;
+      renderPage();
+    }
+
+    function toggleRowSelect(id, checked) {
+      if (checked) selectedIds.add(id); else selectedIds.delete(id);
+      syncBulkBar();
+      syncSelectAllState();
+    }
+
+    function toggleSelectAll(checkboxEl) {
+      const start = (currentPage - 1) * pageSize;
+      const pageItems = currentFilteredList.slice(start, start + pageSize);
+      pageItems.forEach(p => {
+        if (checkboxEl.checked) selectedIds.add(p.id); else selectedIds.delete(p.id);
+      });
+      renderTable(pageItems);
+      syncBulkBar();
+    }
+
+    function syncSelectAllState() {
+      const start = (currentPage - 1) * pageSize;
+      const pageItems = currentFilteredList.slice(start, start + pageSize);
+      const allSelected = pageItems.length > 0 && pageItems.every(p => selectedIds.has(p.id));
+      const selectAll = document.querySelector('#chk-select-all');
+      if (selectAll) selectAll.checked = allSelected;
+    }
+
+    function syncBulkBar() {
+      const bar = document.querySelector('#bulk-bar');
+      const count = document.querySelector('#bulk-count');
+      count.textContent = selectedIds.size;
+      bar.classList.toggle('is-visible', selectedIds.size > 0);
+    }
+
+    function clearSelection() {
+      selectedIds.clear();
+      syncBulkBar();
+      renderPage();
+    }
+
+    async function bulkDeactivateSelected() {
+      if (selectedIds.size === 0) return;
+      if (!confirm(`নির্বাচিত ${selectedIds.size}টি প্রোডাক্ট নিষ্ক্রিয় করতে চান?`)) return;
+      for (const id of Array.from(selectedIds)) {
+        await softDeleteProduct(id, true);
+      }
+      selectedIds.clear();
+      syncBulkBar();
+      await fetchAdminProducts();
+    }
+
+    function exportProductsCsv() {
+      if (currentFilteredList.length === 0) { alert('এক্সপোর্ট করার জন্য কোনো প্রোডাক্ট নেই।'); return; }
+      const headers = ['Product ID', 'Name', 'SKU', 'Category', 'Regular Price', 'Sale Price', 'Stock', 'Status'];
+      const rows = currentFilteredList.map(p => [
+        p.id, p.name, p.sku, categoryNameFor(p.category_id), p.price, p.sale_price || '', p.stock, p.status
+      ]);
+      const csv = [headers, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `aytmart-products-${Date.now()}.csv`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function editProduct(productId) {
+      window.location.href = `product-edit.html?id=${productId}`;
+    }
+
+    async function softDeleteProduct(productId, silent) {
+      // Soft deletion popup window matches ERP Preservation constraint [1]
+      const proceed = silent ? true : confirm('আপনি কি নিশ্চিতভাবে এই প্রোডাক্টটি নিষ্ক্রিয় (Inactive) করতে চান? এটি চিরতরে ডিলিট হবে না।');
+      if (!proceed) return;
+
+      try {
+        const response = await ApiClient.request('products.delete', { id: productId });
+        if (response && response.success) {
+          if (!silent) { alert('প্রোডাক্টটি সফলভাবে নিষ্ক্রিয় করা হয়েছে।'); await fetchAdminProducts(); }
+          return;
+        }
+      } catch (err) {
+        console.warn('Backend soft delete transaction failed. Bypassing simulation.', err);
+      }
+
+      // Simulating the soft delete locally on local fallback list [1]
+      const target = localProductsList.find(p => p.id === productId);
+      if (target) {
+        target.status = 'Inactive';
+        if (!silent) {
+          alert('সিমুলেশন: প্রোডাক্টটি নিষ্ক্রিয় করা হয়েছে।');
+          updateKpis(localProductsList);
+          filterCatalog();
+        }
+      }
+    }
+
+    function performLogout() {
+      if (confirm('আপনি কি এডমিন সেশন থেকে লগআউট করতে চান?')) {
+        StorageHelper.remove(ENV.STORAGE_KEYS.SESSION);
+        window.location.href = 'login.html';
+      }
+    }
+
+    // UI: sidebar collapse (desktop)
+    const layout = document.getElementById('admin-layout');
+    const collapseBtn = document.getElementById('sidebar-collapse-btn');
+    collapseBtn.addEventListener('click', () => layout.classList.toggle('is-collapsed'));
+
+    // UI: mobile sidebar drawer
+    const sidebar = document.getElementById('admin-sidebar');
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    mobileBtn.addEventListener('click', () => sidebar.classList.toggle('is-open'));
+
+    // UI: profile dropdown
+    const profileMenu = document.getElementById('profile-menu');
+    const profileBtn = document.getElementById('profile-badge-btn');
+    profileBtn.addEventListener('click', (e) => { e.stopPropagation(); profileMenu.classList.toggle('is-open'); });
+    document.addEventListener('click', () => profileMenu.classList.remove('is-open'));
+
+    // UI: theme toggle (light / dark)
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const html = document.documentElement;
+      html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>

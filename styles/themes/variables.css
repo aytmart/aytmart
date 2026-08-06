@@ -1,0 +1,234 @@
+/* ==========================================================================
+   File: /styles/theme/variables.css
+   Description: Global CSS Custom Properties — AYT Mart Premium Design System
+   Signature: "Nakshi stitch" heritage palette — deep emerald, aged gold,
+   warm cream — shared by index / products / product and now header / footer.
+   All existing token NAMES are preserved so untouched pages never break;
+   only values are upgraded, and new granular tokens are layered on top.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ---------------------------------------------------------------------
+     BRAND PALETTE — deep emerald + aged gold (kept under legacy names so
+     any file still referencing --color-primary / --color-accent inherits
+     the new premium look automatically).
+     --------------------------------------------------------------------- */
+  --color-primary:        #0B4238;  /* Deep emerald */
+  --color-primary-dark:   #072722;
+  --color-primary-light:  #14614F;
+  --color-accent:         #C9A227;  /* Aged gold — primary CTA accent */
+  --color-accent-hover:   #96751A;
+  --color-gold:           #C9A227;
+  --color-gold-light:     #E7CD73;
+  --color-gold-dark:      #96751A;
+  --color-rose:           #B23B3B;  /* Sale / clearance accent */
+  --color-rose-dark:      #8E2E2E;
+  --color-ink:            #1C2420;
+  --color-white:          #FFFFFF;
+  --color-black:          #000000;
+
+  --color-facebook:       #1877F2;
+  --color-youtube:        #FF0000;
+  --color-instagram:      #E4405F;
+  --color-whatsapp:       #25D366;
+
+  /* ---------------------------------------------------------------------
+     LIGHT THEME SURFACE / TEXT
+     --------------------------------------------------------------------- */
+  --bg-color:             #FBF7EF;  /* Warm cream */
+  --bg-surface:           #FFFFFF;
+  --bg-surface-alt:       #F5F2E9;
+  --text-color:           #1C2420;
+  --text-muted:           #5B564B;  /* darkened from #756F62 — restores WCAG AA (was ~3.9:1, now ~6.5:1) */
+  --border-color:         #E5E0D2;
+  --bg-header:            var(--bg-surface);
+  --bg-footer:            var(--bg-surface);
+
+  --bg-hover:             #F0ECE2;
+  --bg-disabled:          #ECE7DB;
+
+  --text-heading:         #13201C;
+  --text-inverse:         #FFFFFF;
+  --text-link:            var(--color-primary);
+
+  --border-light:         #EFE9DB;
+  --border-dark:          #C9C0AE;
+
+  /* Glass + overlay */
+  --glass-bg:             rgba(255, 255, 255, 0.66);
+  --glass-bg-dark:        rgba(7, 39, 34, 0.55);
+  --glass-border:         rgba(255, 255, 255, 0.35);
+  --overlay-color:        rgba(11, 20, 17, 0.55);
+  --overlay-color-soft:   rgba(11, 20, 17, 0.28);
+
+  /* Feedback colors */
+  --color-success:        #10b981;
+  --color-error:          #ef4444;
+  --color-warning:        #f59e0b;
+  --color-info:           #3b82f6;
+
+  /* Buttons */
+  --btn-primary-bg:       var(--color-primary);
+  --btn-primary-hover:    var(--color-primary-dark);
+
+  --btn-secondary-bg:     var(--color-accent);
+  --btn-secondary-hover:  var(--color-accent-hover);
+
+  --btn-text:             #FFFFFF;
+
+  /* Forms */
+  --input-bg:             #FFFFFF;
+  --input-border:         var(--border-color);
+  --input-focus:          var(--color-accent);
+  --input-placeholder:    #8E887C;
+
+  /* Header / Footer */
+  --header-bg:            var(--bg-surface);
+  --header-text:          var(--text-color);
+
+  --footer-bg:            var(--color-primary);
+  --footer-text:          #FFFFFF;
+
+  /* Cards */
+  --card-bg:              var(--bg-surface);
+  --card-border:          var(--border-color);
+
+  /* ---------------------------------------------------------------------
+     TYPOGRAPHY
+     --------------------------------------------------------------------- */
+  --font-family:          'Hind Siliguri', 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display:         'Tiro Bangla', 'Noto Serif Bengali', serif;
+  --font-num:             'Poppins', 'Hind Siliguri', sans-serif;
+
+  --font-xs:              0.75rem;
+  --font-sm:              0.875rem;
+  --font-base:            1rem;
+  --font-lg:              1.125rem;
+  --font-xl:              1.25rem;
+  --font-2xl:             1.5rem;
+  --font-3xl:             1.875rem;
+  --font-4xl:             2.25rem;
+
+  --weight-normal:        400;
+  --weight-medium:        500;
+  --weight-semibold:      600;
+  --weight-bold:          700;
+
+  --line-height-tight:    1.2;
+  --line-height-normal:   1.5;
+  --line-height-relaxed:  1.75;
+  --letter-spacing-tight: -0.01em;
+  --letter-spacing-wide:  0.06em;
+  --letter-spacing-wider: 0.12em;
+
+  /* ---------------------------------------------------------------------
+     SPACING SCALE (8px grid + fine steps)
+     --------------------------------------------------------------------- */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Container widths */
+  --container-sm:  640px;
+  --container-md:  960px;
+  --container-lg:  1200px;
+  --container-xl:  1320px;
+
+  /* ---------------------------------------------------------------------
+     RADIUS / SHADOW / GRADIENT
+     --------------------------------------------------------------------- */
+  --border-radius-sm:    6px;
+  --border-radius-md:    10px;
+  --border-radius-lg:    18px;
+  --border-radius-xl:    24px;
+  --border-radius-full:  9999px;
+  --card-radius:         var(--border-radius-lg);
+  --button-radius:       var(--border-radius-full);
+
+  --shadow-sm: 0 2px 8px rgba(15, 35, 30, 0.06);
+  --shadow-md: 0 10px 30px rgba(15, 35, 30, 0.10);
+  --shadow-lg: 0 24px 60px rgba(15, 35, 30, 0.16);
+  --shadow-gold: 0 10px 24px rgba(201, 162, 39, 0.25);
+
+  --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  --gradient-gold:    linear-gradient(135deg, var(--color-gold-light), var(--color-gold));
+  --gradient-rose:    linear-gradient(120deg, var(--color-rose), var(--color-rose-dark));
+
+  /* ---------------------------------------------------------------------
+     MOTION
+     --------------------------------------------------------------------- */
+  --transition-fast:    150ms ease;
+  --transition-normal:  320ms cubic-bezier(.22, .61, .36, 1);
+  --transition-slow:    560ms cubic-bezier(.22, .61, .36, 1);
+
+  /* ---------------------------------------------------------------------
+     STRUCTURAL DIMENSIONS
+     --------------------------------------------------------------------- */
+  --header-height:          72px;
+  --header-height-shrunk:   58px;
+  --announcement-height:    36px;
+  --footer-height:          auto;
+  --sidebar-width:          280px;
+  --mobile-bottom-bar-height: 60px;
+
+  /* ---------------------------------------------------------------------
+     Z-INDEX SCALE
+     --------------------------------------------------------------------- */
+  --z-base:        1;
+  --z-sticky:      100;
+  --z-header:      1000;
+  --z-dropdown:    1100;
+  --z-drawer:      2000;
+  --z-overlay:     1999;
+  --z-modal:       2500;
+  --z-toast:       3000;
+}
+
+/* ==========================================================================
+   DARK THEME
+   ========================================================================== */
+[data-theme="dark"] {
+  --bg-color:        #081410;
+  --bg-surface:      #0E211C;
+  --bg-surface-alt:  #12281F;
+  --text-color:       #F3EFE2;
+  --text-muted:       #9BA79E;
+  --border-color:     #24443A;
+  --bg-header:        #050B09;  /* deep near-black — deliberately darker than --bg-surface so the header reads as "premium dark", not the same flat teal as every card */
+  --bg-footer:        #071713;
+
+  --header-text:      #F3EFE2;
+  --footer-text:      #F3EFE2;
+
+  --card-bg:          #0E211C;
+  --card-border:      #24443A;
+
+  --input-bg:         #10231D;
+  --input-border:     #24443A;
+
+  --bg-hover:         #16342B;
+
+  --text-heading:     #FFFFFF;
+  --text-inverse:     #000000;
+
+  --btn-text:         #FFFFFF;
+
+  --glass-bg:         rgba(3, 9, 7, 0.72);   /* deepened + more opaque so the un-scrolled glass header doesn't look washed-out teal in dark mode */
+  --glass-bg-dark:    rgba(4, 15, 12, 0.65);
+  --glass-border:     rgba(255, 255, 255, 0.12);
+  --overlay-color:    rgba(0, 0, 0, 0.65);
+  --overlay-color-soft: rgba(0, 0, 0, 0.35);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.40);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.50);
+}

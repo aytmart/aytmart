@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>যোগাযোগ করুন | AYT Mart</title>
+  <link rel="stylesheet" href="styles/themes/variables.css">
+  <link rel="stylesheet" href="styles/base/reset.css">
+  <link rel="stylesheet" href="styles/layout/layout.css">
+  <style>
+    .page-head { text-align: center; margin: var(--space-8) auto var(--space-8); max-width: 640px; }
+    .page-head h1 { font-size: var(--font-3xl); font-weight: var(--weight-bold); margin-bottom: var(--space-2); }
+    .page-head p { color: var(--text-muted); }
+    .contact-layout {
+      display: grid; grid-template-columns: 1fr 1.3fr; gap: var(--space-8);
+      margin-bottom: var(--space-16); align-items: start;
+    }
+    @media (max-width: 800px) { .contact-layout { grid-template-columns: 1fr; } }
+    .contact-info-card, .contact-form-card {
+      background: var(--bg-surface); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg); padding: var(--space-6);
+    }
+    .contact-info-row { display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-5); }
+    .contact-info-row:last-child { margin-bottom: 0; }
+    .contact-info-row .icon { font-size: 1.4rem; }
+    .contact-info-row h3 { font-size: var(--font-sm); font-weight: var(--weight-semibold); margin-bottom: 2px; }
+    .contact-info-row p, .contact-info-row a { font-size: var(--font-sm); color: var(--text-muted); }
+    .contact-form-card h2 { font-size: var(--font-lg); font-weight: var(--weight-bold); margin-bottom: var(--space-5); }
+    .contact-form-card form { display: flex; flex-direction: column; gap: var(--space-4); }
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+    @media (max-width: 480px) { .form-row-2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header id="global-header"></header>
+
+  <main class="container">
+    <div class="page-head">
+      <h1>যোগাযোগ করুন</h1>
+      <p>কোনো প্রশ্ন বা সহায়তা প্রয়োজন? নিচের ফর্ম পূরণ করুন অথবা সরাসরি WhatsApp-এ যোগাযোগ করুন — আমরা যত দ্রুত সম্ভব উত্তর দেব।</p>
+    </div>
+
+    <div class="contact-layout">
+      <div class="contact-info-card">
+        <div class="contact-info-row">
+          <span class="icon">💬</span>
+          <div><h3>হোয়াটসঅ্যাপ</h3><a href="#" id="contact-wa-link" target="_blank" rel="noopener">লোড হচ্ছে...</a></div>
+        </div>
+        <div class="contact-info-row">
+          <span class="icon">📧</span>
+          <div><h3>ইমেইল</h3><a href="mailto:info@aytmart.com">info@aytmart.com</a></div>
+        </div>
+        <div class="contact-info-row">
+          <span class="icon">🏠</span>
+          <div><h3>ঠিকানা</h3><p>ঢাকা, বাংলাদেশ (অনলাইন-ভিত্তিক কার্যক্রম)</p></div>
+        </div>
+        <div class="contact-info-row">
+          <span class="icon">🕐</span>
+          <div><h3>সাপোর্ট সময়</h3><p>প্রতিদিন সকাল ৯টা - রাত ১০টা</p></div>
+        </div>
+      </div>
+
+      <div class="contact-form-card">
+        <h2>মেসেজ পাঠান</h2>
+        <form id="contact-form">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="c-name">আপনার নাম</label>
+              <input class="form-input" id="c-name" name="name" type="text" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="c-phone">মোবাইল নাম্বার</label>
+              <input class="form-input" id="c-phone" name="phone" type="tel" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="c-subject">বিষয়</label>
+            <input class="form-input" id="c-subject" name="subject" type="text" placeholder="যেমন: অর্ডার সংক্রান্ত প্রশ্ন" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="c-message">মেসেজ</label>
+            <textarea class="form-textarea" id="c-message" name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg">WhatsApp-এ পাঠান</button>
+          <p class="form-hint">* এই ফর্মটি সরাসরি আমাদের WhatsApp-এ আপনার মেসেজ পাঠিয়ে দেবে, যাতে দ্রুততম সময়ে উত্তর পান।</p>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer id="global-footer"></footer>
+
+  <script src="config/environment/env.js"></script>
+  <script src="utils/storage/storage.js"></script>
+  <script src="api/shared/api-client.js"></script>
+  <script src="components/header/header.js"></script>
+  <script src="components/footer/footer.js"></script>
+  <script src="components/whatsapp/whatsapp.js"></script>
+  <script>
+    // No backend "contact" endpoint exists yet in api-client.js / the GAS
+    // routes, so — same pattern track-order.html already uses for its
+    // not-found fallback — this form hands off to a pre-filled WhatsApp
+    // deep link rather than pretending to submit somewhere that doesn't
+    // receive it.
+    document.addEventListener('DOMContentLoaded', () => {
+      const cleanPhone = ENV.CONTACT_WHATSAPP.replace(/\+/g, '');
+      document.querySelector('#contact-wa-link').textContent = ENV.CONTACT_WHATSAPP;
+      document.querySelector('#contact-wa-link').href = `https://wa.me/${cleanPhone}`;
+
+      document.querySelector('#contact-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.querySelector('#c-name').value.trim();
+        const phone = document.querySelector('#c-phone').value.trim();
+        const subject = document.querySelector('#c-subject').value.trim();
+        const message = document.querySelector('#c-message').value.trim();
+
+        const text = [
+          'আসসালামু আলাইকুম! আমি ওয়েবসাইটের কন্টাক্ট ফর্ম থেকে মেসেজ পাঠাচ্ছি।',
+          `নাম: ${name}`,
+          `মোবাইল: ${phone}`,
+          subject ? `বিষয়: ${subject}` : null,
+          `মেসেজ: ${message}`
+        ].filter(Boolean).join('\n');
+
+        window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+      });
+    });
+  </script>
+</body>
+</html>

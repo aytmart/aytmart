@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>পছন্দের তালিকা | AYT Mart</title>
+  <link rel="stylesheet" href="styles/themes/variables.css">
+  <link rel="stylesheet" href="styles/base/reset.css">
+  <link rel="stylesheet" href="styles/layout/layout.css">
+  <style>
+    .page-head { margin: var(--space-6) 0; }
+    .page-head h1 { font-size: var(--font-2xl); font-weight: var(--weight-bold); }
+    .wishlist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--space-5);
+      margin-bottom: var(--space-12);
+    }
+    .wish-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .wish-thumb-box { aspect-ratio: 1; background: var(--bg-surface-alt); position: relative; }
+    .wish-thumb { width: 100%; height: 100%; object-fit: cover; }
+    .wish-remove-btn {
+      position: absolute; top: var(--space-2); right: var(--space-2);
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--bg-surface); border: 1px solid var(--border-color);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 14px; color: var(--text-muted);
+    }
+    .wish-remove-btn:hover { background: var(--color-rose); color: #fff; border-color: var(--color-rose); }
+    .wish-body { padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2); flex: 1; }
+    .wish-name { font-size: var(--font-sm); font-weight: var(--weight-semibold); line-height: var(--line-height-normal); }
+    .wish-price { font-weight: var(--weight-bold); color: var(--color-primary); }
+    .wish-price .old { color: var(--text-muted); font-weight: var(--weight-regular); text-decoration: line-through; margin-left: var(--space-2); font-size: var(--font-xs); }
+    .wish-actions { margin-top: auto; display: flex; gap: var(--space-2); }
+    .wish-actions .btn { flex: 1; padding: var(--space-2) var(--space-3); font-size: var(--font-sm); }
+    .empty-wishlist { text-align: center; padding: var(--space-16) var(--space-4); }
+    .empty-wishlist .icon { font-size: 3rem; margin-bottom: var(--space-4); display: block; }
+    .empty-wishlist h2 { font-size: var(--font-lg); margin-bottom: var(--space-2); }
+    .empty-wishlist p { color: var(--text-muted); margin-bottom: var(--space-5); }
+  </style>
+</head>
+<body>
+  <header id="global-header"></header>
+
+  <main class="container">
+    <div class="page-head"><h1>পছন্দের তালিকা</h1></div>
+    <div id="wishlist-container"></div>
+  </main>
+
+  <footer id="global-footer"></footer>
+
+  <script src="config/environment/env.js"></script>
+  <script src="utils/storage/storage.js"></script>
+  <script src="api/shared/api-client.js"></script>
+  <script src="components/header/header.js"></script>
+  <script src="components/footer/footer.js"></script>
+  <script src="components/whatsapp/whatsapp.js"></script>
+  <script src="services/products/product-service.js"></script>
+  <script src="services/cart/cart-service.js"></script>
+  <script>
+    // Wishlist storage contract matches the rest of the site (index.html /
+    // products.html / product.html): a plain array of product IDs under
+    // ENV.STORAGE_KEYS.WISHLIST ('ayt_wishlist'). There is no dedicated
+    // WishlistService yet, so — consistent with how product.html already
+    // writes directly to CartService/StorageHelper — this page talks to
+    // storage directly rather than depending on the still-empty
+    // services/wishlist/wishlist.service.js.
+    document.addEventListener('DOMContentLoaded', renderWishlist);
+    window.addEventListener('wishlist-updated', renderWishlist);
+
+    function getWishlistIds() {
+      const list = StorageHelper.get(ENV.STORAGE_KEYS.WISHLIST, []);
+      return Array.isArray(list) ? list.map(String) : [];
+    }
+
+    function setWishlistIds(ids) {
+      StorageHelper.set(ENV.STORAGE_KEYS.WISHLIST, ids);
+      window.dispatchEvent(new CustomEvent('wishlist-updated'));
+    }
+
+    async function renderWishlist() {
+      const container = document.querySelector('#wishlist-container');
+      const ids = getWishlistIds();
+
+      if (!ids.length) {
+        container.innerHTML = `
+          <div class="empty-wishlist">
+            <span class="icon">🤍</span>
+            <h2>আপনার পছন্দের তালিকা খালি!</h2>
+            <p>প্রোডাক্ট পাতায় হার্ট আইকনে ক্লিক করে পছন্দের প্রোডাক্ট এখানে যোগ করুন।</p>
+            <a href="products.html" class="btn btn-primary">প্রোডাক্ট ব্রাউজ করুন</a>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = '<div class="wishlist-grid" id="wishlist-grid"></div>';
+      const grid = document.querySelector('#wishlist-grid');
+
+      const products = (await Promise.all(ids.map((id) => ProductService.getById(id)))).filter(Boolean);
+
+      // Prune IDs that no longer resolve to a real product (deleted/renamed)
+      // instead of silently rendering a broken card.
+      const validIds = products.map((p) => String(p.id));
+      if (validIds.length !== ids.length) setWishlistIds(validIds);
+
+      if (!products.length) {
+        renderWishlist(); // re-run once against the pruned (now-empty) list
+        return;
+      }
+
+      grid.innerHTML = products.map((p) => `
+        <div class="wish-card" data-id="${p.id}">
+          <div class="wish-thumb-box">
+            <img class="wish-thumb" src="${p.image}" alt="${p.name}" loading="lazy" />
+            <button type="button" class="wish-remove-btn" data-remove-id="${p.id}" aria-label="সরিয়ে ফেলুন">✕</button>
+          </div>
+          <div class="wish-body">
+            <div class="wish-name">${p.name}</div>
+            <div class="wish-price">৳${p.sale_price || p.price}${p.sale_price ? `<span class="old">৳${p.price}</span>` : ''}</div>
+            <div class="wish-actions">
+              <a href="product.html?id=${p.id}" class="btn btn-outline">দেখুন</a>
+              <button type="button" class="btn btn-primary" data-addcart-id="${p.id}" ${p.stock === 0 ? 'disabled' : ''}>কার্টে যোগ</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      grid.querySelectorAll('[data-remove-id]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.removeId;
+          setWishlistIds(getWishlistIds().filter((i) => i !== String(id)));
+          renderWishlist();
+        });
+      });
+
+      grid.querySelectorAll('[data-addcart-id]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          await CartService.add(btn.dataset.addcartId, 1);
+          showToast('কার্টে যোগ করা হয়েছে');
+        });
+      });
+    }
+
+    function showToast(message) {
+      let toast = document.querySelector('#wish-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'wish-toast';
+        toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--color-primary-dark);color:#fff;padding:10px 20px;border-radius:var(--border-radius-md);font-size:14px;z-index:9999;opacity:0;transition:opacity .25s;';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = message;
+      toast.style.opacity = '1';
+      clearTimeout(window.__wishToastTimer);
+      window.__wishToastTimer = setTimeout(() => { toast.style.opacity = '0'; }, 1800);
+    }
+  </script>
+</body>
+</html>

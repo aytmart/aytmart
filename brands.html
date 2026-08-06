@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ব্র্যান্ড সমূহ | AYT Mart</title>
+  <link rel="stylesheet" href="styles/themes/variables.css">
+  <link rel="stylesheet" href="styles/base/reset.css">
+  <link rel="stylesheet" href="styles/layout/layout.css">
+  <style>
+    .page-head { text-align: center; margin: var(--space-8) auto var(--space-6); max-width: 640px; }
+    .page-head h1 { font-size: var(--font-3xl); font-weight: var(--weight-bold); margin-bottom: var(--space-2); }
+    .page-head p { color: var(--text-muted); }
+    .empty-state {
+      max-width: 520px;
+      margin: var(--space-6) auto var(--space-16);
+      text-align: center;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-10) var(--space-6);
+    }
+    .empty-state .icon { font-size: 2.6rem; margin-bottom: var(--space-3); display: block; }
+    .empty-state h2 { font-size: var(--font-lg); margin-bottom: var(--space-2); }
+    .empty-state p { color: var(--text-muted); font-size: var(--font-sm); margin-bottom: var(--space-5); line-height: var(--line-height-relaxed); }
+  </style>
+</head>
+<body>
+  <header id="global-header"></header>
+
+  <main class="container">
+    <div class="page-head">
+      <h1>ব্র্যান্ড সমূহ</h1>
+      <p>নির্দিষ্ট ব্র্যান্ড অনুযায়ী প্রোডাক্ট খুঁজে নিন।</p>
+    </div>
+
+    <!--
+      Honest placeholder: the current product catalog (ProductService /
+      MOCK_PRODUCTS) has no `brand` field yet, so there is no real brand
+      data to list here without inventing it. Once products carry a brand
+      attribute, this page should switch to rendering brand tiles the same
+      way categories.html renders categories — pulled from a real
+      ProductService.getBrands()-style source rather than hardcoded here.
+    -->
+    <div class="empty-state">
+      <span class="icon">🏷️</span>
+      <h2>ব্র্যান্ড তালিকা শীঘ্রই আসছে</h2>
+      <p>আমরা এখন প্রতিটি প্রোডাক্টের সাথে ব্র্যান্ড তথ্য যুক্ত করার কাজ করছি। ততক্ষণে আপনি ক্যাটাগরি অনুযায়ী অথবা সরাসরি সার্চ করে পছন্দের প্রোডাক্ট খুঁজে নিতে পারেন।</p>
+      <a href="products.html" class="btn btn-primary">সকল প্রোডাক্ট দেখুন</a>
+    </div>
+  </main>
+
+  <footer id="global-footer"></footer>
+
+  <script src="config/environment/env.js"></script>
+  <script src="utils/storage/storage.js"></script>
+  <script src="api/shared/api-client.js"></script>
+  <script src="components/header/header.js"></script>
+  <script src="components/footer/footer.js"></script>
+  <script src="components/whatsapp/whatsapp.js"></script>
+</body>
+</html>

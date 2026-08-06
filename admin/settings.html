@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0B4238">
+  <title>সিস্টেম সেটিংস | AYT Mart Control Panel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../styles/themes/variables.css">
+  <link rel="stylesheet" href="../styles/base/reset.css">
+  <style>
+    /* ==========================================================================
+       AYT MART CONTROL — ADMIN SETTINGS DESIGN SYSTEM
+       Shares tokens + shell with dashboard.html / login.html / products.html.
+       ========================================================================== */
+    :root {
+      --ayt-primary:        var(--color-primary, #0B4238);
+      --ayt-primary-dark:   #072722;
+      --ayt-primary-light:  var(--color-primary-light, #14614F);
+      --ayt-gold:           var(--color-gold, #C9A227);
+      --ayt-gold-light:     #E7CD73;
+      --ayt-gold-dark:      #96751A;
+      --ayt-cream:          #FBF7EF;
+      --ayt-ink:            #1C2420;
+      --ayt-rose:           #B23B3B;
+      --ayt-rose-dark:      #8E2E2E;
+      --ayt-amber:          #B5750F;
+      --ayt-emerald:        #1E7A5F;
+      --ayt-blue:           #2563A8;
+      --ayt-surface:        var(--bg-surface, #FFFFFF);
+      --ayt-surface-alt:    var(--bg-surface-alt, #F5F2E9);
+      --ayt-border:         var(--border-color, #E5E0D2);
+      --ayt-muted:          var(--text-muted, #756F62);
+
+      --ayt-sp-1: var(--space-1, 4px);  --ayt-sp-2: var(--space-2, 8px);
+      --ayt-sp-3: var(--space-3, 12px); --ayt-sp-4: var(--space-4, 16px);
+      --ayt-sp-5: var(--space-5, 20px); --ayt-sp-6: var(--space-6, 24px);
+      --ayt-sp-8: var(--space-8, 32px); --ayt-sp-10: var(--space-10, 40px);
+
+      --ayt-radius-sm: var(--border-radius-sm, 6px);
+      --ayt-radius-md: var(--border-radius-md, 12px);
+      --ayt-radius-lg: var(--border-radius-lg, 18px);
+      --ayt-radius-full: var(--border-radius-full, 999px);
+      --ayt-shadow-sm: 0 2px 8px rgba(15, 35, 30, .06);
+      --ayt-shadow-md: var(--shadow-md, 0 10px 30px rgba(15, 35, 30, .10));
+      --ayt-shadow-lg: 0 24px 60px rgba(15, 35, 30, .16);
+      --ayt-shadow-gold: 0 8px 20px rgba(201, 162, 39, .22);
+      --ayt-fast: var(--transition-fast, 150ms ease);
+      --ayt-normal: var(--transition-normal, 320ms cubic-bezier(.22,.61,.36,1));
+
+      --ayt-font-display: 'Tiro Bangla', 'Noto Serif Bengali', serif;
+      --ayt-font-body: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+      --ayt-font-num: 'Poppins', 'Hind Siliguri', sans-serif;
+
+      --sidebar-w: 264px;
+      --sidebar-w-collapsed: 84px;
+      --topbar-h: 72px;
+    }
+
+    html[data-theme="dark"] {
+      --ayt-cream: #0F1613;
+      --ayt-ink: #EDEAE0;
+      --ayt-surface: #16201C;
+      --ayt-surface-alt: #1B2622;
+      --ayt-border: #263129;
+      --ayt-muted: #93998F;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+    }
+
+    * { box-sizing: border-box; }
+    body { font-family: var(--ayt-font-body); color: var(--ayt-ink); background: var(--ayt-cream); }
+    :focus-visible { outline: 2px solid var(--ayt-gold-dark); outline-offset: 2px; }
+    button { font-family: inherit; cursor: pointer; }
+    a { text-decoration: none; color: inherit; }
+    ::selection { background: rgba(201,162,39,.28); }
+    .num { font-family: var(--ayt-font-num); }
+
+    /* ---------- Layout shell ---------- */
+    .admin-layout { display: grid; grid-template-columns: var(--sidebar-w) 1fr; min-height: 100vh; transition: grid-template-columns var(--ayt-normal); }
+    .admin-layout.is-collapsed { grid-template-columns: var(--sidebar-w-collapsed) 1fr; }
+
+    .admin-sidebar {
+      position: sticky; top: 0; height: 100vh;
+      background: linear-gradient(190deg, var(--ayt-primary-dark) 0%, var(--ayt-primary) 100%);
+      color: rgba(243,239,226,.72);
+      padding: var(--ayt-sp-5) var(--ayt-sp-4);
+      display: flex; flex-direction: column; gap: var(--ayt-sp-6);
+      overflow: hidden; z-index: 20;
+    }
+    .sidebar-brand { display: flex; align-items: center; gap: var(--ayt-sp-3); padding-bottom: var(--ayt-sp-4); border-bottom: 1px solid rgba(251,247,239,.12); white-space: nowrap; }
+    .sidebar-brand .mark { width: 38px; height: 38px; flex-shrink: 0; border-radius: var(--ayt-radius-sm); background: linear-gradient(150deg, var(--ayt-gold-light), var(--ayt-gold) 60%, var(--ayt-gold-dark)); display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: var(--ayt-shadow-gold); }
+    .sidebar-brand .txt { color: #fff; font-family: var(--ayt-font-display); font-size: 16px; font-weight: 700; overflow: hidden; }
+    .sidebar-brand .txt small { display: block; font-family: var(--ayt-font-num); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ayt-gold-light); font-weight: 500; }
+    .is-collapsed .sidebar-brand .txt { display: none; }
+
+    .sidebar-menu { display: flex; flex-direction: column; gap: var(--ayt-sp-1); }
+    .menu-section-label { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(243,239,226,.4); padding: var(--ayt-sp-3) var(--ayt-sp-3) var(--ayt-sp-1); white-space: nowrap; }
+    .is-collapsed .menu-section-label { opacity: 0; height: 0; padding: 0; overflow: hidden; }
+
+    .menu-link { position: relative; display: flex; align-items: center; gap: var(--ayt-sp-3); padding: 11px var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 13.5px; font-weight: 500; white-space: nowrap; overflow: hidden; transition: background-color var(--ayt-fast), color var(--ayt-fast); }
+    .menu-link svg { width: 19px; height: 19px; flex-shrink: 0; opacity: .85; }
+    .menu-link:hover { background-color: rgba(251,247,239,.08); color: #fff; }
+    .menu-link.active { background: linear-gradient(135deg, var(--ayt-gold) 0%, var(--ayt-gold-dark) 100%); color: #241C05; font-weight: 700; box-shadow: var(--ayt-shadow-gold); }
+    .menu-link.active svg { opacity: 1; }
+    .is-collapsed .menu-link .label-txt { display: none; }
+    .is-collapsed .menu-link { justify-content: center; }
+
+    .sidebar-foot { margin-top: auto; padding-top: var(--ayt-sp-4); border-top: 1px solid rgba(251,247,239,.12); }
+    .sidebar-collapse-btn { display: flex; align-items: center; gap: var(--ayt-sp-2); width: 100%; background: rgba(251,247,239,.06); border: 1px solid rgba(251,247,239,.14); color: rgba(243,239,226,.75); padding: var(--ayt-sp-2) var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 12.5px; transition: background var(--ayt-fast); }
+    .sidebar-collapse-btn:hover { background: rgba(251,247,239,.12); }
+    .sidebar-collapse-btn svg { width: 16px; height: 16px; transition: transform var(--ayt-normal); flex-shrink: 0; }
+    .is-collapsed .sidebar-collapse-btn svg { transform: rotate(180deg); }
+    .is-collapsed .sidebar-collapse-btn .label-txt { display: none; }
+    .is-collapsed .sidebar-collapse-btn { justify-content: center; }
+
+    /* ---------- Main console ---------- */
+    .admin-console { display: flex; flex-direction: column; min-width: 0; }
+    .console-header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(251,247,239,.86); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
+      height: var(--topbar-h); border-bottom: 1px solid var(--ayt-border);
+      display: flex; align-items: center; justify-content: space-between; padding: 0 var(--ayt-sp-6); gap: var(--ayt-sp-4);
+    }
+    html[data-theme="dark"] .console-header { background: rgba(15,22,19,.86); }
+    .header-left { display: flex; align-items: center; gap: var(--ayt-sp-4); min-width: 0; }
+    .icon-btn.mobile-menu-btn { display: none; }
+    .breadcrumb { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .breadcrumb .crumb-trail { font-size: 11px; color: var(--ayt-muted); display: flex; align-items: center; gap: 6px; }
+    .breadcrumb .crumb-trail .sep { opacity: .5; }
+    .breadcrumb h1 { font-family: var(--ayt-font-display); font-size: 19px; font-weight: 700; color: var(--ayt-primary-dark); }
+    html[data-theme="dark"] .breadcrumb h1 { color: var(--ayt-gold-light); }
+
+    .header-right { display: flex; align-items: center; gap: var(--ayt-sp-2); }
+    .icon-btn { position: relative; width: 40px; height: 40px; border-radius: var(--ayt-radius-full); display: flex; align-items: center; justify-content: center; background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); color: var(--ayt-ink); transition: background var(--ayt-fast), border-color var(--ayt-fast), transform var(--ayt-fast); }
+    .icon-btn:hover { background: var(--ayt-surface); border-color: var(--ayt-gold); transform: translateY(-1px); }
+    .icon-btn svg { width: 17px; height: 17px; }
+    #theme-toggle .icon-moon { display: none; }
+    html[data-theme="dark"] #theme-toggle .icon-sun { display: none; }
+    html[data-theme="dark"] #theme-toggle .icon-moon { display: block; }
+
+    .profile-menu { position: relative; }
+    .admin-profile-badge { display: flex; align-items: center; gap: var(--ayt-sp-2); padding: 6px 10px 6px 6px; border-radius: var(--ayt-radius-full); border: 1px solid var(--ayt-border); background: var(--ayt-surface-alt); transition: border-color var(--ayt-fast); }
+    .admin-profile-badge:hover { border-color: var(--ayt-gold); }
+    .admin-profile-badge .avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(150deg, var(--ayt-gold-light), var(--ayt-gold-dark)); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #241C05; }
+    .admin-profile-badge .who { display: flex; flex-direction: column; line-height: 1.25; }
+    .admin-profile-badge .who b { font-size: 12.5px; font-weight: 700; }
+    .admin-profile-badge .who span { font-size: 10.5px; color: var(--ayt-muted); }
+    .admin-profile-badge .chev { width: 14px; height: 14px; color: var(--ayt-muted); transition: transform var(--ayt-fast); }
+    .profile-menu.is-open .chev { transform: rotate(180deg); }
+    .profile-dropdown { position: absolute; right: 0; top: calc(100% + 10px); width: 220px; background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); box-shadow: var(--ayt-shadow-lg); padding: var(--ayt-sp-2); display: none; z-index: 30; }
+    .profile-menu.is-open .profile-dropdown { display: block; animation: aytFadeDown 160ms ease both; }
+    @keyframes aytFadeDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    .profile-dropdown a, .profile-dropdown .btn-logout { display: flex; align-items: center; gap: var(--ayt-sp-2); padding: var(--ayt-sp-2) var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 13px; color: var(--ayt-ink); transition: background var(--ayt-fast); }
+    .profile-dropdown a:hover, .profile-dropdown .btn-logout:hover { background: var(--ayt-surface-alt); }
+    .profile-dropdown svg { width: 15px; height: 15px; color: var(--ayt-muted); }
+    .profile-dropdown hr { border: none; border-top: 1px solid var(--ayt-border); margin: var(--ayt-sp-1) 0; }
+    .btn-logout { width: 100%; background: none; border: none; text-align: left; color: var(--ayt-rose-dark) !important; cursor: pointer; }
+    .btn-logout svg { color: var(--ayt-rose-dark); }
+
+    .console-body { padding: var(--ayt-sp-6); display: flex; flex-direction: column; gap: var(--ayt-sp-6); }
+
+    /* ---------- Split Pane Settings ---------- */
+    .settings-container { display: grid; grid-template-columns: 240px 1fr; gap: var(--ayt-sp-6); }
+    
+    .settings-tabs-list { display: flex; flex-direction: column; gap: var(--ayt-sp-1); background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); padding: var(--ayt-sp-3); height: fit-content; box-shadow: var(--ayt-shadow-sm); }
+    .settings-tab-link { display: flex; align-items: center; gap: var(--ayt-sp-3); padding: 10px var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 12.5px; font-weight: 600; color: var(--ayt-muted); background: none; border: none; text-align: left; transition: background var(--ayt-fast), color var(--ayt-fast); }
+    .settings-tab-link:hover { background: var(--ayt-surface-alt); color: var(--ayt-ink); }
+    .settings-tab-link.active { background: var(--ayt-primary); color: #ffffff; }
+
+    .settings-content-pane { display: flex; flex-direction: column; gap: var(--ayt-sp-6); }
+    
+    .settings-panel-card { background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); padding: var(--ayt-sp-6); box-shadow: var(--ayt-shadow-sm); display: flex; flex-direction: column; gap: var(--ayt-sp-5); }
+    .panel-title { font-family: var(--ayt-font-display); font-size: 16px; font-weight: 700; border-bottom: 1px solid var(--ayt-border); padding-bottom: var(--ayt-sp-2); color: var(--ayt-primary-dark); display: flex; align-items: center; gap: 8px; }
+    html[data-theme="dark"] .panel-title { color: var(--ayt-gold-light); }
+
+    .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ayt-sp-4); }
+    .form-group { display: flex; flex-direction: column; gap: var(--ayt-sp-2); }
+    .form-group.full-width { grid-column: 1 / span 2; }
+    
+    .form-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--ayt-primary-dark); }
+    html[data-theme="dark"] .form-label { color: var(--ayt-gold-light); }
+    
+    .form-input { background-color: var(--ayt-surface-alt); border: 1.5px solid var(--ayt-border); border-radius: var(--ayt-radius-sm); padding: 10px 12px; font-size: 13px; font-family: var(--ayt-font-body); color: var(--ayt-ink); transition: border-color var(--ayt-fast), background-color var(--ayt-fast); }
+    .form-input:focus { outline: none; border-color: var(--ayt-gold); background-color: var(--ayt-surface); }
+    .form-input:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* ---------- Media Upload Box ---------- */
+    .upload-box { border: 2px dashed var(--ayt-border); border-radius: var(--ayt-radius-md); padding: var(--ayt-sp-5); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: var(--ayt-sp-2); background: var(--ayt-surface-alt); transition: border-color var(--ayt-fast); }
+    .upload-box:hover { border-color: var(--ayt-gold); }
+    .upload-box .icon { font-size: 26px; }
+    .upload-box .btn-upload { background: var(--ayt-surface); border: 1px solid var(--ayt-border); font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: var(--ayt-radius-sm); transition: border-color var(--ayt-fast); }
+    .upload-box .btn-upload:hover { border-color: var(--ayt-gold); }
+
+    /* ---------- Color Picker Row ---------- */
+    .color-row { display: flex; align-items: center; gap: var(--ayt-sp-3); }
+    .color-preview { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--ayt-border); }
+
+    /* ---------- Switch Toggles ---------- */
+    .switch-row { display: flex; align-items: center; justify-content: space-between; background: var(--ayt-surface-alt); border: 1.5px solid var(--ayt-border); border-radius: var(--ayt-radius-sm); padding: var(--ayt-sp-3) var(--ayt-sp-4); }
+    .switch-row span { font-size: 12.5px; font-weight: 600; }
+    .switch { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .switch .slider { position: absolute; inset: 0; background: var(--ayt-border); border-radius: var(--ayt-radius-full); transition: background var(--ayt-fast); cursor: pointer; }
+    .switch .slider::before { content: ""; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: transform var(--ayt-fast); }
+    .switch input:checked + .slider { background: var(--ayt-gold-dark); }
+    .switch input:checked + .slider::before { transform: translateX(18px); }
+
+    /* ---------- Footer Action Bar ---------- */
+    .settings-footer-actions { display: flex; align-items: center; justify-content: flex-end; gap: var(--ayt-sp-3); margin-top: var(--ayt-sp-2); }
+    .btn-save-settings { display: flex; align-items: center; gap: 7px; background: linear-gradient(135deg, var(--ayt-primary) 0%, var(--ayt-primary-dark) 100%); color: #ffffff; padding: 12px var(--ayt-sp-6); border: none; border-radius: var(--ayt-radius-sm); font-weight: 700; font-size: 13.5px; box-shadow: var(--ayt-shadow-md); transition: transform var(--ayt-fast), box-shadow var(--ayt-fast); cursor: pointer; }
+    .btn-save-settings:hover { transform: translateY(-1px); box-shadow: var(--ayt-shadow-lg); }
+
+    .ayt-reveal { opacity: 0; transform: translateY(14px); animation: aytRevealIn 560ms cubic-bezier(.22,.61,.36,1) forwards; }
+    @keyframes aytRevealIn { to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 992px) {
+      .admin-layout { grid-template-columns: 1fr; }
+      .admin-sidebar { position: fixed; left: 0; top: 0; width: 264px; transform: translateX(-100%); transition: transform var(--ayt-normal); box-shadow: var(--ayt-shadow-lg); }
+      .admin-sidebar.is-open { transform: translateX(0); }
+      .icon-btn.mobile-menu-btn { display: flex; }
+      .header-search { display: none; }
+      .settings-container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-layout" id="admin-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <div class="sidebar-brand">
+        <div class="mark">⚙️</div>
+        <div class="txt">AYT Mart<small>Control Panel</small></div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <span class="menu-section-label">প্রধান মেনু</span>
+        <a href="dashboard.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          <span class="label-txt">ড্যাশবোর্ড</span>
+        </a>
+        <a href="products.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>
+          <span class="label-txt">প্রোডাক্টস</span>
+        </a>
+        <a href="categories.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+          <span class="label-txt">ক্যাটাগরি</span>
+        </a>
+        <a href="orders.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+          <span class="label-txt">অর্ডারসমূহ</span>
+        </a>
+        <a href="inventory.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7Z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>
+          <span class="label-txt">ইনভেন্টরি</span>
+        </a>
+
+        <span class="menu-section-label">সিস্টেম</span>
+        <a href="settings.html" class="menu-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+          <span class="label-txt">সেটিংস</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-foot">
+        <button class="sidebar-collapse-btn" id="sidebar-collapse-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
+          <span class="label-txt">সাইডবার সংকুচিত করুন</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Console -->
+    <main class="admin-console">
+      <header class="console-header">
+        <div class="header-left">
+          <button class="icon-btn mobile-menu-btn" id="mobile-menu-btn" aria-label="মেনু খুলুন">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <span class="crumb-trail">সিস্টেম <span class="sep">/</span> গ্লোবাল সেটিংস</span>
+            <h1>সিস্টেম কনফিগারেশন সেটিংস</h1>
+          </div>
+        </div>
+
+        <div class="header-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="সেটিংস প্যারামিটার খুঁজুন..." />
+        </div>
+
+        <div class="header-right">
+          <button class="icon-btn" id="theme-toggle" aria-label="থিম পরিবর্তন করুন">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+          </button>
+          <div class="profile-menu" id="profile-menu">
+            <button class="admin-profile-badge" id="profile-badge-btn">
+              <span class="avatar">এ</span>
+              <span class="who"><b>এডমিন</b><span>admin@aytmart.com</span></span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="profile-dropdown">
+              <a href="settings.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/></svg> প্রোফাইল সেটিংস
+              </a>
+              <hr>
+              <button class="btn-logout" onclick="performLogout()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> লগআউট
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="console-body">
+        
+        <div class="settings-container ayt-reveal">
+          <!-- Left side tab links selector -->
+          <nav class="settings-tabs-list">
+            <button class="settings-tab-link active" onclick="switchSettingsTab('general')">⚙️ General & Info</button>
+            <button class="settings-tab-link" onclick="switchSettingsTab('branding')">🎨 Branding & Logo</button>
+            <button class="settings-tab-link" onclick="switchSettingsTab('contact')">📞 Contact & Address</button>
+            <button class="settings-tab-link" onclick="switchSettingsTab('shipping')">🚚 Shipping Rates</button>
+            <button class="settings-tab-link" onclick="switchSettingsTab('payment')">💳 Currency & Payment</button>
+            <button class="settings-tab-link" onclick="switchSettingsTab('notifications')">✉️ Email & SMS Integrations</button>
+            <button class="settings-tab-link" onclick="switchSettingsTab('seo')">🔍 SEO & Marketing</button>
+            <button class="settings-tab-link" onclick="switchSettingsTab('advanced')">🛠️ Advanced APIs & back-ups</button>
+          </nav>
+
+          <!-- Right side actual settings forms inside a single unified form wrapper -->
+          <form class="settings-content-pane" onsubmit="saveStoreSettings(event)">
+            
+            <!-- PANEL 1: General & Store Info -->
+            <div class="settings-panel-card" id="pane-general">
+              <h3 class="panel-title">গ্লোবাল প্যারামিটার ও স্টোর বিবরণী</h3>
+              <div class="settings-grid">
+                <div class="form-group full-width">
+                  <label class="form-label">অনলাইন স্টোরের নাম (Store Name) *</label>
+                  <input type="text" id="set-store-name" class="form-input" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">স্টোরের ট্যাগলাইন (Store Tagline)</label>
+                  <input type="text" class="form-input" placeholder="প্রিমিয়াম ও হালাল ইসলামিক রিটেইল শপ" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">অপারেশনাল স্ট্যাটাস (Store Operational Status)</label>
+                  <select id="set-status" class="form-input">
+                    <option value="Active">Active (সক্রিয় কার্যধারা)</option>
+                    <option value="Maintenance">Maintenance (রক্ষণাবেক্ষণ মোড)</option>
+                  </select>
+                </div>
+                <div class="form-group full-width">
+                  <div class="switch-row">
+                    <span>ওয়েবসাইটে লাইভ স্টক প্রদর্শন করুন (Show Live Stock Counts)</span>
+                    <label class="switch">
+                      <input type="checkbox" checked />
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL 2: Branding & Logo -->
+            <div class="settings-panel-card" id="pane-branding" style="display: none;">
+              <h3 class="panel-title">ভিজ্যুয়াল ব্র্যান্ডিং এবং মিডিয়া কনফিগারেশন</h3>
+              <div class="settings-grid">
+                <div class="form-group">
+                  <label class="form-label">ওয়েবসাইট লোগো (Primary Logo)</label>
+                  <div class="upload-box">
+                    <span class="icon">🖼️</span>
+                    <button type="button" class="btn-upload" onclick="alert('মিডিয়া লাইব্রেরি ফিচারটি কনফিগার হচ্ছে।')">Upload Logo</button>
+                    <span style="font-size:10px; color:var(--ayt-muted);">PNG, JPEG - Max 2MB</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">ফেভিকন আইকন (Favicon Symbol)</label>
+                  <div class="upload-box">
+                    <span class="icon">🎨</span>
+                    <button type="button" class="btn-upload" onclick="alert('মিডিয়া লাইব্রেরি ফিচারটি কনফিগার হচ্ছে।')">Upload Favicon</button>
+                    <span style="font-size:10px; color:var(--ayt-muted);">ICO, PNG - Max 100KB</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">প্রধান থিম কালার (Primary Accent Color)</label>
+                  <div class="color-row">
+                    <input type="color" class="form-input" value="#0B4238" style="padding: 0; width: 50px; height: 38px; cursor: pointer;" />
+                    <span class="num">#0B4238</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">সেকেন্ডারি গোল্ড কালার (Gold Accent Color)</label>
+                  <div class="color-row">
+                    <input type="color" class="form-input" value="#C9A227" style="padding: 0; width: 50px; height: 38px; cursor: pointer;" />
+                    <span class="num">#C9A227</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL 3: Contact & Address -->
+            <div class="settings-panel-card" id="pane-contact" style="display: none;">
+              <h3 class="panel-title">যোগাযোগের বিবরণ এবং সাপোর্ট ঠিকানা</h3>
+              <div class="settings-grid">
+                <div class="form-group">
+                  <label class="form-label">হোয়াটসঅ্যাপ বিজনেস নাম্বার (WhatsApp Business) *</label>
+                  <input type="tel" id="set-whatsapp" class="form-input" placeholder="+8801XXXXXXXXX" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">কাস্টমার সাপোর্ট ইমেইল (Support Email) *</label>
+                  <input type="email" id="set-email" class="form-input" required />
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">ওয়্যারহাউজ কর্পোরেট ঠিকানা (Warehouse Corporate Address)</label>
+                  <input type="text" class="form-input" placeholder="বাড়ি ৪২, রোড ৫, ধানমন্ডি, ঢাকা, বাংলাদেশ" />
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL 4: Shipping Rates -->
+            <div class="settings-panel-card" id="pane-shipping" style="display: none;">
+              <h3 class="panel-title">ডেলিভারি জোন এবং শিপিং কস্ট কনফিগারেশন</h3>
+              <div class="settings-grid">
+                <div class="form-group">
+                  <label class="form-label">ঢাকার ভিতরে ডেলিভারি চার্জ (Inside Dhaka Fee) *</label>
+                  <input type="number" id="set-fee-inside" class="form-input" min="0" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">ঢাকার বাইরে ডেলিভারি চার্জ (Outside Dhaka Fee) *</label>
+                  <input type="number" id="set-fee-outside" class="form-input" min="0" required />
+                </div>
+                <div class="form-group full-width">
+                  <div class="switch-row">
+                    <span>নির্দিষ্ট মূল্যের উপরে ফ্রি ডেলিভারি সক্রিয় করুন (Free Shipping Threshold)</span>
+                    <label class="switch">
+                      <input type="checkbox" />
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL 5: Currency & Payment -->
+            <div class="settings-panel-card" id="pane-payment" style="display: none;">
+              <h3 class="panel-title">কারেন্সি প্যারামিটার এবং গেটওয়ে</h3>
+              <div class="settings-grid">
+                <div class="form-group">
+                  <label class="form-label">ডিফল্ট মুদ্রা কনফিগারেশন (Default Currency System)</label>
+                  <input type="text" id="set-currency" class="form-input" disabled />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">কর বা ভ্যাট পার্সেন্টেজ (VAT/Tax System %)</label>
+                  <input type="number" class="form-input" value="0" placeholder="0% (কর অব্যাহতি প্রাপ্ত)" />
+                </div>
+                <div class="form-group full-width">
+                  <div class="switch-row">
+                    <span>bKash/Nagad পেমেন্ট গেটওয়ে সক্রিয় করুন (SSLCommerz API Integration)</span>
+                    <label class="switch">
+                      <input type="checkbox" checked />
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL 6: Email & SMS Notifications -->
+            <div class="settings-panel-card" id="pane-notifications" style="display: none;">
+              <h3 class="panel-title">অটোমেটেড গ্রাহক নোটিফিকেশন গেটওয়ে (SMTP / SMS / WhatsApp)</h3>
+              <div class="settings-grid">
+                <div class="form-group">
+                  <label class="form-label">ইমেইল সেন্ডার নাম (Email Sender Name)</label>
+                  <input type="text" class="form-input" value="AYT Mart Notifications" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">SMTP সার্ভার হোস্ট (Host IP)</label>
+                  <input type="text" class="form-input" value="smtp.mailgun.org" />
+                </div>
+                <div class="form-group">
+                  <div class="switch-row">
+                    <span>অর্ডার প্লেস করার পর গ্রাহককে অটোমেটিক SMS পাঠান (SMS Gateway API)</span>
+                    <label class="switch">
+                      <input type="checkbox" />
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="switch-row">
+                    <span>অর্ডার ডেলিভারির পর অটোমেটিক WhatsApp বার্তা পাঠান</span>
+                    <label class="switch">
+                      <input type="checkbox" checked />
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL 7: SEO & Marketing -->
+            <div class="settings-panel-card" id="pane-seo" style="display: none;">
+              <h3 class="panel-title">সার্চ ইঞ্জিন মেটা ডেটা কনফিগারেশন (SEO)</h3>
+              <div class="settings-grid">
+                <div class="form-group full-width">
+                  <label class="form-label">হোমপেজ মেটা টাইটেল (SEO Title)</label>
+                  <input type="text" class="form-input" value="AYT Mart - প্রিমিয়াম হালাল ও ইসলামিক রিটেইল প্রোডাক্ট কালেকশন" />
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">হোমপেজ মেটা ডেসক্রিপশন (SEO Description)</label>
+                  <input type="text" class="form-input" value="বাংলাদেশের অন্যতম সেরা ইসলামিক লাইফস্টাইল ও রিটেইল স্টোর। হালাল খাবার, আতর, জায়নামাজ ও কাঠের রেহাল সহ প্রমিয়াম সব সামগ্রী এক ছাদের নিচে।" />
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL 8: Advanced APIs & back-ups -->
+            <div class="settings-panel-card" id="pane-advanced" style="display: none;">
+              <h3 class="panel-title">সিস্টেম ব্যাকআপ ও এপিআই কনফিগারেশন</h3>
+              <div class="settings-grid">
+                <div class="form-group full-width">
+                  <label class="form-label">গুগল শিট ইন্টিগ্রেশন লিংক (Google App Script API Endpoint)</label>
+                  <input type="text" class="form-input" value="https://script.google.com/macros/s/AKfycby-XSlyF8TGkTfjHz1GSbceKQTHHoBEwVrUw0LnNzrOeerNW37N3N68kbt4QV8W9dex/exec" disabled />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">সিস্টেম ডাটাবেস ব্যাকআপ (Manual DB backup)</label>
+                  <button type="button" class="btn-ghost" onclick="alert('সিস্টেম SQL ব্যাকআপ জেনারেট হচ্ছে...')">☁️ জেনারেট ব্যাকআপ ক্লাউড ফাইল</button>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">সিস্টেম রানিং মোড</label>
+                  <span class="num text-emerald" style="font-weight: 700; font-size: 13.5px;">Live ERP Mode v2.4</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Unified save/reset bar at footer -->
+            <div class="settings-footer-actions">
+              <button type="button" class="btn-ghost" onclick="loadCurrentSettings(); alert('কনফিগারেশন রিসেট করা হয়েছে।');">রিসেট (Reset Defaults)</button>
+              <button type="submit" class="btn-save-settings">💾 সেটিংস সংরক্ষণ করুন (Save Changes)</button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- App Services & Scripts -->
+  <script src="../config/environment/env.js"></script>
+  <script src="../utils/storage/storage.js"></script>
+  <script src="../api/shared/api-client.js"></script>
+  
+  <script>
+    // Guard: Validate session as Admin
+    document.addEventListener('DOMContentLoaded', () => {
+      const session = StorageHelper.get(ENV.STORAGE_KEYS.SESSION, null);
+      if (!session || session.role !== 'Admin') {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      loadCurrentSettings();
+    });
+
+    function loadCurrentSettings() {
+      // Load current system settings overrides or defaults
+      const overrides = StorageHelper.get('ayt_settings_override', {});
+
+      document.querySelector('#set-store-name').value = overrides.STORE_NAME || ENV.STORE_NAME;
+      document.querySelector('#set-currency').value = `${ENV.DEFAULT_CURRENCY || 'BDT'} (${ENV.CURRENCY_SYMBOL || '৳'})`;
+      document.querySelector('#set-whatsapp').value = overrides.CONTACT_WHATSAPP || ENV.CONTACT_WHATSAPP;
+      document.querySelector('#set-email').value = overrides.SUPPORT_EMAIL || 'info@aytmart.com';
+      document.querySelector('#set-fee-inside').value = overrides.SHIPPING_FEE_INSIDE || 60;
+      document.querySelector('#set-fee-outside').value = overrides.SHIPPING_FEE_OUTSIDE || 120;
+      document.querySelector('#set-status').value = overrides.STORE_STATUS || 'Active';
+    }
+
+    async function saveStoreSettings(event) {
+      event.preventDefault();
+
+      const newSettings = {
+        STORE_NAME: document.querySelector('#set-store-name').value.trim(),
+        CONTACT_WHATSAPP: document.querySelector('#set-whatsapp').value.trim(),
+        SUPPORT_EMAIL: document.querySelector('#set-email').value.trim(),
+        SHIPPING_FEE_INSIDE: parseInt(document.querySelector('#set-fee-inside').value, 10) || 60,
+        SHIPPING_FEE_OUTSIDE: parseInt(document.querySelector('#set-fee-outside').value, 10) || 120,
+        STORE_STATUS: document.querySelector('#set-status').value
+      };
+
+      try {
+        // Try submitting settings list to Apps Script sheets database
+        const response = await ApiClient.request('settings.update', newSettings);
+        if (response && response.success) {
+          StorageHelper.set('ayt_settings_override', newSettings);
+          applyOverrideSync(newSettings);
+          alert('গ্লোবালシステム সেটিংস সফলভাবে সেভ করা হয়েছে।');
+          return;
+        }
+      } catch (err) {
+        console.warn('Backend Settings API offline. Committing local environment modifications.', err);
+      }
+
+      // Safe local transaction override mapping
+      StorageHelper.set('ayt_settings_override', newSettings);
+      applyOverrideSync(newSettings);
+      alert('সিমুলেশন: সেটিংস লোকাল কনফিগারেশনে সংরক্ষণ করা হয়েছে!');
+    }
+
+    /**
+     * Intercepts standard environmental configurations dynamically
+     */
+    function applyOverrideSync(settings) {
+      if (typeof ENV !== 'undefined') {
+        ENV.STORE_NAME = settings.STORE_NAME;
+        ENV.CONTACT_WHATSAPP = settings.CONTACT_WHATSAPP;
+      }
+    }
+
+    function switchSettingsTab(tabName) {
+      document.querySelectorAll('.settings-tab-link').forEach(btn => btn.classList.remove('active'));
+      
+      const eventTarget = [...document.querySelectorAll('.settings-tab-link')].find(btn => btn.innerText.toLowerCase().includes(tabName));
+      if (eventTarget) eventTarget.classList.add('active');
+
+      document.querySelector('#pane-general').style.display = 'none';
+      document.querySelector('#pane-branding').style.display = 'none';
+      document.querySelector('#pane-contact').style.display = 'none';
+      document.querySelector('#pane-shipping').style.display = 'none';
+      document.querySelector('#pane-payment').style.display = 'none';
+      document.querySelector('#pane-notifications').style.display = 'none';
+      document.querySelector('#pane-seo').style.display = 'none';
+      document.querySelector('#pane-advanced').style.display = 'none';
+
+      if (tabName === 'general') {
+        document.querySelector('#pane-general').style.display = 'flex';
+      } else if (tabName === 'branding') {
+        document.querySelector('#pane-branding').style.display = 'flex';
+      } else if (tabName === 'contact') {
+        document.querySelector('#pane-contact').style.display = 'flex';
+      } else if (tabName === 'shipping') {
+        document.querySelector('#pane-shipping').style.display = 'flex';
+      } else if (tabName === 'payment') {
+        document.querySelector('#pane-payment').style.display = 'flex';
+      } else if (tabName === 'notifications') {
+        document.querySelector('#pane-notifications').style.display = 'flex';
+      } else if (tabName === 'seo') {
+        document.querySelector('#pane-seo').style.display = 'flex';
+      } else if (tabName === 'advanced') {
+        document.querySelector('#pane-advanced').style.display = 'flex';
+      }
+    }
+
+    function performLogout() {
+      if (confirm('আপনি কি এডমিন সেশন থেকে লগআউট করতে চান?')) {
+        StorageHelper.remove(ENV.STORAGE_KEYS.SESSION);
+        window.location.href = 'login.html';
+      }
+    }
+
+    // UI: sidebar collapse (desktop)
+    const layout = document.getElementById('admin-layout');
+    const collapseBtn = document.getElementById('sidebar-collapse-btn');
+    collapseBtn.addEventListener('click', () => layout.classList.toggle('is-collapsed'));
+
+    // UI: mobile sidebar drawer
+    const sidebar = document.getElementById('admin-sidebar');
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    mobileBtn.addEventListener('click', () => sidebar.classList.toggle('is-open'));
+
+    // UI: profile dropdown
+    const profileMenu = document.getElementById('profile-menu');
+    const profileBtn = document.getElementById('profile-badge-btn');
+    profileBtn.addEventListener('click', (e) => { e.stopPropagation(); profileMenu.classList.toggle('is-open'); });
+    document.addEventListener('click', () => profileMenu.classList.remove('is-open'));
+
+    // UI: theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const html = document.documentElement;
+      html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>

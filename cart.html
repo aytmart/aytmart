@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>শপিং কার্ট | AYT Mart</title>
+  <link rel="stylesheet" href="styles/themes/variables.css">
+  <link rel="stylesheet" href="styles/base/reset.css">
+  <link rel="stylesheet" href="styles/layout/layout.css">
+  <style>
+    .cart-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: var(--space-8);
+      margin-top: var(--space-6);
+    }
+    
+    /* Cart Table items */
+    .cart-table-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-5);
+      height: fit-content;
+    }
+    .cart-item-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 120px 110px 40px;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .cart-item-row:last-child {
+      border-bottom: none;
+    }
+    .cart-thumb-box {
+      aspect-ratio: 1;
+      border-radius: var(--border-radius-sm);
+      overflow: hidden;
+      background-color: var(--bg-surface-alt);
+    }
+    .cart-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .item-meta {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .item-name {
+      font-size: var(--font-sm);
+      font-weight: var(--weight-semibold);
+    }
+    .item-sku {
+      font-size: var(--font-xs);
+      color: var(--text-muted);
+    }
+    .item-price {
+      font-size: var(--font-sm);
+      font-weight: var(--weight-bold);
+      color: var(--color-accent);
+    }
+    .item-qty-stepper {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      overflow: hidden;
+      height: 36px;
+    }
+    .item-stepper-btn {
+      width: 30px;
+      height: 100%;
+      background-color: var(--bg-surface-alt);
+      font-weight: var(--weight-bold);
+    }
+    .item-qty-val {
+      width: 40px;
+      text-align: center;
+      font-size: var(--font-sm);
+    }
+    .btn-remove-item {
+      color: var(--color-error);
+      font-size: var(--font-lg);
+      text-align: center;
+    }
+
+    /* Checkout summary sidebar */
+    .summary-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-5);
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+    .summary-title {
+      font-size: var(--font-lg);
+      font-weight: var(--weight-bold);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: var(--space-2);
+    }
+    .summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: var(--font-sm);
+    }
+    .zone-select {
+      width: 100%;
+      background-color: var(--bg-surface-alt);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      padding: var(--space-2);
+      font-size: var(--font-sm);
+      margin-top: var(--space-2);
+    }
+    .grand-total-box {
+      border-top: 1px dashed var(--border-color);
+      padding-top: var(--space-4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: var(--font-base);
+      font-weight: var(--weight-bold);
+      color: var(--color-accent);
+    }
+    .btn-checkout-link {
+      display: block;
+      width: 100%;
+      background-color: var(--color-primary);
+      color: #ffffff;
+      padding: var(--space-3);
+      border-radius: var(--border-radius-sm);
+      font-weight: var(--weight-bold);
+      text-align: center;
+      transition: background-color var(--transition-fast);
+    }
+    .btn-checkout-link:hover {
+      background-color: var(--color-accent);
+    }
+
+    /* Empty state display */
+    .empty-state {
+      text-align: center;
+      padding: var(--space-12) 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .empty-icon {
+      font-size: 4rem;
+    }
+    .btn-shop-now {
+      background-color: var(--color-accent);
+      color: #ffffff;
+      padding: var(--space-3) var(--space-8);
+      border-radius: var(--border-radius-full);
+      font-weight: var(--weight-semibold);
+    }
+
+    @media (max-width: 768px) {
+      .cart-layout {
+        grid-template-columns: 1fr;
+      }
+      .cart-item-row {
+        grid-template-columns: 60px 1fr 40px;
+        grid-template-rows: auto auto;
+        gap: var(--space-2);
+      }
+      .cart-item-row .item-qty-stepper {
+        grid-column: 2;
+        width: fit-content;
+      }
+      .cart-item-row .btn-remove-item {
+        grid-column: 3;
+        grid-row: 1 / span 2;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Header Injection Placeholder -->
+  <header id="global-header"></header>
+
+  <main class="main-container">
+    <h1 class="section-title" style="text-align: left; margin-bottom: var(--space-4)">শপিং কার্ট</h1>
+
+    <div class="cart-layout" id="cart-content-wrapper">
+      <!-- Loading indicator or rendered output -->
+      <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted)">কার্ট লোড হচ্ছে...</p>
+    </div>
+  </main>
+
+  <!-- Dynamic Footer Injection Placeholder -->
+  <footer id="global-footer"></footer>
+
+  <!-- App Services & Scripts -->
+  <script src="config/environment/env.js"></script>
+  <script src="utils/storage/storage.js"></script>
+  <script src="api/shared/api-client.js"></script>
+  <script src="components/header/header.js"></script>
+  <script src="components/footer/footer.js"></script>
+  <script src="components/whatsapp/whatsapp.js"></script>
+  <script src="services/cart/cart-service.js"></script>
+  
+  <script>
+    let selectedShippingFee = StorageHelper.get('ayt_shipping_zone', 'inside') === 'outside' ? 120 : 60; // Synced with checkout via 'ayt_shipping_zone'
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCart();
+      window.addEventListener('cart-updated', renderCart);
+    });
+
+    function renderCart() {
+      const wrapper = document.querySelector('#cart-content-wrapper');
+      const cart = CartService.getCart();
+      const summary = CartService.getSummary();
+
+      if (summary.itemCount === 0) {
+        wrapper.style.display = 'block';
+        wrapper.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🛒</div>
+            <h2 style="font-size: var(--font-lg)">আপনার শপিং কার্ট খালি!</h2>
+            <p style="color: var(--text-muted)">এখনই আমাদের প্রিমিয়াম পণ্যগুলো ব্রাউজ করুন এবং অর্ডার করুন।</p>
+            <a href="products.html" class="btn-shop-now">পণ্য দেখুন</a>
+          </div>
+        `;
+        return;
+      }
+
+      wrapper.style.display = 'grid';
+      wrapper.innerHTML = `
+        <!-- Items table -->
+        <div class="cart-table-card">
+          ${cart.items.map(item => `
+            <div class="cart-item-row">
+              <div class="cart-thumb-box">
+                <img src="${item.Image}" alt="${item.Product_Name}" class="cart-thumb" />
+              </div>
+              <div class="item-meta">
+                <span class="item-name">${item.Product_Name}</span>
+                <span class="item-sku">SKU: ${item.SKU}</span>
+                <span class="item-price">৳${item.Price}</span>
+              </div>
+              <!-- Stepper -->
+              <div class="item-qty-stepper">
+                <button class="item-stepper-btn" onclick="adjustItemQty('${item.Product_ID}', -1)">-</button>
+                <span class="item-qty-val">${item.Quantity}</span>
+                <button class="item-stepper-btn" onclick="adjustItemQty('${item.Product_ID}', 1)">+</button>
+              </div>
+              <!-- Line total -->
+              <span class="item-price" style="text-align: right; color: var(--text-color);">
+                ৳${(parseFloat(item.Price) * parseInt(item.Quantity, 10)).toFixed(2)}
+              </span>
+              <!-- Delete -->
+              <button class="btn-remove-item" onclick="removeCartItem('${item.Product_ID}')" aria-label="Remove Item">×</button>
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- Sidebar Summary -->
+        <div class="summary-card">
+          <h2 class="summary-title">অর্ডার সামারি</h2>
+          
+          <div class="summary-row">
+            <span>উপমোট (Subtotal):</span>
+            <span style="font-weight: var(--weight-semibold)">৳${summary.subtotal.toFixed(2)}</span>
+          </div>
+
+          <!-- Shipping destination zone selection -->
+          <div>
+            <span style="font-size: var(--font-sm); font-weight: var(--weight-medium)">ডেলিভারি এলাকা নির্বাচন করুন:</span>
+            <select class="zone-select" id="delivery-zone-selector" onchange="updateShippingCharge(this.value)">
+              <option value="inside" ${selectedShippingFee === 60 ? 'selected' : ''}>ঢাকার ভিতরে (৳৬০)</option>
+              <option value="outside" ${selectedShippingFee === 120 ? 'selected' : ''}>ঢাকার বাইরে (৳১২০)</option>
+            </select>
+          </div>
+
+          <div class="summary-row">
+            <span>ডেলিভারি চার্জ:</span>
+            <span id="shipping-charge-indicator">৳${selectedShippingFee.toFixed(2)}</span>
+          </div>
+
+          <div class="grand-total-box">
+            <span>সর্বমোট (Grand Total):</span>
+            <span id="grand-total-indicator">৳${(summary.subtotal + selectedShippingFee).toFixed(2)}</span>
+          </div>
+
+          <!-- Proceed -->
+          <a href="checkout.html" class="btn-checkout-link">চেকআউট করতে এগিয়ে যান ➔</a>
+        </div>
+      `;
+    }
+
+    function adjustItemQty(productId, delta) {
+      const cart = CartService.getCart();
+      const item = cart.items.find(i => i.Product_ID === productId);
+      if (item) {
+        CartService.updateQuantity(productId, item.Quantity + delta);
+      }
+    }
+
+    function removeCartItem(productId) {
+      if (confirm('আপনি কি নিশ্চিতভাবে এই প্রোডাক্টটি কার্ট থেকে বাদ দিতে চান?')) {
+        CartService.removeItem(productId);
+      }
+    }
+
+    function updateShippingCharge(zone) {
+      selectedShippingFee = zone === 'inside' ? 60 : 120; // ৳60 Inside Dhaka / ৳120 Outside Dhaka [1]
+      StorageHelper.set('ayt_shipping_zone', zone); // Kept in sync so checkout.html starts from the same estimate
+      document.querySelector('#shipping-charge-indicator').innerText = `৳${selectedShippingFee.toFixed(2)}`;
+
+      const summary = CartService.getSummary();
+      document.querySelector('#grand-total-indicator').innerText = `৳${(summary.subtotal + selectedShippingFee).toFixed(2)}`;
+    }
+  </script>
+</body>
+</html>
