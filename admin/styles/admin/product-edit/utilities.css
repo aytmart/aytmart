@@ -1,0 +1,32 @@
+/* ==========================================================================
+   AYT MART CONTROL — PRODUCT EDIT PAGE
+   utilities.css — base element resets + reusable utility classes
+   ========================================================================== */
+
+* { box-sizing: border-box; }
+body { font-family: var(--ayt-font-body); color: var(--ayt-ink); background: var(--ayt-cream); }
+button { font-family: inherit; cursor: pointer; }
+a { text-decoration: none; color: inherit; }
+.num { font-family: var(--ayt-font-num); }
+
+/* Visually hide content while keeping it available to screen readers (a11y) */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Consistent visible focus ring across interactive elements (a11y) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: none;
+  box-shadow: var(--ayt-focus-ring);
+}

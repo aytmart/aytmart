@@ -1,0 +1,49 @@
+/* ==========================================================================
+   AYT MART CONTROL — PRODUCT EDIT PAGE
+   forms.css — grid, fields, switches, dynamic rows, variant pills
+   ========================================================================== */
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ayt-sp-4); }
+.form-group { display: flex; flex-direction: column; gap: var(--ayt-sp-2); }
+.form-group.full-width { grid-column: 1 / span 2; }
+
+.form-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--ayt-primary-dark); }
+html[data-theme="dark"] .form-label { color: var(--ayt-gold-light); }
+
+.form-input, .form-select, .form-textarea { width: 100%; background: var(--ayt-surface-alt); border: 1.5px solid var(--ayt-border); border-radius: var(--ayt-radius-sm); padding: 10px 12px; font-size: 13px; font-family: var(--ayt-font-body); color: var(--ayt-ink); transition: border-color var(--ayt-fast), background-color var(--ayt-fast); }
+.form-textarea { resize: vertical; min-height: 100px; }
+.form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--ayt-gold); background-color: var(--ayt-surface); }
+.form-input-hint { font-size: 11px; color: var(--ayt-muted); }
+
+/* Validity states (a11y: paired with aria-invalid in markup/JS) */
+.form-input:invalid:not(:placeholder-shown), .form-input.is-invalid,
+.form-select.is-invalid, .form-textarea.is-invalid { border-color: var(--ayt-rose); }
+.form-input.is-valid, .form-select.is-valid, .form-textarea.is-valid { border-color: var(--ayt-emerald); }
+.form-input:disabled, .form-select:disabled, .form-textarea:disabled { opacity: .6; cursor: not-allowed; }
+
+/* ---------- Custom toggle switches ---------- */
+.switch-row { display: flex; align-items: center; justify-content: space-between; background: var(--ayt-surface-alt); border: 1.5px solid var(--ayt-border); border-radius: var(--ayt-radius-sm); padding: var(--ayt-sp-3) var(--ayt-sp-4); }
+.switch-row span { font-size: 12.5px; font-weight: 600; }
+.switch { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch .slider { position: absolute; inset: 0; background: var(--ayt-border); border-radius: var(--ayt-radius-full); transition: background var(--ayt-fast); cursor: pointer; }
+.switch .slider::before { content: ""; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: transform var(--ayt-fast); }
+.switch input:checked + .slider { background: var(--ayt-gold-dark); }
+.switch input:checked + .slider::before { transform: translateX(18px); }
+.switch input:focus-visible + .slider { box-shadow: var(--ayt-focus-ring); }
+
+/* ---------- Dynamic rows (specs / gallery URLs) ---------- */
+.dynamic-list-row { display: flex; align-items: center; gap: var(--ayt-sp-3); margin-bottom: var(--ayt-sp-2); }
+.dynamic-list-container { display: flex; flex-direction: column; gap: var(--ayt-sp-2); }
+.dynamic-list-row .flex-grow { flex: 1; }
+.dynamic-list-row .flex-grow-wide { flex: 1.5; }
+
+.btn-circle-add { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--ayt-primary); color: #fff; border: none; font-size: 18px; line-height: 1; transition: background var(--ayt-fast); flex-shrink: 0; }
+.btn-circle-add:hover { background: var(--ayt-primary-light); }
+.btn-circle-remove { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #fee2e2; color: #b91c1c; border: none; font-size: 18px; line-height: 1; transition: background var(--ayt-fast); flex-shrink: 0; }
+.btn-circle-remove:hover { background: #fecaca; }
+
+/* ---------- Variant tag pills ---------- */
+.variants-tag-box { display: flex; flex-wrap: wrap; gap: var(--ayt-sp-2); background: var(--ayt-surface-alt); border: 1.5px solid var(--ayt-border); border-radius: var(--ayt-radius-sm); padding: var(--ayt-sp-3); min-height: 48px; }
+.variant-pill { display: inline-flex; align-items: center; gap: 6px; background: var(--ayt-primary); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: var(--ayt-radius-sm); }
+.variant-pill button { background: none; border: none; color: #fff; font-size: 12px; cursor: pointer; padding: 0; line-height: 1; }
