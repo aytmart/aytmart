@@ -387,7 +387,18 @@
   <script src="../utils/storage/storage.js"></script>
   <script src="../api/shared/api-client.js"></script>
 
-  <!-- Page logic: state, API calls, rendering, validation, events -->
-  <script src="../scripts/admin/product-edit.js"></script>
+  <!-- Page logic: composition root imports every module below it -->
+  <script type="module" src="../scripts/admin/product-events.js"></script>
+  <!--
+    Module graph (loaded via ES import, not separate <script> tags):
+    product-events.js  → theme.js, sidebar.js, profile.js (→ modal.js),
+                          product-variants.js, product-specifications.js,
+                          product-gallery.js, product-save.js
+                            (→ product-loader.js, product-validation.js,
+                               product-ui.js, toast.js)
+    product-loader.js  → product-ui.js, product-variants.js,
+                          product-specifications.js, product-gallery.js, toast.js
+  -->
+
 </body>
 </html>

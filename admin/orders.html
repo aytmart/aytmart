@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AYT Mart Enterprise ERP - Order Management, Tracking & Fulfillment Console">
   <meta name="theme-color" content="#0B4238">
   <title>অর্ডার ম্যানেজমেন্ট | AYT Mart Control Panel</title>
 
@@ -10,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="../styles/themes/variables.css">
   <link rel="stylesheet" href="../styles/base/reset.css">
   <style>
@@ -260,19 +262,30 @@
     .status-badge, .badge-status { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; padding: 4px 10px; border-radius: var(--ayt-radius-full); white-space: nowrap; }
     .status-badge::before, .badge-status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
 
-    /* Order status */
-    .status-processing { background: #DCEBFB; color: var(--ayt-blue); }
-    .status-confirmed   { background: #E4F3EE; color: var(--ayt-emerald); }
-    .status-delivered   { background: #D1FAE5; color: #0F7A54; }
-    .status-cancelled   { background: #FDECEC; color: var(--ayt-rose-dark); }
+    /* Order status - WCAG AA Compliant Contrast Colors */
+    .status-processing { background: #DCEBFB; color: #1D4ED8; }
+    .status-confirmed   { background: #E4F3EE; color: #115E59; }
+    .status-delivered   { background: #D1FAE5; color: #065F46; }
+    .status-cancelled   { background: #FDECEC; color: #991B1B; }
     /* Delivery status */
-    .deliv-pending   { background: #F5F2E9; color: var(--ayt-muted); }
-    .deliv-shipped   { background: #DCEBFB; color: var(--ayt-blue); }
-    .deliv-delivered { background: #D1FAE5; color: #0F7A54; }
+    .deliv-pending   { background: #F5F2E9; color: #4B5563; }
+    .deliv-shipped   { background: #DCEBFB; color: #1D4ED8; }
+    .deliv-delivered { background: #D1FAE5; color: #065F46; }
     /* Payment status */
-    .pay-pending { background: #FEF3C7; color: var(--ayt-amber); }
-    .pay-paid    { background: #D1FAE5; color: #0F7A54; }
-    .pay-failed  { background: #FDECEC; color: var(--ayt-rose-dark); }
+    .pay-pending { background: #FEF3C7; color: #92400E; }
+    .pay-paid    { background: #D1FAE5; color: #065F46; }
+    .pay-failed  { background: #FDECEC; color: #991B1B; }
+
+    /* Enterprise Print Styles */
+    @media print {
+      body { background: #fff !important; color: #000 !important; }
+      .admin-sidebar, .console-header, .page-head-actions, .toolbar-card, .bulk-bar, .pagination-bar, .row-actions, #sidebar-collapse-btn { display: none !important; }
+      .admin-layout { grid-template-columns: 1fr !important; }
+      .table-card { border: none !important; box-shadow: none !important; }
+      .data-table th, .data-table td { border-bottom: 1px solid #ddd !important; color: #000 !important; }
+      .modal-overlay { position: static !important; background: none !important; display: block !important; }
+      .modal-card { max-width: 100% !important; height: auto !important; box-shadow: none !important; border: none !important; }
+    }
 
     .row-actions { display: flex; align-items: center; gap: var(--ayt-sp-2); position: relative; }
     .btn-row { font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: var(--ayt-radius-sm); border: 1px solid var(--ayt-border); background: var(--ayt-surface); transition: background var(--ayt-fast), border-color var(--ayt-fast), color var(--ayt-fast); }
@@ -464,8 +477,8 @@
         </div>
 
         <div class="header-search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" placeholder="দ্রুত খুঁজুন..." />
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="global-header-search" placeholder="দ্রুত খুঁজুন..." aria-label="গ্লোবাল সার্চ" />
         </div>
 
         <div class="header-right">
@@ -573,11 +586,11 @@
         <div class="toolbar-card ayt-reveal" style="animation-delay: 100ms">
           <div class="toolbar-left">
             <div class="search-admin">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" id="order-search" placeholder="অর্ডার আইডি বা মোবাইল খুঁজুন..." oninput="filterOrders()"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="order-search" placeholder="অর্ডার আইডি বা মোবাইল খুঁজুন..." aria-label="অর্ডার সার্চ" oninput="debounceFilterOrders()"/>
             </div>
 
-            <select id="order-status-filter" class="select-admin" onchange="filterOrders()">
+            <select id="order-status-filter" class="select-admin" aria-label="অর্ডার স্ট্যাটাস ফিল্টার" onchange="filterOrders()">
               <option value="all">অর্ডার স্ট্যাটাস (All)</option>
               <option value="processing">Processing</option>
               <option value="confirmed">Confirmed</option>
@@ -585,21 +598,21 @@
               <option value="cancelled">Cancelled</option>
             </select>
 
-            <select id="payment-status-filter" class="select-admin" onchange="filterOrders()">
+            <select id="payment-status-filter" class="select-admin" aria-label="পেমেন্ট স্ট্যাটাস ফিল্টার" onchange="filterOrders()">
               <option value="all">পেমেন্ট স্ট্যাটাস (All)</option>
               <option value="pending">Pending</option>
               <option value="paid">Paid</option>
               <option value="failed">Failed</option>
             </select>
 
-            <select id="delivery-status-filter" class="select-admin" onchange="filterOrders()">
+            <select id="delivery-status-filter" class="select-admin" aria-label="ডেলিভারি স্ট্যাটাস ফিল্টার" onchange="filterOrders()">
               <option value="all">ডেলিভারি স্ট্যাটাস (All)</option>
               <option value="pending">Pending</option>
               <option value="shipped">Shipped</option>
               <option value="delivered">Delivered</option>
             </select>
 
-            <select id="payment-method-filter" class="select-admin" onchange="filterOrders()">
+            <select id="payment-method-filter" class="select-admin" aria-label="পেমেন্ট মেথড ফিল্টার" onchange="filterOrders()">
               <option value="all">পেমেন্ট মেথড (All)</option>
               <option value="cod">Cash on Delivery</option>
               <option value="bkash">bKash</option>
@@ -607,14 +620,14 @@
               <option value="card">Card</option>
             </select>
 
-            <select id="date-range-filter" class="select-admin" onchange="filterOrders()">
+            <select id="date-range-filter" class="select-admin" aria-label="তারিখ পরিসীমা ফিল্টার" onchange="filterOrders()">
               <option value="all">তারিখ পরিসীমা (All)</option>
               <option value="today">আজ</option>
               <option value="7d">গত ৭ দিন</option>
               <option value="30d">গত ৩০ দিন</option>
             </select>
 
-            <select id="customer-filter" class="select-admin" onchange="filterOrders()">
+            <select id="customer-filter" class="select-admin" aria-label="গ্রাহক ফিল্টার" onchange="filterOrders()">
               <option value="all">সকল গ্রাহক</option>
             </select>
           </div>
@@ -636,18 +649,18 @@
             <table class="data-table">
               <thead>
                 <tr>
-                  <th style="width: 34px;"><input type="checkbox" class="chk" id="chk-select-all" onchange="toggleSelectAllOrders(this)"/></th>
-                  <th>অর্ডার আইডি</th>
-                  <th>গ্রাহক</th>
-                  <th>মোবাইল</th>
-                  <th>প্রোডাক্টস</th>
-                  <th>পরিমাণ</th>
-                  <th>পেমেন্ট মেথড</th>
-                  <th>পেমেন্ট স্ট্যাটাস</th>
-                  <th>ডেলিভারি স্ট্যাটাস</th>
-                  <th>অর্ডার স্ট্যাটাস</th>
-                  <th>অর্ডার তারিখ</th>
-                  <th style="text-align:right;">অ্যাকশন</th>
+                  <th scope="col" style="width: 34px;"><input type="checkbox" class="chk" id="chk-select-all" aria-label="সকল অর্ডার নির্বাচন করুন" onchange="toggleSelectAllOrders(this)"/></th>
+                  <th scope="col">অর্ডার আইডি</th>
+                  <th scope="col">গ্রাহক</th>
+                  <th scope="col">মোবাইল</th>
+                  <th scope="col">প্রোডাক্টস</th>
+                  <th scope="col">পরিমাণ</th>
+                  <th scope="col">পেমেন্ট মেথড</th>
+                  <th scope="col">পেমেন্ট স্ট্যাটাস</th>
+                  <th scope="col">ডেলিভারি স্ট্যাটাস</th>
+                  <th scope="col">অর্ডার স্ট্যাটাস</th>
+                  <th scope="col">অর্ডার তারিখ</th>
+                  <th scope="col" style="text-align:right;">অ্যাকশন</th>
                 </tr>
               </thead>
               <tbody id="admin-orders-table">
@@ -667,7 +680,7 @@
   </div>
 
   <!-- Order Details Drawer -->
-  <div class="modal-overlay" id="order-modal-overlay" onclick="if(event.target===this) closeInspector();">
+  <div class="modal-overlay" id="order-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="inspector-order-id" onclick="if(event.target===this) closeInspector();">
     <div class="modal-card">
       <div class="modal-header">
         <h3 class="modal-title" id="inspector-order-id">অর্ডার বিবরণী</h3>
@@ -734,6 +747,23 @@
     let selectedOrderIds = new Set();
     let currentPage = 1;
     let pageSize = 10;
+    let filterDebounceTimer = null;
+
+    // Security Helper: HTML Entity Escaping to prevent Stored XSS
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function debounceFilterOrders() {
+      clearTimeout(filterDebounceTimer);
+      filterDebounceTimer = setTimeout(filterOrders, 250);
+    }
 
     // Default mock orders to supplement simulated database records [2]
     const MOCK_ADMIN_ORDERS = [
@@ -886,14 +916,23 @@
 
     // ---------- KPIs ----------
     function updateKpis(list) {
-      const todayStr = new Date().toISOString().substring(0, 10);
+      const now = new Date();
+      const localTodayYMD = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
       const total = list.length;
       const pending = list.filter(o => o.Delivery_Status === 'Pending' && o.Order_Status !== 'Cancelled').length;
       const processing = list.filter(o => o.Order_Status === 'Processing').length;
       const shipped = list.filter(o => o.Delivery_Status === 'Shipped').length;
       const delivered = list.filter(o => o.Order_Status === 'Delivered').length;
       const cancelled = list.filter(o => o.Order_Status === 'Cancelled').length;
-      const todaysOrders = list.filter(o => (o.Created_At || '').substring(0, 10) === todayStr);
+
+      const todaysOrders = list.filter(o => {
+        if (!o.Created_At) return false;
+        const d = new Date(o.Created_At);
+        if (isNaN(d.getTime())) return false;
+        const orderYMD = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        return orderYMD === localTodayYMD;
+      });
       const todaysRevenue = todaysOrders.reduce((sum, o) => sum + (parseFloat(o.Grand_Total) || 0), 0);
 
       document.querySelector('#kpi-total').textContent = total;
@@ -954,55 +993,60 @@
       const pageItems = list.slice(start, start + pageSize);
 
       tbody.innerHTML = pageItems.map(order => {
-        const initial = (order.Customer_Name || '?').trim().charAt(0);
+        const safeId = escapeHtml(order.Order_ID);
+        const safeName = escapeHtml(order.Customer_Name || '—');
+        const safePhone = escapeHtml(order.Customer_Phone || '—');
+        const safeMethod = escapeHtml(order.Payment_Method || 'Cash on Delivery');
+        const safePayStatus = escapeHtml(order.Payment_Status || 'Pending');
+        const safeDelivStatus = escapeHtml(order.Delivery_Status || 'Pending');
+        const safeOrderStatus = escapeHtml(order.Order_Status || 'Processing');
+
+        const initial = safeName.trim().charAt(0);
         const itemsCount = (order.Items || []).length;
-        const firstItemName = itemsCount ? order.Items[0].Product_Name : '—';
+        const firstItemName = itemsCount ? escapeHtml(order.Items[0].Product_Name) : '—';
         const moreText = itemsCount > 1 ? `<div class="more">+${itemsCount - 1}টি আরও প্রোডাক্ট</div>` : '';
         const dateLabel = formatOrderDate(order.Created_At);
 
         return `
         <tr>
-          <td><input type="checkbox" class="chk" ${selectedOrderIds.has(order.Order_ID) ? 'checked' : ''} onchange="toggleOrderSelect('${order.Order_ID}', this.checked)"/></td>
-          <td class="oid">${order.Order_ID}</td>
+          <td><input type="checkbox" class="chk" aria-label="অর্ডার ${safeId} নির্বাচন করুন" ${selectedOrderIds.has(order.Order_ID) ? 'checked' : ''} onchange="toggleOrderSelect('${safeId}', this.checked)"/></td>
+          <td class="oid">${safeId}</td>
           <td>
             <div class="cust-cell">
               <span class="cust-avatar">${initial}</span>
-              <div class="cust-info"><b>${order.Customer_Name}</b></div>
+              <div class="cust-info"><b>${safeName}</b></div>
             </div>
           </td>
-          <td><code>${order.Customer_Phone}</code></td>
+          <td><code>${safePhone}</code></td>
           <td class="prod-summary">${firstItemName}${moreText}</td>
-          <td class="price">৳${parseFloat(order.Grand_Total).toFixed(2)}</td>
-          <td class="muted">${order.Payment_Method || 'Cash on Delivery'}</td>
-          <td><span class="badge-status pay-${order.Payment_Status.toLowerCase()}">${order.Payment_Status}</span></td>
-          <td><span class="badge-status deliv-${order.Delivery_Status.toLowerCase()}">${order.Delivery_Status}</span></td>
-          <td><span class="badge-status status-${order.Order_Status.toLowerCase()}">${order.Order_Status}</span></td>
+          <td class="price">৳${parseFloat(order.Grand_Total || 0).toFixed(2)}</td>
+          <td class="muted">${safeMethod}</td>
+          <td><span class="badge-status pay-${safePayStatus.toLowerCase()}">${safePayStatus}</span></td>
+          <td><span class="badge-status deliv-${safeDelivStatus.toLowerCase()}">${safeDelivStatus}</span></td>
+          <td><span class="badge-status status-${safeOrderStatus.toLowerCase()}">${safeOrderStatus}</span></td>
           <td class="muted">${dateLabel}</td>
           <td>
             <div class="row-actions" style="justify-content:flex-end;">
-              <button class="btn-row view" onclick="inspectOrder('${order.Order_ID}')">ফুলফিল করুন</button>
-              <div class="row-menu-wrap" id="row-menu-${order.Order_ID}">
-                <button class="row-menu-btn" onclick="toggleRowMenu('${order.Order_ID}', event)" aria-label="আরও অ্যাকশন">
+              <button class="btn-row view" onclick="inspectOrder('${safeId}')">ফুলফিল করুন</button>
+              <div class="row-menu-wrap" id="row-menu-${safeId}">
+                <button class="row-menu-btn" onclick="toggleRowMenu('${safeId}', event)" aria-label="অর্ডার ${safeId} এর অপশনসমূহ">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
                 </button>
                 <div class="row-menu-dropdown">
-                  <button onclick="inspectOrder('${order.Order_ID}')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg> বিবরণী দেখুন
+                  <button onclick="inspectOrder('${safeId}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg> বিবরণী ও স্ট্যাটাস
                   </button>
-                  <button onclick="editOrder('${order.Order_ID}')">
+                  <button onclick="editOrder('${safeId}')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg> সম্পাদনা করুন
                   </button>
-                  <button onclick="printInvoice('${order.Order_ID}')">
+                  <button onclick="printInvoice('${safeId}')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> ইনভয়েস প্রিন্ট
                   </button>
-                  <button onclick="inspectOrder('${order.Order_ID}')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><polyline points="21 3 21 9 15 9"/></svg> স্ট্যাটাস আপডেট
-                  </button>
                   <hr>
-                  <button class="danger" onclick="cancelOrder('${order.Order_ID}')">
+                  <button class="danger" onclick="cancelOrder('${safeId}')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg> অর্ডার বাতিল করুন
                   </button>
-                  <button class="danger" onclick="deleteOrder('${order.Order_ID}')">
+                  <button class="danger" onclick="deleteOrder('${safeId}')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg> ডিলিট করুন
                   </button>
                 </div>
@@ -1144,11 +1188,11 @@
           </span>
           <div class="drawer-info-row">
             <span class="ico">👤</span>
-            <span><b>${order.Customer_Name}</b><span>প্রাইমারি গ্রাহক</span></span>
+            <span><b>${escapeHtml(order.Customer_Name)}</b><span>প্রাইমারি গ্রাহক</span></span>
           </div>
           <div class="drawer-info-row">
             <span class="ico">📞</span>
-            <span><b>${order.Customer_Phone}</b><span>মোবাইল নাম্বার</span></span>
+            <span><b>${escapeHtml(order.Customer_Phone)}</b><span>মোবাইল নাম্বার</span></span>
           </div>
         </div>
 
@@ -1159,7 +1203,7 @@
           </span>
           <div class="drawer-info-row">
             <span class="ico">📍</span>
-            <span><b>ডেলিভারি ঠিকানা</b><span>${order.Shipping_Address}</span></span>
+            <span><b>ডেলিভারি ঠিকানা</b><span>${escapeHtml(order.Shipping_Address)}</span></span>
           </div>
         </div>
 
@@ -1170,13 +1214,13 @@
           </span>
           ${(order.Items || []).map(item => `
             <div class="drawer-item-row">
-              <span>${item.Product_Name} <span class="qty">× ${item.Quantity}</span></span>
+              <span>${escapeHtml(item.Product_Name)} <span class="qty">× ${item.Quantity}</span></span>
               <span class="amt">৳${(parseFloat(item.Price) * item.Quantity).toFixed(2)}</span>
             </div>
           `).join('')}
           <div class="drawer-total-row">
             <span>সর্বমোট বিলিং</span>
-            <span class="amt">৳${parseFloat(order.Grand_Total).toFixed(2)}</span>
+            <span class="amt">৳${parseFloat(order.Grand_Total || 0).toFixed(2)}</span>
           </div>
         </div>
 
@@ -1454,6 +1498,13 @@
     themeToggle.addEventListener('click', () => {
       const html = document.documentElement;
       html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+
+    // Accessibility: Keyboard listener for Escape key to close Modal Drawer
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.querySelector('#order-modal-overlay').classList.contains('active')) {
+        closeInspector();
+      }
     });
   </script>
 </body>
