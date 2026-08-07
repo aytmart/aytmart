@@ -572,11 +572,21 @@
               <div class="form-group">
                 <label class="form-label">মূল থাম্বনেইল ইমেজ URL (Primary Image URL) *</label>
                 <input type="url" id="prod-main-image" class="form-input" placeholder="https://images.unsplash.com/..." required />
+                <div class="dynamic-list-row" style="margin-top:6px;">
+                  <input type="file" id="prod-main-image-file" accept="image/*" style="display:none" onchange="handleImageFileSelect(this, 'prod-main-image')" />
+                  <button type="button" class="btn-ghost" style="font-size:11px;" onclick="document.getElementById('prod-main-image-file').click()">📤 PC থেকে আপলোড করুন</button>
+                  <span id="prod-main-image-status" style="font-size:11px; color:var(--ayt-muted);"></span>
+                </div>
               </div>
 
               <div class="form-group">
                 <label class="form-label">সেকেন্ডারি হোভার ইমেজ URL (Hover Image URL)</label>
                 <input type="url" id="prod-hover-image" class="form-input" placeholder="https://images.unsplash.com/..." />
+                <div class="dynamic-list-row" style="margin-top:6px;">
+                  <input type="file" id="prod-hover-image-file" accept="image/*" style="display:none" onchange="handleImageFileSelect(this, 'prod-hover-image')" />
+                  <button type="button" class="btn-ghost" style="font-size:11px;" onclick="document.getElementById('prod-hover-image-file').click()">📤 PC থেকে আপলোড করুন</button>
+                  <span id="prod-hover-image-status" style="font-size:11px; color:var(--ayt-muted);"></span>
+                </div>
               </div>
 
               <!-- Product gallery addition dynamic list -->
@@ -619,6 +629,55 @@
       addSpecificationRow('উপাদান', '');
       addSpecificationRow('প্রস্তুতকারক দেশ', 'বাংলাদেশ');
     });
+
+    // Converts a selected file to base64, uploads it via media.upload,
+    // and fills the given text input with the returned Drive URL.
+    async function handleImageFileSelect(fileInputEl, targetInputId) {
+      const file = fileInputEl.files[0];
+      if (!file) return;
+
+      const statusEl = document.getElementById(`${targetInputId}-status`);
+      const MAX_BYTES = 5 * 1024 * 1024;
+
+      if (file.size > MAX_BYTES) {
+        alert('ছবিটি ৫MB-এর চেয়ে বড়। ছোট সাইজের ছবি ব্যবহার করুন।');
+        fileInputEl.value = '';
+        return;
+      }
+
+      statusEl.textContent = 'আপলোড হচ্ছে...';
+
+      try {
+        const base64 = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = () => reject(new Error('ফাইল পড়া যায়নি।'));
+          reader.readAsDataURL(file);
+        });
+
+        const session = StorageHelper.get(ENV.STORAGE_KEYS.SESSION, null);
+
+        const response = await ApiClient.request('media.upload', {
+          base64,
+          fileName: file.name,
+          mimeType: file.type,
+          createdBy: session ? session.email : ''
+        });
+
+        if (response && response.success && response.data && response.data.url) {
+          document.getElementById(targetInputId).value = response.data.url;
+          statusEl.textContent = '✅ আপলোড সফল';
+        } else {
+          throw new Error((response && response.message) || 'আপলোড ব্যর্থ হয়েছে।');
+        }
+      } catch (err) {
+        console.error('Image upload failed:', err);
+        statusEl.textContent = '';
+        alert('ছবি আপলোড করা যায়নি: ' + (err.message || 'অজানা ত্রুটি'));
+      } finally {
+        fileInputEl.value = '';
+      }
+    }
 
     // Load category lists from ProductService API
     async function loadCategoryList() {

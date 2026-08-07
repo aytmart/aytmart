@@ -326,7 +326,7 @@
         const response = await ApiClient.request('orders.create', orderData);
         if (response && response.success) {
           CartService.clearCart();
-          StorageHelper.set('ayt_last_order', { ...response.data, Order_Status: 'confirmed' });
+          StorageHelper.set('ayt_last_order', { ...response.data, Order_Status: 'confirmed', synced: true });
           window.location.href = 'order-success.html';
           return;
         }
