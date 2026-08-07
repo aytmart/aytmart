@@ -571,7 +571,7 @@
 
               <div class="form-group">
                 <label class="form-label">মূল থাম্বনেইল ইমেজ URL (Primary Image URL) *</label>
-                <input type="url" id="prod-main-image" class="form-input" placeholder="https://images.unsplash.com/..." required />
+                <input type="url" id="prod-main-image" class="form-input" placeholder="https://www.pinterest.com/pin/1125759238150214364?w=400&q=80" required />
                 <div class="dynamic-list-row" style="margin-top:6px;">
                   <input type="file" id="prod-main-image-file" accept="image/*" style="display:none" onchange="handleImageFileSelect(this, 'prod-main-image')" />
                   <button type="button" class="btn-ghost" style="font-size:11px;" onclick="document.getElementById('prod-main-image-file').click()">📤 PC থেকে আপলোড করুন</button>
@@ -581,7 +581,7 @@
 
               <div class="form-group">
                 <label class="form-label">সেকেন্ডারি হোভার ইমেজ URL (Hover Image URL)</label>
-                <input type="url" id="prod-hover-image" class="form-input" placeholder="https://images.unsplash.com/..." />
+                <input type="url" id="prod-hover-image" class="form-input" placeholder="https://www.pinterest.com/pin/1125759238150214364?w=400&q=80" />
                 <div class="dynamic-list-row" style="margin-top:6px;">
                   <input type="file" id="prod-hover-image-file" accept="image/*" style="display:none" onchange="handleImageFileSelect(this, 'prod-hover-image')" />
                   <button type="button" class="btn-ghost" style="font-size:11px;" onclick="document.getElementById('prod-hover-image-file').click()">📤 PC থেকে আপলোড করুন</button>
@@ -743,7 +743,7 @@
       const row = document.createElement('div');
       row.className = 'dynamic-list-row gallery-url-item';
       row.innerHTML = `
-        <input type="url" class="form-input gallery-url-field" placeholder="https://..." value="${urlValue}" required style="flex:1;" />
+        <input type="url" class="form-input gallery-url-field" placeholder="https://www.pinterest.com/pin/1125759238150214364?w=400&q=80" value="${urlValue}" required style="flex:1;" />
         <button type="button" class="btn-circle-remove" onclick="this.parentElement.remove()">×</button>
       `;
       container.appendChild(row);
