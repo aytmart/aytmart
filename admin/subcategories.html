@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0B4238">
+  <title>সাবক্যাটাগরি ম্যানেজমেন্ট | AYT Mart Control Panel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../styles/themes/variables.css">
+  <link rel="stylesheet" href="../styles/base/reset.css">
+  <style>
+    :root {
+      --ayt-primary:        var(--color-primary, #0B4238);
+      --ayt-primary-dark:   #072722;
+      --ayt-primary-light:  var(--color-primary-light, #14614F);
+      --ayt-gold:           var(--color-gold, #C9A227);
+      --ayt-gold-light:     #E7CD73;
+      --ayt-gold-dark:      #96751A;
+      --ayt-cream:          #FBF7EF;
+      --ayt-ink:            #1C2420;
+      --ayt-rose:           #B23B3B;
+      --ayt-rose-dark:      #8E2E2E;
+      --ayt-amber:          #B5750F;
+      --ayt-emerald:        #1E7A5F;
+      --ayt-blue:           #2563A8;
+      --ayt-surface:        var(--bg-surface, #FFFFFF);
+      --ayt-surface-alt:    var(--bg-surface-alt, #F5F2E9);
+      --ayt-border:         var(--border-color, #E5E0D2);
+      --ayt-muted:          var(--text-muted, #756F62);
+
+      --ayt-sp-1: var(--space-1, 4px);  --ayt-sp-2: var(--space-2, 8px);
+      --ayt-sp-3: var(--space-3, 12px); --ayt-sp-4: var(--space-4, 16px);
+      --ayt-sp-5: var(--space-5, 20px); --ayt-sp-6: var(--space-6, 24px);
+      --ayt-sp-8: var(--space-8, 32px); --ayt-sp-10: var(--space-10, 40px);
+
+      --ayt-radius-sm: var(--border-radius-sm, 6px);
+      --ayt-radius-md: var(--border-radius-md, 12px);
+      --ayt-radius-lg: var(--border-radius-lg, 18px);
+      --ayt-radius-full: var(--border-radius-full, 999px);
+      --ayt-shadow-sm: 0 2px 8px rgba(15, 35, 30, .06);
+      --ayt-shadow-md: var(--shadow-md, 0 10px 30px rgba(15, 35, 30, .10));
+      --ayt-shadow-lg: 0 24px 60px rgba(15, 35, 30, .16);
+      --ayt-shadow-gold: 0 8px 20px rgba(201, 162, 39, .22);
+      --ayt-fast: var(--transition-fast, 150ms ease);
+      --ayt-normal: var(--transition-normal, 320ms cubic-bezier(.22,.61,.36,1));
+
+      --ayt-font-display: 'Tiro Bangla', 'Noto Serif Bengali', serif;
+      --ayt-font-body: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+      --ayt-font-num: 'Poppins', 'Hind Siliguri', sans-serif;
+
+      --sidebar-w: 264px;
+      --sidebar-w-collapsed: 84px;
+      --topbar-h: 72px;
+    }
+
+    html[data-theme="dark"] {
+      --ayt-cream: #0F1613;
+      --ayt-ink: #EDEAE0;
+      --ayt-surface: #16201C;
+      --ayt-surface-alt: #1B2622;
+      --ayt-border: #263129;
+      --ayt-muted: #93998F;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+    }
+
+    * { box-sizing: border-box; }
+    body { font-family: var(--ayt-font-body); color: var(--ayt-ink); background: var(--ayt-cream); }
+    :focus-visible { outline: 2px solid var(--ayt-gold-dark); outline-offset: 2px; }
+    button { font-family: inherit; cursor: pointer; }
+    a { text-decoration: none; color: inherit; }
+    ::selection { background: rgba(201,162,39,.28); }
+    .num { font-family: var(--ayt-font-num); }
+
+    .admin-layout { display: grid; grid-template-columns: var(--sidebar-w) 1fr; min-height: 100vh; transition: grid-template-columns var(--ayt-normal); }
+    .admin-layout.is-collapsed { grid-template-columns: var(--sidebar-w-collapsed) 1fr; }
+
+    .admin-sidebar {
+      position: sticky; top: 0; height: 100vh;
+      background: linear-gradient(190deg, var(--ayt-primary-dark) 0%, var(--ayt-primary) 100%);
+      color: rgba(243,239,226,.72);
+      padding: var(--ayt-sp-5) var(--ayt-sp-4);
+      display: flex; flex-direction: column; gap: var(--ayt-sp-6);
+      overflow: hidden; z-index: 20;
+    }
+    .sidebar-brand { display: flex; align-items: center; gap: var(--ayt-sp-3); padding-bottom: var(--ayt-sp-4); border-bottom: 1px solid rgba(251,247,239,.12); white-space: nowrap; }
+    .sidebar-brand .mark { width: 38px; height: 38px; flex-shrink: 0; border-radius: var(--ayt-radius-sm); background: linear-gradient(150deg, var(--ayt-gold-light), var(--ayt-gold) 60%, var(--ayt-gold-dark)); display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: var(--ayt-shadow-gold); }
+    .sidebar-brand .txt { color: #fff; font-family: var(--ayt-font-display); font-size: 16px; font-weight: 700; overflow: hidden; }
+    .sidebar-brand .txt small { display: block; font-family: var(--ayt-font-num); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ayt-gold-light); font-weight: 500; }
+    .is-collapsed .sidebar-brand .txt { display: none; }
+
+    .sidebar-menu { display: flex; flex-direction: column; gap: var(--ayt-sp-1); }
+    .menu-section-label { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(243,239,226,.4); padding: var(--ayt-sp-3) var(--ayt-sp-3) var(--ayt-sp-1); white-space: nowrap; }
+    .is-collapsed .menu-section-label { opacity: 0; height: 0; padding: 0; overflow: hidden; }
+
+    .menu-link { position: relative; display: flex; align-items: center; gap: var(--ayt-sp-3); padding: 11px var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 13.5px; font-weight: 500; white-space: nowrap; overflow: hidden; transition: background-color var(--ayt-fast), color var(--ayt-fast); }
+    .menu-link svg { width: 19px; height: 19px; flex-shrink: 0; opacity: .85; }
+    .menu-link:hover { background-color: rgba(251,247,239,.08); color: #fff; }
+    .menu-link.active { background: linear-gradient(135deg, var(--ayt-gold) 0%, var(--ayt-gold-dark) 100%); color: #241C05; font-weight: 700; box-shadow: var(--ayt-shadow-gold); }
+    .menu-link.active svg { opacity: 1; }
+    .menu-link.sub-link { padding-left: 34px; font-size: 12.5px; }
+    .is-collapsed .menu-link .label-txt { display: none; }
+    .is-collapsed .menu-link { justify-content: center; }
+    .is-collapsed .menu-link.sub-link { display: none; }
+
+    .sidebar-foot { margin-top: auto; padding-top: var(--ayt-sp-4); border-top: 1px solid rgba(251,247,239,.12); }
+    .sidebar-collapse-btn { display: flex; align-items: center; gap: var(--ayt-sp-2); width: 100%; background: rgba(251,247,239,.06); border: 1px solid rgba(251,247,239,.14); color: rgba(243,239,226,.75); padding: var(--ayt-sp-2) var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 12.5px; transition: background var(--ayt-fast); }
+    .sidebar-collapse-btn:hover { background: rgba(251,247,239,.12); }
+    .sidebar-collapse-btn svg { width: 16px; height: 16px; transition: transform var(--ayt-normal); flex-shrink: 0; }
+    .is-collapsed .sidebar-collapse-btn svg { transform: rotate(180deg); }
+    .is-collapsed .sidebar-collapse-btn .label-txt { display: none; }
+    .is-collapsed .sidebar-collapse-btn { justify-content: center; }
+
+    .admin-console { display: flex; flex-direction: column; min-width: 0; }
+    .console-header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(251,247,239,.86); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
+      height: var(--topbar-h); border-bottom: 1px solid var(--ayt-border);
+      display: flex; align-items: center; justify-content: space-between; padding: 0 var(--ayt-sp-6); gap: var(--ayt-sp-4);
+    }
+    html[data-theme="dark"] .console-header { background: rgba(15,22,19,.86); }
+    .header-left { display: flex; align-items: center; gap: var(--ayt-sp-4); min-width: 0; }
+    .icon-btn.mobile-menu-btn { display: none; }
+    .breadcrumb { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .breadcrumb .crumb-trail { font-size: 11px; color: var(--ayt-muted); display: flex; align-items: center; gap: 6px; }
+    .breadcrumb .crumb-trail .sep { opacity: .5; }
+    .breadcrumb h1 { font-family: var(--ayt-font-display); font-size: 19px; font-weight: 700; color: var(--ayt-primary-dark); }
+    html[data-theme="dark"] .breadcrumb h1 { color: var(--ayt-gold-light); }
+
+    .header-right { display: flex; align-items: center; gap: var(--ayt-sp-2); }
+    .icon-btn { position: relative; width: 40px; height: 40px; border-radius: var(--ayt-radius-full); display: flex; align-items: center; justify-content: center; background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); color: var(--ayt-ink); transition: background var(--ayt-fast), border-color var(--ayt-fast), transform var(--ayt-fast); }
+    .icon-btn:hover { background: var(--ayt-surface); border-color: var(--ayt-gold); transform: translateY(-1px); }
+    .icon-btn svg { width: 17px; height: 17px; }
+    #theme-toggle .icon-moon { display: none; }
+    html[data-theme="dark"] #theme-toggle .icon-sun { display: none; }
+    html[data-theme="dark"] #theme-toggle .icon-moon { display: block; }
+
+    .console-body { padding: var(--ayt-sp-6); display: flex; flex-direction: column; gap: var(--ayt-sp-6); }
+
+    .page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--ayt-sp-4); flex-wrap: wrap; }
+    .page-head .eyebrow { font-family: var(--ayt-font-num); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ayt-gold-dark); }
+    .page-head h1 { font-family: var(--ayt-font-display); font-size: 24px; font-weight: 700; color: var(--ayt-primary-dark); margin-top: 2px; }
+    html[data-theme="dark"] .page-head h1 { color: #FBF7EF; }
+    .page-head p { font-size: 13px; color: var(--ayt-muted); margin-top: 2px; }
+    .page-head-actions { display: flex; align-items: center; gap: var(--ayt-sp-2); flex-wrap: wrap; }
+
+    .btn-gold { display: flex; align-items: center; gap: 7px; background: linear-gradient(135deg, var(--ayt-gold-light) 0%, var(--ayt-gold) 55%, var(--ayt-gold-dark) 100%); color: #241C05; font-size: 13px; font-weight: 700; padding: 11px 18px; border: none; border-radius: var(--ayt-radius-sm); box-shadow: var(--ayt-shadow-gold); transition: transform var(--ayt-fast), box-shadow var(--ayt-fast); }
+    .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(201,162,39,.32); }
+    .btn-gold svg { width: 15px; height: 15px; }
+    .btn-ghost { display: flex; align-items: center; gap: 7px; background: var(--ayt-surface); color: var(--ayt-ink); font-size: 13px; font-weight: 600; padding: 10px 16px; border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-sm); transition: border-color var(--ayt-fast), background var(--ayt-fast), transform var(--ayt-fast); }
+    .btn-ghost:hover { border-color: var(--ayt-gold); background: var(--ayt-surface-alt); transform: translateY(-1px); }
+    .btn-ghost svg { width: 15px; height: 15px; }
+
+    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--ayt-sp-4); }
+    .metric-card { position: relative; background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); padding: var(--ayt-sp-5); display: flex; flex-direction: column; gap: var(--ayt-sp-3); box-shadow: var(--ayt-shadow-sm); overflow: hidden; transition: box-shadow var(--ayt-normal), border-color var(--ayt-normal), transform var(--ayt-normal); }
+    .metric-card:hover { box-shadow: var(--ayt-shadow-lg); border-color: var(--ayt-gold); transform: translateY(-3px); }
+    .metric-ico { width: 38px; height: 38px; border-radius: var(--ayt-radius-sm); display: flex; align-items: center; justify-content: center; }
+    .metric-ico svg { width: 19px; height: 19px; }
+    .metric-ico.tone-gold { background: rgba(201,162,39,.14); color: var(--ayt-gold-dark); }
+    .metric-ico.tone-emerald { background: rgba(30,122,95,.12); color: var(--ayt-emerald); }
+    .metric-ico.tone-blue { background: rgba(37,99,168,.12); color: var(--ayt-blue); }
+    .metric-ico.tone-rose { background: rgba(178,59,59,.12); color: var(--ayt-rose); }
+    .metric-title { font-size: 12px; font-weight: 600; color: var(--ayt-muted); }
+    .metric-value { font-family: var(--ayt-font-num); font-size: 26px; font-weight: 700; color: var(--ayt-primary-dark); }
+    html[data-theme="dark"] .metric-value { color: #FBF7EF; }
+
+    .toolbar-card { background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); padding: var(--ayt-sp-4) var(--ayt-sp-5); box-shadow: var(--ayt-shadow-sm); display: flex; align-items: center; justify-content: space-between; gap: var(--ayt-sp-4); flex-wrap: wrap; }
+    .toolbar-left { display: flex; align-items: center; gap: var(--ayt-sp-3); flex-wrap: wrap; flex: 1; min-width: 260px; }
+    .search-admin { display: flex; align-items: center; gap: var(--ayt-sp-2); background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-full); padding: 9px 16px; min-width: 220px; flex: 1; max-width: 320px; transition: border-color var(--ayt-fast), box-shadow var(--ayt-fast); }
+    .search-admin:focus-within { border-color: var(--ayt-gold); box-shadow: 0 0 0 4px rgba(201,162,39,.12); }
+    .search-admin svg { width: 15px; height: 15px; color: var(--ayt-muted); flex-shrink: 0; }
+    .search-admin input { border: none; background: none; outline: none; font-size: 13px; width: 100%; color: var(--ayt-ink); font-family: var(--ayt-font-body); }
+    .search-admin input::placeholder { color: #A79F8E; }
+    .select-admin { background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-sm); padding: 9px 12px; font-size: 12.5px; font-family: var(--ayt-font-body); color: var(--ayt-ink); transition: border-color var(--ayt-fast); }
+    .select-admin:focus { outline: none; border-color: var(--ayt-gold); }
+
+    .table-card { background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); box-shadow: var(--ayt-shadow-sm); overflow: hidden; }
+    .table-scroll { overflow-x: auto; }
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th, .data-table td { padding: 12px var(--ayt-sp-4); font-size: 12.5px; text-align: left; }
+    .data-table th { background: var(--ayt-surface-alt); font-weight: 700; font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--ayt-muted); }
+    .data-table tbody tr { border-top: 1px solid var(--ayt-border); transition: background var(--ayt-fast); }
+    .data-table tbody tr:hover { background: var(--ayt-surface-alt); }
+    .data-table td.muted { color: var(--ayt-muted); }
+
+    .cat-cell { display: flex; align-items: center; gap: var(--ayt-sp-3); }
+    .cat-icon-tile { width: 38px; height: 38px; border-radius: var(--ayt-radius-sm); background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+    .cat-cell b { font-size: 13px; font-weight: 600; }
+    .cat-id { font-family: var(--ayt-font-num); font-size: 11px; color: var(--ayt-muted); }
+
+    .status-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; padding: 4px 10px; border-radius: var(--ayt-radius-full); }
+    .status-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .status-active { background: #D1FAE5; color: #0F7A54; }
+    .status-inactive { background: #FDECEC; color: var(--ayt-rose-dark); }
+
+    .row-actions { display: flex; align-items: center; gap: var(--ayt-sp-2); }
+    .btn-row { font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: var(--ayt-radius-sm); border: 1px solid var(--ayt-border); background: var(--ayt-surface); transition: background var(--ayt-fast), border-color var(--ayt-fast), color var(--ayt-fast); }
+    .btn-row.edit { color: var(--ayt-blue); }
+    .btn-row.edit:hover { background: rgba(37,99,168,.08); border-color: var(--ayt-blue); }
+    .btn-row.del { color: var(--ayt-rose-dark); }
+    .btn-row.del:hover { background: rgba(178,59,59,.08); border-color: var(--ayt-rose); }
+
+    .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--ayt-sp-10) var(--ayt-sp-6); gap: var(--ayt-sp-3); }
+    .empty-state .ico { font-size: 40px; }
+    .empty-state h3 { font-family: var(--ayt-font-display); font-size: 17px; font-weight: 700; color: var(--ayt-primary-dark); }
+    .empty-state p { font-size: 13px; color: var(--ayt-muted); max-width: 340px; }
+
+    .skeleton { position: relative; overflow: hidden; background: var(--ayt-surface-alt); border-radius: var(--ayt-radius-sm); display: inline-block; }
+    .skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent); animation: aytShimmer 1.5s infinite; }
+    @keyframes aytShimmer { 100% { transform: translateX(100%); } }
+    .sk-line { height: 12px; width: 120px; }
+
+    .ayt-reveal { opacity: 0; transform: translateY(14px); animation: aytRevealIn 560ms cubic-bezier(.22,.61,.36,1) forwards; }
+    @keyframes aytRevealIn { to { opacity: 1; transform: translateY(0); } }
+
+    .modal-overlay { position: fixed; inset: 0; background: rgba(15,22,19,.5); backdrop-filter: blur(3px); display: none; align-items: flex-start; justify-content: center; padding: var(--ayt-sp-8) var(--ayt-sp-4); z-index: 100; overflow-y: auto; }
+    .modal-overlay.is-open { display: flex; animation: aytFadeDown 180ms ease both; }
+    @keyframes aytFadeDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    .modal-card {
+      width: 100%; max-width: 560px; background: var(--ayt-surface); border: 1px solid var(--ayt-border);
+      border-radius: var(--ayt-radius-lg); box-shadow: var(--ayt-shadow-lg); overflow: hidden;
+      animation: aytCardIn 260ms cubic-bezier(.22,.61,.36,1) both;
+    }
+    @keyframes aytCardIn { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .modal-head { display: flex; align-items: center; justify-content: space-between; padding: var(--ayt-sp-5) var(--ayt-sp-6); border-bottom: 1px solid var(--ayt-border); background: var(--ayt-surface-alt); }
+    .modal-head h3 { font-family: var(--ayt-font-display); font-size: 17px; font-weight: 700; color: var(--ayt-primary-dark); }
+    .modal-close { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--ayt-surface); border: 1px solid var(--ayt-border); color: var(--ayt-muted); }
+    .modal-close:hover { border-color: var(--ayt-gold); color: var(--ayt-ink); }
+    .modal-close svg { width: 15px; height: 15px; }
+    .modal-body { padding: var(--ayt-sp-6); display: flex; flex-direction: column; gap: var(--ayt-sp-4); max-height: 64vh; overflow-y: auto; }
+    .modal-foot { display: flex; align-items: center; justify-content: flex-end; gap: var(--ayt-sp-3); padding: var(--ayt-sp-5) var(--ayt-sp-6); border-top: 1px solid var(--ayt-border); background: var(--ayt-surface-alt); }
+
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ayt-sp-4); }
+    .form-field { display: flex; flex-direction: column; gap: var(--ayt-sp-2); }
+    .form-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ayt-primary-dark); }
+    html[data-theme="dark"] .form-label { color: var(--ayt-gold-light); }
+    .form-input, .form-textarea, .form-select {
+      width: 100%; background: var(--ayt-surface-alt); border: 1.5px solid var(--ayt-border); border-radius: var(--ayt-radius-sm);
+      padding: 11px 13px; font-size: 13.5px; font-family: var(--ayt-font-body); color: var(--ayt-ink);
+      transition: border-color var(--ayt-fast), background var(--ayt-fast), box-shadow var(--ayt-fast);
+    }
+    .form-textarea { resize: vertical; min-height: 70px; }
+    .form-input:focus, .form-textarea:focus, .form-select:focus { outline: none; border-color: var(--ayt-gold); background: var(--ayt-surface); box-shadow: 0 0 0 4px rgba(201,162,39,.12); }
+    .form-hint { font-size: 11px; color: var(--ayt-muted); }
+
+    .btn-submit { display: flex; align-items: center; gap: 7px; background: linear-gradient(135deg, var(--ayt-primary) 0%, var(--ayt-primary-dark) 100%); color: #fff; font-size: 13px; font-weight: 700; padding: 11px 20px; border: none; border-radius: var(--ayt-radius-sm); box-shadow: var(--ayt-shadow-md); transition: transform var(--ayt-fast), box-shadow var(--ayt-fast); }
+    .btn-submit:hover { transform: translateY(-1px); box-shadow: var(--ayt-shadow-lg); }
+    .btn-cancel-modal { font-size: 13px; font-weight: 600; color: var(--ayt-muted); background: none; border: none; padding: 11px 14px; }
+    .btn-cancel-modal:hover { color: var(--ayt-ink); }
+
+    @media (max-width: 992px) {
+      .admin-layout, .admin-layout.is-collapsed { grid-template-columns: 1fr; }
+      .admin-sidebar { position: fixed; left: 0; top: 0; width: 264px; transform: translateX(-100%); transition: transform var(--ayt-normal); box-shadow: var(--ayt-shadow-lg); }
+      .admin-sidebar.is-open { transform: translateX(0); }
+      .icon-btn.mobile-menu-btn { display: flex; }
+      .form-row-2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .console-header { padding: 0 var(--ayt-sp-4); }
+      .console-body { padding: var(--ayt-sp-4); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-layout" id="admin-layout">
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <div class="sidebar-brand">
+        <div class="mark">🛒</div>
+        <div class="txt">AYT Mart<small>Control Panel</small></div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <span class="menu-section-label">প্রধান মেনু</span>
+        <a href="dashboard.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          <span class="label-txt">ড্যাশবোর্ড</span>
+        </a>
+        <a href="products.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>
+          <span class="label-txt">প্রোডাক্টস</span>
+        </a>
+        <a href="categories.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+          <span class="label-txt">ক্যাটাগরি</span>
+        </a>
+        <a href="subcategories.html" class="menu-link sub-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3v18M3 9h6M3 15h6"/></svg>
+          <span class="label-txt">সাবক্যাটাগরি</span>
+        </a>
+        <a href="orders.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+          <span class="label-txt">অর্ডারসমূহ</span>
+        </a>
+        <a href="inventory.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7Z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>
+          <span class="label-txt">ইনভেন্টরি</span>
+        </a>
+        <a href="settings.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+          <span class="label-txt">সেটিংস</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-foot">
+        <button class="sidebar-collapse-btn" id="sidebar-collapse-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
+          <span class="label-txt">সাইডবার সংকুচিত করুন</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="admin-console">
+      <header class="console-header">
+        <div class="header-left">
+          <button class="icon-btn mobile-menu-btn" id="mobile-menu-btn" aria-label="মেনু খুলুন">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <span class="crumb-trail">ড্যাশবোর্ড <span class="sep">/</span> ক্যাটাগরি <span class="sep">/</span> সাবক্যাটাগরি</span>
+            <h1>সাবক্যাটাগরি ম্যানেজমেন্ট</h1>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <button class="icon-btn" id="theme-toggle" aria-label="থিম পরিবর্তন করুন">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="console-body">
+
+        <div class="page-head ayt-reveal">
+          <div>
+            <span class="eyebrow">ক্যাটালগ কাঠামো</span>
+            <h1>সাবক্যাটাগরি ডিরেক্টরি</h1>
+            <p>প্রতিটি ক্যাটাগরির অধীনে সাবক্যাটাগরি পরিচালনা করুন</p>
+          </div>
+          <div class="page-head-actions">
+            <button class="btn-ghost" onclick="fetchSubcategories()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              রিফ্রেশ
+            </button>
+            <button class="btn-gold" onclick="openSubcategoryModal()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              নতুন সাবক্যাটাগরি
+            </button>
+          </div>
+        </div>
+
+        <div class="metrics-grid ayt-reveal" style="animation-delay: 60ms">
+          <div class="metric-card">
+            <div class="metric-ico tone-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3v18M3 9h6M3 15h6"/></svg></div>
+            <span class="metric-title">মোট সাবক্যাটাগরি</span>
+            <span class="metric-value num" id="kpi-sub-total">—</span>
+          </div>
+          <div class="metric-card">
+            <div class="metric-ico tone-emerald"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <span class="metric-title">সক্রিয়</span>
+            <span class="metric-value num" id="kpi-sub-active">—</span>
+          </div>
+          <div class="metric-card">
+            <div class="metric-ico tone-rose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></div>
+            <span class="metric-title">নিষ্ক্রিয়</span>
+            <span class="metric-value num" id="kpi-sub-inactive">—</span>
+          </div>
+          <div class="metric-card">
+            <div class="metric-ico tone-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/></svg></div>
+            <span class="metric-title">প্যারেন্ট ক্যাটাগরি</span>
+            <span class="metric-value num" id="kpi-sub-parents">—</span>
+          </div>
+        </div>
+
+        <div class="toolbar-card ayt-reveal" style="animation-delay: 100ms">
+          <div class="toolbar-left">
+            <div class="search-admin">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="sub-search" placeholder="সাবক্যাটাগরি নাম বা আইডি খুঁজুন..." oninput="filterSubcategories()"/>
+            </div>
+            <select id="sub-parent-filter" class="select-admin" onchange="filterSubcategories()">
+              <option value="all">সকল ক্যাটাগরি</option>
+            </select>
+            <select id="sub-status-filter" class="select-admin" onchange="filterSubcategories()">
+              <option value="all">সকল স্ট্যাটাস</option>
+              <option value="active">Active (সক্রিয়)</option>
+              <option value="inactive">Inactive (নিষ্ক্রিয়)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-card ayt-reveal" style="animation-delay: 140ms">
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>সাবক্যাটাগরি</th>
+                  <th>প্যারেন্ট ক্যাটাগরি</th>
+                  <th>ক্রম</th>
+                  <th>স্ট্যাটাস</th>
+                  <th>অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody id="subcategories-directory-table">
+                <tr><td colspan="5"><span class="skeleton sk-line"></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="subcategory-modal-overlay" onclick="if(event.target===this) closeSubcategoryModal();">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="form-panel-title">নতুন সাবক্যাটাগরি তৈরি</h3>
+        <button class="modal-close" onclick="closeSubcategoryModal()" aria-label="বন্ধ করুন">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <form id="subcategory-form" onsubmit="saveSubcategory(event)">
+        <input type="hidden" id="subcategory-id-hidden" />
+        <div class="modal-body">
+
+          <div class="form-field">
+            <label class="form-label">প্যারেন্ট ক্যাটাগরি (Parent Category) *</label>
+            <select id="sub-cat-parent-id" class="form-select" required>
+              <option value="">— ক্যাটাগরি বেছে নিন —</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label">সাবক্যাটাগরি নাম (Subcategory Name) *</label>
+            <input type="text" id="sub-cat-name" class="form-input" placeholder="যেমন: পাঞ্জাবি" required oninput="autoSlugFromSubName()"/>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-field">
+              <label class="form-label">স্লাগ (Slug)</label>
+              <input type="text" id="sub-cat-slug" class="form-input" placeholder="panjabi" />
+            </div>
+            <div class="form-field">
+              <label class="form-label">আইকন ইমোজি (Icon Emoji)</label>
+              <input type="text" id="sub-cat-icon" class="form-input" placeholder="যেমন: 👕" maxLength="4" />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label">বিবরণ (Description)</label>
+            <textarea id="sub-cat-description" class="form-textarea" placeholder="সংক্ষিপ্ত বিবরণ লিখুন..."></textarea>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-field">
+              <label class="form-label">সাজানোর ক্রম (Sort Order)</label>
+              <input type="number" id="sub-cat-sort" class="form-input" value="10" required />
+            </div>
+            <div class="form-field">
+              <label class="form-label">স্ট্যাটাস (Status)</label>
+              <select id="sub-cat-status" class="form-select">
+                <option value="Active">Active (সক্রিয়)</option>
+                <option value="Inactive">Inactive (নিষ্ক্রিয়)</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-foot">
+          <button type="button" class="btn-cancel-modal" id="btn-cancel-edit" onclick="resetSubForm()">বাতিল করুন</button>
+          <button type="submit" class="btn-submit" id="btn-form-submit">সাবক্যাটাগরি সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../config/environment/env.js"></script>
+  <script src="../utils/storage/storage.js"></script>
+  <script src="../api/shared/api-client.js"></script>
+
+  <script>
+    let localCategoriesList = [];
+    let localSubcategoriesList = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const session = StorageHelper.get(ENV.STORAGE_KEYS.SESSION, null);
+      if (!session || session.role !== 'Admin') {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      await fetchCategoriesForDropdown();
+      await fetchSubcategories();
+    });
+
+    // Pull parent-category list to populate dropdowns/filters
+    async function fetchCategoriesForDropdown() {
+      try {
+        const response = await ApiClient.request('categories.list', { includeInactive: true }, 'GET');
+        if (response && response.success && response.data && response.data.items) {
+          localCategoriesList = response.data.items;
+        }
+      } catch (err) {
+        console.warn('Could not load parent categories list.', err);
+        localCategoriesList = [];
+      }
+
+      const parentSelect = document.querySelector('#sub-cat-parent-id');
+      const filterSelect = document.querySelector('#sub-parent-filter');
+
+      parentSelect.innerHTML = '<option value="">— ক্যাটাগরি বেছে নিন —</option>' +
+        localCategoriesList.map(cat => `<option value="${cat['Category ID']}">${cat['Category Name']}</option>`).join('');
+
+      filterSelect.innerHTML = '<option value="all">সকল ক্যাটাগরি</option>' +
+        localCategoriesList.map(cat => `<option value="${cat['Category ID']}">${cat['Category Name']}</option>`).join('');
+    }
+
+    async function fetchSubcategories() {
+      const tbody = document.querySelector('#subcategories-directory-table');
+      tbody.innerHTML = Array.from({length: 4}).map(() => `
+        <tr>
+          <td><div class="cat-cell"><span class="skeleton" style="width:38px;height:38px;"></span><span class="skeleton sk-line"></span></div></td>
+          <td><span class="skeleton sk-line" style="width:80px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:30px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:60px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:90px;"></span></td>
+        </tr>
+      `).join('');
+
+      try {
+        const response = await ApiClient.request('subcategories.list', {}, 'GET');
+        if (response && response.success && response.data && response.data.items) {
+          localSubcategoriesList = response.data.items;
+        } else {
+          localSubcategoriesList = [];
+        }
+      } catch (err) {
+        console.error('Failed to load subcategories:', err);
+        localSubcategoriesList = [];
+        tbody.innerHTML = `
+          <tr><td colspan="5">
+            <div class="empty-state">
+              <span class="ico">⚠️</span>
+              <h3>ব্যাকএন্ড থেকে ডেটা আনা যায়নি</h3>
+              <p>সার্ভার এরর: ${err.message || 'অজানা সমস্যা'}। কনসোল চেক করুন।</p>
+            </div>
+          </td></tr>`;
+        return;
+      }
+
+      updateSubKpis();
+      filterSubcategories();
+    }
+
+    function updateSubKpis() {
+      const total = localSubcategoriesList.length;
+      const active = localSubcategoriesList.filter(s => (s['Status'] || 'Active').toLowerCase() === 'active').length;
+      const inactive = total - active;
+      const parents = new Set(localSubcategoriesList.map(s => s['Category ID'])).size;
+      document.querySelector('#kpi-sub-total').textContent = total;
+      document.querySelector('#kpi-sub-active').textContent = active;
+      document.querySelector('#kpi-sub-inactive').textContent = inactive;
+      document.querySelector('#kpi-sub-parents').textContent = parents;
+    }
+
+    function parentCategoryName(categoryId) {
+      const parent = localCategoriesList.find(c => c['Category ID'] === categoryId);
+      return parent ? parent['Category Name'] : '<span class="muted">—</span>';
+    }
+
+    function filterSubcategories() {
+      const searchVal = (document.querySelector('#sub-search')?.value || '').trim().toLowerCase();
+      const parentVal = document.querySelector('#sub-parent-filter')?.value || 'all';
+      const statusVal = document.querySelector('#sub-status-filter')?.value || 'all';
+
+      let filtered = [...localSubcategoriesList];
+
+      if (searchVal) {
+        filtered = filtered.filter(s =>
+          (s['Subcategory Name'] || '').toLowerCase().includes(searchVal) ||
+          (s['Subcategory ID'] || '').toLowerCase().includes(searchVal)
+        );
+      }
+      if (parentVal !== 'all') {
+        filtered = filtered.filter(s => s['Category ID'] === parentVal);
+      }
+      if (statusVal === 'active') {
+        filtered = filtered.filter(s => (s['Status'] || 'Active').toLowerCase() === 'active');
+      } else if (statusVal === 'inactive') {
+        filtered = filtered.filter(s => (s['Status'] || 'Active').toLowerCase() === 'inactive');
+      }
+
+      renderSubcategoriesTable(filtered);
+    }
+
+    function renderSubcategoriesTable(list) {
+      const tbody = document.querySelector('#subcategories-directory-table');
+
+      if (list.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5">
+              <div class="empty-state">
+                <span class="ico">📁</span>
+                <h3>কোনো সাবক্যাটাগরি পাওয়া যায়নি</h3>
+                <p>একটি নতুন সাবক্যাটাগরি তৈরি করুন।</p>
+                <button class="btn-gold" onclick="openSubcategoryModal()">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="15" height="15"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  নতুন সাবক্যাটাগরি তৈরি করুন
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = list.map(sub => {
+        const isActive = (sub['Status'] || 'Active').toLowerCase() === 'active';
+        return `
+        <tr>
+          <td>
+            <div class="cat-cell">
+              <span class="cat-icon-tile">${sub['Icon'] || '📁'}</span>
+              <div>
+                <b>${sub['Subcategory Name']}</b><br/>
+                <span class="cat-id">${sub['Subcategory ID']}</span>
+              </div>
+            </div>
+          </td>
+          <td class="muted">${parentCategoryName(sub['Category ID'])}</td>
+          <td class="num">${sub['Sort Order'] || 10}</td>
+          <td>
+            <span class="status-badge ${isActive ? 'status-active' : 'status-inactive'}">
+              ${sub['Status'] || 'Active'}
+            </span>
+          </td>
+          <td>
+            <div class="row-actions">
+              <button class="btn-row edit" onclick="openSubcategoryModal(); startEditSubcategory('${sub['Subcategory ID']}')">সম্পাদনা</button>
+              <button class="btn-row del" onclick="softDeleteSubcategory('${sub['Subcategory ID']}')">মুছুন</button>
+            </div>
+          </td>
+        </tr>
+      `;
+      }).join('');
+    }
+
+    function autoSlugFromSubName() {
+      const slugField = document.querySelector('#sub-cat-slug');
+      if (slugField.dataset.manual === 'true') return;
+      const name = document.querySelector('#sub-cat-name').value.trim();
+      slugField.value = name
+        .toLowerCase()
+        .replace(/[^\w\u0980-\u09FF\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-');
+    }
+
+    async function saveSubcategory(event) {
+      event.preventDefault();
+
+      const hiddenId = document.querySelector('#subcategory-id-hidden').value;
+      const isEdit = !!hiddenId;
+
+      const parentId = document.querySelector('#sub-cat-parent-id').value;
+      if (!parentId) {
+        alert('একটি প্যারেন্ট ক্যাটাগরি বেছে নিন।');
+        return;
+      }
+
+      const subcategoryData = {
+        'Category ID': parentId,
+        'Subcategory Name': document.querySelector('#sub-cat-name').value.trim(),
+        'Slug': document.querySelector('#sub-cat-slug').value.trim(),
+        'Icon': document.querySelector('#sub-cat-icon').value.trim(),
+        'Description': document.querySelector('#sub-cat-description').value.trim(),
+        'Sort Order': parseInt(document.querySelector('#sub-cat-sort').value, 10) || 10,
+        'Status': document.querySelector('#sub-cat-status').value
+      };
+
+      if (isEdit) subcategoryData['Subcategory ID'] = hiddenId;
+
+      try {
+        const action = isEdit ? 'subcategories.update' : 'subcategories.create';
+        const response = await ApiClient.request(action, subcategoryData);
+        if (response && response.success) {
+          alert(isEdit ? 'সাবক্যাটাগরি আপডেট সম্পন্ন হয়েছে।' : 'নতুন সাবক্যাটাগরি তৈরি সম্পন্ন হয়েছে।');
+          resetSubForm();
+          await fetchSubcategories();
+          return;
+        }
+        alert('সংরক্ষণ ব্যর্থ হয়েছে: ' + (response && response.message ? response.message : 'অজানা সমস্যা'));
+      } catch (err) {
+        console.error('Subcategory save failed:', err);
+        alert('সংরক্ষণ ব্যর্থ হয়েছে: ' + (err.message || 'নেটওয়ার্ক সমস্যা। আবার চেষ্টা করুন।'));
+      }
+    }
+
+    function startEditSubcategory(subcategoryId) {
+      const sub = localSubcategoriesList.find(s => s['Subcategory ID'] === subcategoryId);
+      if (!sub) return;
+
+      document.querySelector('#subcategory-id-hidden').value = sub['Subcategory ID'];
+      document.querySelector('#sub-cat-parent-id').value = sub['Category ID'] || '';
+      document.querySelector('#sub-cat-name').value = sub['Subcategory Name'];
+      document.querySelector('#sub-cat-slug').value = sub['Slug'] || '';
+      document.querySelector('#sub-cat-slug').dataset.manual = sub['Slug'] ? 'true' : 'false';
+      document.querySelector('#sub-cat-icon').value = sub['Icon'] || '';
+      document.querySelector('#sub-cat-description').value = sub['Description'] || '';
+      document.querySelector('#sub-cat-sort').value = sub['Sort Order'] || 10;
+      document.querySelector('#sub-cat-status').value = sub['Status'] || 'Active';
+
+      document.querySelector('#form-panel-title').innerText = 'সাবক্যাটাগরি সম্পাদনা';
+      document.querySelector('#btn-form-submit').innerText = 'সাবক্যাটাগরি আপডেট করুন';
+    }
+
+    async function softDeleteSubcategory(subcategoryId) {
+      if (!confirm('আপনি কি নিশ্চিতভাবে এই সাবক্যাটাগরি নিষ্ক্রিয় করতে চান?')) return;
+
+      try {
+        const response = await ApiClient.request('subcategories.delete', { id: subcategoryId });
+        if (response && response.success) {
+          alert('সাবক্যাটাগরি নিষ্ক্রিয় করা হয়েছে।');
+          await fetchSubcategories();
+          return;
+        }
+        alert('মুছে ফেলা যায়নি: ' + (response && response.message ? response.message : 'অজানা সমস্যা'));
+      } catch (err) {
+        console.error('Subcategory delete failed:', err);
+        alert('মুছে ফেলা যায়নি: ' + (err.message || 'নেটওয়ার্ক সমস্যা।'));
+      }
+    }
+
+    function resetSubForm() {
+      document.querySelector('#subcategory-form').reset();
+      document.querySelector('#subcategory-id-hidden').value = '';
+      document.querySelector('#sub-cat-slug').dataset.manual = 'false';
+      document.querySelector('#form-panel-title').innerText = 'নতুন সাবক্যাটাগরি তৈরি';
+      document.querySelector('#btn-form-submit').innerText = 'সাবক্যাটাগরি সংরক্ষণ করুন';
+      closeSubcategoryModal();
+    }
+
+    function openSubcategoryModal() {
+      document.querySelector('#subcategory-modal-overlay').classList.add('is-open');
+    }
+    function closeSubcategoryModal() {
+      document.querySelector('#subcategory-modal-overlay').classList.remove('is-open');
+    }
+
+    // UI: sidebar collapse (desktop)
+    const layout = document.getElementById('admin-layout');
+    const collapseBtn = document.getElementById('sidebar-collapse-btn');
+    collapseBtn.addEventListener('click', () => layout.classList.toggle('is-collapsed'));
+
+    // UI: mobile sidebar drawer
+    const sidebar = document.getElementById('admin-sidebar');
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    mobileBtn.addEventListener('click', () => sidebar.classList.toggle('is-open'));
+
+    // UI: theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const html = document.documentElement;
+      html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>
