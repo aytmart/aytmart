@@ -20,6 +20,7 @@ class DynamicHeader {
     this.initMobileSearchOverlay();
     this.initScrollEffects();
     this.initMegaMenu();
+    this.initCategoryMegaMenu();
     this.initActiveNav();
     this.initLanguageSwitcher();
     this.initNotifications();
@@ -81,13 +82,8 @@ class DynamicHeader {
               <a href="products.html" class="nav-link" data-nav="products.html">সকল প্রোডাক্ট</a>
               <div class="mega-menu">
                 <div class="mega-col">
-                  <div class="mega-col-title">কেনাকাটা</div>
-                  <a href="products.html">সকল প্রোডাক্ট</a>
-                  <a href="categories.html">ক্যাটাগরি সমূহ</a>
-                  <a href="brands.html">ব্র্যান্ড সমূহ</a>
-                </div>
-                <div class="mega-col">
                   <div class="mega-col-title">জনপ্রিয়</div>
+                  <a href="products.html">সকল প্রোডাক্ট</a>
                   <a href="products.html?sort=best-selling">বেস্ট সেলার</a>
                   <a href="products.html?sort=newest">নতুন এসেছে</a>
                   <a href="products.html?sale=1">অফার প্রোডাক্ট</a>
@@ -100,7 +96,12 @@ class DynamicHeader {
                 </div>
               </div>
             </div>
-            <a href="categories.html" class="nav-link" data-nav="categories.html">ক্যাটাগরি</a>
+            <div class="nav-item has-mega" id="category-nav-item">
+              <a href="categories.html" class="nav-link" data-nav="categories.html">ক্যাটাগরি</a>
+              <div class="mega-menu mega-menu-categories" id="category-mega-menu">
+                <div class="mega-col"><div class="mega-col-title">লোড হচ্ছে...</div></div>
+              </div>
+            </div>
             <a href="products.html?sale=1" class="nav-link nav-link-offer" data-nav="offers">🔥 অফার</a>
             <a href="track-order.html" class="nav-link" data-nav="track-order.html">অর্ডার ট্র্যাক</a>
           </nav>
@@ -198,6 +199,7 @@ class DynamicHeader {
           <a href="index.html" class="drawer-link">🏠 হোম (Home)</a>
           <a href="products.html" class="drawer-link">🛍️ সকল প্রোডাক্ট (Products)</a>
           <a href="categories.html" class="drawer-link">📂 ক্যাটাগরি (Categories)</a>
+          <div id="drawer-category-list" class="drawer-subcat-list"></div>
           <a href="products.html?sale=1" class="drawer-link drawer-link-offer">🔥 অফার (Offers)</a>
           <a href="track-order.html" class="drawer-link">📦 অর্ডার ট্র্যাক (Track Order)</a>
           <div class="drawer-divider"></div>
@@ -305,6 +307,81 @@ class DynamicHeader {
       });
     });
   }
+
+  /**
+   * Populates the desktop "ক্যাটাগরি" mega-menu and the mobile drawer's
+   * category list with real Category -> Subcategory data from the backend.
+   * Runs after render() so the placeholder markup already exists in the DOM.
+   */
+  async initCategoryMegaMenu() {
+    const megaMenu = document.querySelector('#category-mega-menu');
+    const drawerList = document.querySelector('#drawer-category-list');
+    if (!megaMenu && !drawerList) return;
+
+    let categories = [];
+    try {
+      categories = (window.ProductService && typeof ProductService.getCategories === 'function')
+        ? await ProductService.getCategories()
+        : [];
+    } catch (e) {
+      categories = [];
+    }
+
+    if (!categories || !categories.length) {
+      if (megaMenu) {
+        megaMenu.innerHTML = `<div class="mega-col"><a href="categories.html">সব ক্যাটাগরি দেখুন</a></div>`;
+      }
+      return;
+    }
+
+    // Fetch each category's subcategories in parallel.
+    const withSubs = await Promise.all(categories.map(async (cat) => {
+      let subs = [];
+      try {
+        subs = (window.ProductService && typeof ProductService.getSubcategories === 'function')
+          ? await ProductService.getSubcategories(cat.id)
+          : [];
+      } catch (e) {
+        subs = [];
+      }
+      return { ...cat, subcategories: subs || [] };
+    }));
+
+    if (megaMenu) {
+      megaMenu.innerHTML = withSubs.map((cat) => {
+        const subLinks = cat.subcategories.length
+          ? cat.subcategories.map((sub) => `
+              <a href="products.html?category=${encodeURIComponent(cat.id)}&subcategory=${encodeURIComponent(sub.id)}">${sub.name}</a>
+            `).join('')
+          : `<a href="products.html?category=${encodeURIComponent(cat.id)}" class="mega-col-empty">কোনো সাবক্যাটাগরি নেই</a>`;
+
+        return `
+          <div class="mega-col">
+            <div class="mega-col-title">
+              <a href="products.html?category=${encodeURIComponent(cat.id)}">${cat.icon || ''} ${cat.name}</a>
+            </div>
+            ${subLinks}
+          </div>
+        `;
+      }).join('');
+    }
+
+    if (drawerList) {
+      drawerList.innerHTML = withSubs.map((cat) => {
+        const subLinks = cat.subcategories.length
+          ? `<div class="drawer-subcat-group">${cat.subcategories.map((sub) => `
+              <a href="products.html?category=${encodeURIComponent(cat.id)}&subcategory=${encodeURIComponent(sub.id)}" class="drawer-link drawer-sublink">${sub.name}</a>
+            `).join('')}</div>`
+          : '';
+
+        return `
+          <a href="products.html?category=${encodeURIComponent(cat.id)}" class="drawer-link drawer-sublink">${cat.icon || ''} ${cat.name}</a>
+          ${subLinks}
+        `;
+      }).join('');
+    }
+  }
+
 
   initActiveNav() {
     const current = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();

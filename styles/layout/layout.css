@@ -272,6 +272,20 @@ body.has-transparent-header .header-main:not(.is-scrolled) .action-item {
   padding: var(--space-1) 0; transition: color var(--transition-fast), padding-left var(--transition-fast);
 }
 .mega-col a:hover { color: var(--color-gold-dark); padding-left: 4px; }
+.mega-col-empty { color: var(--text-muted) !important; font-style: italic; font-size: var(--font-xs); }
+
+/* Category/Subcategory mega-menu can have more columns than the default 3,
+   depending on how many categories exist — widen it and let it scroll
+   vertically instead of overflowing the viewport. */
+.mega-menu-categories {
+  width: min(760px, 75vw);
+  grid-template-columns: repeat(4, 1fr);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+@media (max-width: 900px) {
+  .mega-menu-categories { grid-template-columns: repeat(2, 1fr); width: min(420px, 80vw); }
+}
 
 /* ---------- Search ---------- */
 .header-search { flex: 1; max-width: 460px; position: relative; }
@@ -431,6 +445,18 @@ body.has-transparent-header .header-main:not(.is-scrolled) .action-item {
 }
 .drawer-link:hover { background: var(--bg-surface-alt); color: var(--color-gold-dark); }
 .drawer-link-offer { color: var(--color-rose); }
+
+.drawer-subcat-list { display: flex; flex-direction: column; }
+.drawer-sublink { font-weight: var(--weight-normal); }
+.drawer-subcat-group {
+  display: flex; flex-direction: column;
+  padding-left: var(--space-5);
+}
+.drawer-subcat-group .drawer-sublink {
+  font-size: var(--font-sm);
+  color: var(--text-muted);
+  padding: var(--space-2) var(--space-2);
+}
 
 .drawer-divider {
   position: relative; height: 18px; margin: 0;

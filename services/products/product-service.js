@@ -121,6 +121,39 @@ const ProductService = {
   },
 
   /**
+   * Retrieves subcategories, optionally filtered to a single parent category.
+   * Used by the header's category/subcategory navigation menu and by the
+   * products page's subcategory filter.
+   *
+   * Note: unlike getCategories()/getAll(), this does NOT fall back to fake
+   * mock data on failure — a silent fake fallback here previously caused
+   * confusion (menu looked "fine" while actually disconnected from the
+   * backend). On failure this simply returns an empty array and logs why,
+   * so a broken backend shows an empty/missing menu instead of fake data.
+   *
+   * @param {string} [categoryId] Optional parent Category ID to filter by.
+   */
+  async getSubcategories(categoryId) {
+    try {
+      const payload = categoryId ? { categoryId } : {};
+      const response = await ApiClient.request('subcategories.list', payload, 'GET');
+      if (response && response.success && response.data && Array.isArray(response.data.items)) {
+        return response.data.items.map(item => ({
+          id: item['Subcategory ID'] || item['id'],
+          category_id: item['Category ID'] || item['category_id'],
+          name: item['Subcategory Name'] || item['name'],
+          icon: item['Icon'] || item['icon'] || ''
+        }));
+      }
+      console.warn('Subcategories backend responded but payload shape was unexpected.', response);
+      return [];
+    } catch (e) {
+      console.warn('Subcategories backend unreachable (network/timeout).', e);
+      return [];
+    }
+  },
+
+  /**
    * Retrieves product catalog with optional query filters.
    */
   async getAll(filters = {}) {
@@ -241,6 +274,8 @@ const ProductService = {
       sku: item['SKU'] || item['sku'] || 'AYT-GEN-SKU',
       name: item['Product Name'] || item['name'] || '',
       slug: item['Slug'] || item['slug'],
+      category_id: item['Category ID'] || item['category_id'] || '',
+      subcategory_id: item['Subcategory ID'] || item['subcategory_id'] || '',
       price: parseFloat(item['Selling Price'] || item['price'] || 0),
       sale_price: (item['Discount Price'] || item['sale_price'])
         ? parseFloat(item['Discount Price'] || item['sale_price'])

@@ -597,7 +597,7 @@
          returns, so the page works fully even if the backend only supports the
          original category filter — swap in real query params whenever ready.
        ========================================================================== */
-    let activeFilters = { category: null, brand: null, minPrice: null, maxPrice: null, minRating: 0, inStockOnly: false, onSaleOnly: false, search: '' };
+    let activeFilters = { category: null, subcategory: null, brand: null, minPrice: null, maxPrice: null, minRating: 0, inStockOnly: false, onSaleOnly: false, search: '' };
     let currentView = 'grid';
     let currentPage = 1;
     const PAGE_SIZE = 12;
@@ -607,6 +607,7 @@
       // Parse category filter from URL params
       const params = new URLSearchParams(window.location.search);
       activeFilters.category = params.get('category') || null;
+      activeFilters.subcategory = params.get('subcategory') || null;
       activeFilters.search = params.get('q') || '';
       if (params.get('sale') === '1') activeFilters.onSaleOnly = true;
       if (activeFilters.search) {
@@ -675,6 +676,7 @@
         // Client-side layer for filters the backend may not yet support
         let filtered = CAT.rawProducts.filter(prod => {
           const price = Number(prod.sale_price || prod.price || 0);
+          if (activeFilters.subcategory && (prod.subcategory_id || '') !== activeFilters.subcategory) return false;
           if (activeFilters.brand && (prod.brand || '') !== activeFilters.brand) return false;
           if (activeFilters.minPrice != null && price < activeFilters.minPrice) return false;
           if (activeFilters.maxPrice != null && price > activeFilters.maxPrice) return false;
@@ -753,7 +755,7 @@
       });
 
       document.getElementById('btn-clear-filters').addEventListener('click', () => {
-        activeFilters = { category: null, brand: null, minPrice: null, maxPrice: null, minRating: 0, inStockOnly: false, onSaleOnly: false, search: '' };
+        activeFilters = { category: null, subcategory: null, brand: null, minPrice: null, maxPrice: null, minRating: 0, inStockOnly: false, onSaleOnly: false, search: '' };
         document.getElementById('catalog-search').value = '';
         document.getElementById('price-min-input').value = '';
         document.getElementById('price-max-input').value = '';
@@ -796,6 +798,7 @@
       const row = document.getElementById('active-filters-row');
       const chips = [];
       if (activeFilters.category) chips.push({ key: 'category', label: `ক্যাটাগরি নির্বাচিত` });
+      if (activeFilters.subcategory) chips.push({ key: 'subcategory', label: `সাবক্যাটাগরি নির্বাচিত` });
       if (activeFilters.brand) chips.push({ key: 'brand', label: `ব্র্যান্ড: ${activeFilters.brand}` });
       if (activeFilters.search) chips.push({ key: 'search', label: `সার্চ: "${activeFilters.search}"` });
       if (activeFilters.minPrice != null || activeFilters.maxPrice != null) chips.push({ key: 'price', label: `মূল্য: ৳${activeFilters.minPrice || 0} - ৳${activeFilters.maxPrice || '∞'}` });
@@ -810,6 +813,7 @@
         btn.addEventListener('click', () => {
           const key = btn.dataset.chipRemove;
           if (key === 'category') { activeFilters.category = null; document.querySelectorAll('input[name="cat-filter"]').forEach(i => i.checked = false); }
+          if (key === 'subcategory') { activeFilters.subcategory = null; }
           if (key === 'brand') { activeFilters.brand = null; }
           if (key === 'search') { activeFilters.search = ''; document.getElementById('catalog-search').value = ''; }
           if (key === 'price') { activeFilters.minPrice = null; activeFilters.maxPrice = null; document.getElementById('price-min-input').value = ''; document.getElementById('price-max-input').value = ''; }
