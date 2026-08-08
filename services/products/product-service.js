@@ -237,15 +237,17 @@ const ProductService = {
     const fallbackImage = 'https://placehold.co/400x400?text=No+Image';
 
     return {
-      id: item['Product ID'],
+      id: item['Product ID'] || item['id'],
       sku: item['SKU'] || item['sku'] || 'AYT-GEN-SKU',
-      name: item['Product Name'],
-      slug: item['Slug'],
-      price: parseFloat(item['Selling Price'] || 0),
-      sale_price: item['Discount Price'] ? parseFloat(item['Discount Price']) : null,
+      name: item['Product Name'] || item['name'] || '',
+      slug: item['Slug'] || item['slug'],
+      price: parseFloat(item['Selling Price'] || item['price'] || 0),
+      sale_price: (item['Discount Price'] || item['sale_price'])
+        ? parseFloat(item['Discount Price'] || item['sale_price'])
+        : null,
       image: imagesArray[0] || fallbackImage,
       images: imagesArray.length ? imagesArray : [fallbackImage],
-      is_featured: !!item['Featured'] || !!item['is_featured'],
+      is_featured: !!item['Featured'] || !!item['is_featured'] || !!item['featured'],
       stock: parseInt(item['Stock'] || item['stock'] || 0, 10),
       description: item['Description'] || item['description'] || 'কোনো বিবরণী পাওয়া যায়নি।',
       specs: item['Specs'] || item['specs'] || []
