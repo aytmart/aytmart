@@ -225,6 +225,17 @@ const ProductService = {
    * @private
    */
   mapProductSchema_(item) {
+    // Products.gs sends the image differently depending on the endpoint:
+    // - list() (list/card view)   -> singular  item.image   (one filename)
+    // - get()  (single product)   -> plural     item.images  (array of filenames, via toClientShape_)
+    // Normalize both shapes into a single `image` + `images` pair so every
+    // consumer (cards, gallery, cart) can rely on both fields always existing.
+    const imagesArray = Array.isArray(item['images']) && item['images'].length
+      ? item['images']
+      : (item['image'] || item['cover.webp'] ? [item['image'] || item['cover.webp']] : []);
+
+    const fallbackImage = 'https://placehold.co/400x400?text=No+Image';
+
     return {
       id: item['Product ID'],
       sku: item['SKU'] || item['sku'] || 'AYT-GEN-SKU',
@@ -232,10 +243,11 @@ const ProductService = {
       slug: item['Slug'],
       price: parseFloat(item['Selling Price'] || 0),
       sale_price: item['Discount Price'] ? parseFloat(item['Discount Price']) : null,
-      image: item['cover.webp'] || item['image'] || 'https://www.pinterest.com/pin/1125759238150214364?w=400&q=80',
+      image: imagesArray[0] || fallbackImage,
+      images: imagesArray.length ? imagesArray : [fallbackImage],
       is_featured: !!item['Featured'] || !!item['is_featured'],
       stock: parseInt(item['Stock'] || item['stock'] || 0, 10),
-      description: item['Description'] || item['description'] || 'কোনো বিবরণী পাওয়া যায়নি।',
+      description: item['Description'] || item['description'] || 'কোনো বিবরণী পাওয়া যায়নি।',
       specs: item['Specs'] || item['specs'] || []
     };
   }
