@@ -571,22 +571,24 @@
 
               <div class="form-group">
                 <label class="form-label">মূল থাম্বনেইল ইমেজ URL (Primary Image URL) *</label>
-                <input type="url" id="prod-main-image" class="form-input" placeholder="https://www.pinterest.com/pin/1125759238150214364?w=400&q=80" required />
+                <input type="url" id="prod-main-image" class="form-input" placeholder="https://www.pinterest.com/pin/1125759238150214364?w=400&q=80" required oninput="previewImageUrl('prod-main-image')" />
                 <div class="dynamic-list-row" style="margin-top:6px;">
                   <input type="file" id="prod-main-image-file" accept="image/*" style="display:none" onchange="handleImageFileSelect(this, 'prod-main-image')" />
                   <button type="button" class="btn-ghost" style="font-size:11px;" onclick="document.getElementById('prod-main-image-file').click()">📤 PC থেকে আপলোড করুন</button>
                   <span id="prod-main-image-status" style="font-size:11px; color:var(--ayt-muted);"></span>
                 </div>
+                <img id="prod-main-image-preview" src="" alt="প্রিভিউ" style="display:none; margin-top:8px; width:96px; height:96px; object-fit:cover; border-radius:var(--ayt-radius-sm); border:1px solid var(--ayt-border);" onerror="this.style.display='none'" />
               </div>
 
               <div class="form-group">
                 <label class="form-label">সেকেন্ডারি হোভার ইমেজ URL (Hover Image URL)</label>
-                <input type="url" id="prod-hover-image" class="form-input" placeholder="https://www.pinterest.com/pin/1125759238150214364?w=400&q=80" />
+                <input type="url" id="prod-hover-image" class="form-input" placeholder="https://www.pinterest.com/pin/1125759238150214364?w=400&q=80" oninput="previewImageUrl('prod-hover-image')" />
                 <div class="dynamic-list-row" style="margin-top:6px;">
                   <input type="file" id="prod-hover-image-file" accept="image/*" style="display:none" onchange="handleImageFileSelect(this, 'prod-hover-image')" />
                   <button type="button" class="btn-ghost" style="font-size:11px;" onclick="document.getElementById('prod-hover-image-file').click()">📤 PC থেকে আপলোড করুন</button>
                   <span id="prod-hover-image-status" style="font-size:11px; color:var(--ayt-muted);"></span>
                 </div>
+                <img id="prod-hover-image-preview" src="" alt="প্রিভিউ" style="display:none; margin-top:8px; width:96px; height:96px; object-fit:cover; border-radius:var(--ayt-radius-sm); border:1px solid var(--ayt-border);" onerror="this.style.display='none'" />
               </div>
 
               <!-- Product gallery addition dynamic list -->
@@ -667,6 +669,7 @@
         if (response && response.success && response.data && response.data.url) {
           document.getElementById(targetInputId).value = response.data.url;
           statusEl.textContent = '✅ আপলোড সফল';
+          previewImageUrl(targetInputId);
         } else {
           throw new Error((response && response.message) || 'আপলোড ব্যর্থ হয়েছে।');
         }
@@ -676,6 +679,22 @@
         alert('ছবি আপলোড করা যায়নি: ' + (err.message || 'অজানা ত্রুটি'));
       } finally {
         fileInputEl.value = '';
+      }
+    }
+
+    // Shows/hides the small thumbnail preview under an image URL field
+    // as soon as it has a value (typed, pasted, or filled by upload).
+    function previewImageUrl(targetInputId) {
+      const urlValue = document.getElementById(targetInputId).value.trim();
+      const previewEl = document.getElementById(`${targetInputId}-preview`);
+      if (!previewEl) return;
+
+      if (urlValue) {
+        previewEl.src = urlValue;
+        previewEl.style.display = 'block';
+      } else {
+        previewEl.style.display = 'none';
+        previewEl.src = '';
       }
     }
 
