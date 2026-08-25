@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AYT Mart — সেরা মূল্যে প্রিমিয়াম কোয়ালিটির দেশীয় পণ্য। সারাদেশে ক্যাশ অন ডেলিভারি ও দ্রুততম হোম ডেলিভারি।">
+  <meta name="theme-color" content="#0B4238">
+  <meta property="og:title" content="AYT Mart | প্রিমিয়াম অনলাইন ই-কমার্স">
+  <meta property="og:description" content="সেরা মূল্যে প্রিমিয়াম কোয়ালিটির দেশীয় পণ্য। সারাদেশে ক্যাশ অন ডেলিভারি এবং দ্রুততম হোম ডেলিভারি!">
+  <meta property="og:type" content="website">
+  <title>AYT Mart | প্রিমিয়াম অনলাইন ই-কমার্স</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles/themes/variables.css">
+  <link rel="stylesheet" href="styles/base/reset.css">
+  <link rel="stylesheet" href="styles/layout/layout.css">
+  <link rel="stylesheet" href="styles/pages/homepage-shelf.css">
+  <style>
+    /* ==========================================================================
+       AYT MART — PREMIUM HOMEPAGE DESIGN SYSTEM
+       Signature: "Nakshi stitch" gold dash-dividers + gift-box corner frames,
+       echoing dešiya (heritage/domestic) craft in a modern, premium register.
+       All tokens fall back to local defaults if the shared theme file does not
+       define them, so this page degrades gracefully but never breaks styling.
+       ========================================================================== */
+    :root {
+      /* -- Brand palette (layered on top of the existing design system) -- */
+      --ayt-primary:        var(--color-primary, #0B4238);
+      --ayt-primary-dark:   #072722;
+      --ayt-primary-light:  var(--color-primary-light, #14614F);
+      --ayt-gold:           var(--color-gold, #C9A227);
+      --ayt-gold-light:     #E7CD73;
+      --ayt-gold-dark:      #96751A;
+      --ayt-cream:          #FBF7EF;
+      --ayt-ink:            #1C2420;
+      --ayt-rose:           #B23B3B;
+      --ayt-rose-dark:      #8E2E2E;
+      --ayt-surface:        var(--bg-surface, #FFFFFF);
+      --ayt-surface-alt:    var(--bg-surface-alt, #F5F2E9);
+      --ayt-border:         var(--border-color, #E5E0D2);
+      --ayt-muted:          var(--text-muted, #756F62);
+
+      /* -- Spacing / radius / shadow / motion (fallbacks mirror common scale) -- */
+      --ayt-sp-1: var(--space-1, 4px);
+      --ayt-sp-2: var(--space-2, 8px);
+      --ayt-sp-3: var(--space-3, 12px);
+      --ayt-sp-4: var(--space-4, 16px);
+      --ayt-sp-5: var(--space-5, 20px);
+      --ayt-sp-6: var(--space-6, 24px);
+      --ayt-sp-8: var(--space-8, 32px);
+      --ayt-sp-10: var(--space-10, 40px);
+      --ayt-sp-12: var(--space-12, 48px);
+      --ayt-sp-16: var(--space-16, 64px);
+      --ayt-radius-sm: var(--border-radius-sm, 6px);
+      --ayt-radius-md: var(--border-radius-md, 12px);
+      --ayt-radius-lg: var(--border-radius-lg, 18px);
+      --ayt-radius-full: var(--border-radius-full, 999px);
+      --ayt-shadow-sm: 0 2px 8px rgba(15, 35, 30, 0.06);
+      --ayt-shadow-md: var(--shadow-md, 0 10px 30px rgba(15, 35, 30, 0.10));
+      --ayt-shadow-lg: 0 24px 60px rgba(15, 35, 30, 0.16);
+      --ayt-shadow-gold: 0 10px 24px rgba(201, 162, 39, 0.25);
+      --ayt-fast: var(--transition-fast, 150ms ease);
+      --ayt-normal: var(--transition-normal, 320ms cubic-bezier(.22,.61,.36,1));
+
+      /* -- Typography -- */
+      --ayt-font-display: 'Tiro Bangla', 'Noto Serif Bengali', serif;
+      --ayt-font-body: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+      --ayt-font-num: 'Poppins', 'Hind Siliguri', sans-serif;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+    }
+
+    body { font-family: var(--ayt-font-body); color: var(--ayt-ink); background: var(--ayt-cream); }
+    h1, h2, h3, .ayt-font-display { font-family: var(--ayt-font-display); }
+    :focus-visible { outline: 2px solid var(--ayt-gold-dark); outline-offset: 3px; }
+    img { max-width: 100%; display: block; }
+    button { font-family: inherit; cursor: pointer; }
+
+    .ayt-container { max-width: 1240px; margin: 0 auto; padding: 0 var(--ayt-sp-5); }
+
+    /* ---------- Section scaffolding ---------- */
+    .ayt-section { padding: var(--ayt-sp-12) 0; }
+    .ayt-section-alt { background: var(--ayt-surface-alt); }
+    .ayt-section-dark { background: var(--ayt-primary); color: #F3EFE2; }
+    .ayt-eyebrow {
+      display: inline-flex; align-items: center; gap: var(--ayt-sp-2);
+      font-family: var(--ayt-font-num); font-size: 12px; font-weight: 600;
+      letter-spacing: .12em; color: var(--ayt-gold-dark);
+      margin-bottom: var(--ayt-sp-2);
+    }
+    .ayt-eyebrow::before { content: ""; width: 20px; height: 2px; background: var(--ayt-gold); border-radius: 2px; }
+    .ayt-section-head { text-align: center; max-width: 640px; margin: 0 auto var(--ayt-sp-10); }
+    .ayt-section-head.is-left { text-align: left; margin: 0 0 var(--ayt-sp-8); max-width: none; }
+    .ayt-section-title { font-size: clamp(24px, 3vw, var(--font-2xl, 30px)); font-weight: var(--weight-bold, 700); color: var(--ayt-primary-dark); line-height: 1.25; }
+    .ayt-section-dark .ayt-section-title { color: #FBF7EF; }
+    .ayt-section-sub { color: var(--ayt-muted); margin-top: var(--ayt-sp-2); font-size: var(--font-base, 16px); }
+    .ayt-head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--ayt-sp-4); flex-wrap: wrap; }
+    .ayt-view-all {
+      display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 14px;
+      color: var(--ayt-primary); border-bottom: 1.5px solid var(--ayt-gold); padding-bottom: 2px;
+      transition: color var(--ayt-fast), gap var(--ayt-fast);
+      white-space: nowrap;
+    }
+    .ayt-view-all:hover { color: var(--ayt-gold-dark); gap: 10px; }
+
+    /* Signature stitch divider */
+    .ayt-divider { position: relative; height: 22px; margin: 0; }
+    .ayt-divider::before {
+      content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px;
+      background-image: repeating-linear-gradient(90deg, var(--ayt-gold) 0 10px, transparent 10px 20px);
+      opacity: .55;
+    }
+    .ayt-divider::after {
+      content: "❖"; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-52%);
+      background: var(--ayt-cream); color: var(--ayt-gold-dark); font-size: 13px; padding: 0 var(--ayt-sp-4);
+    }
+    .ayt-section-alt .ayt-divider::after { background: var(--ayt-surface-alt); }
+    .ayt-section-dark .ayt-divider::after { background: var(--ayt-primary); color: var(--ayt-gold-light); }
+
+    /* Corner-frame accent (gift-box bracket motif) */
+    .ayt-framed { position: relative; }
+    .ayt-framed::before, .ayt-framed::after {
+      content: ""; position: absolute; width: 26px; height: 26px; border: 2px solid var(--ayt-gold);
+      opacity: .85; pointer-events: none;
+    }
+    .ayt-framed::before { top: -8px; left: -8px; border-right: none; border-bottom: none; }
+    .ayt-framed::after { bottom: -8px; right: -8px; border-left: none; border-top: none; }
+
+    .ayt-reveal { opacity: 0; transform: translateY(18px); transition: opacity 640ms ease, transform 640ms ease; }
+    .ayt-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* ==========================================================================
+       1. HERO — premium 3D supermarket shelf experience
+       Full implementation lives in /styles/pages/homepage-shelf.css so it can
+       be reused/iterated on independently of this page's inline design system.
+       ========================================================================== */
+
+    /* USP ticker strip */
+    .ayt-ticker { background: var(--ayt-ink); color: #EFE9D8; overflow: hidden; }
+    .ayt-ticker-track { display: flex; gap: var(--ayt-sp-10); padding: var(--ayt-sp-2) 0; white-space: nowrap; animation: aytTicker 26s linear infinite; width: max-content; }
+    .ayt-ticker-track span { font-size: 13px; font-weight: 500; letter-spacing: .02em; display: inline-flex; align-items: center; gap: 8px; }
+    .ayt-ticker-track span::before { content: "✓"; color: var(--ayt-gold-light); font-weight: 700; }
+    @keyframes aytTicker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ==========================================================================
+       2. Shared skeleton shimmer (reused by featured-products loading state)
+       ========================================================================== */
+    .ayt-skel { position: relative; overflow: hidden; background: var(--ayt-surface-alt); border-radius: var(--ayt-radius-md); }
+    .ayt-skel::after {
+      content: ""; position: absolute; inset: 0; transform: translateX(-100%);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.65), transparent);
+      animation: aytShimmer 1.4s infinite;
+    }
+    @keyframes aytShimmer { 100% { transform: translateX(100%); } }
+
+    /* ==========================================================================
+       3. PROMO BANNER GRID
+       ========================================================================== */
+    .promo-grid { display: grid; grid-template-columns: 1.4fr 1fr; grid-template-rows: 1fr 1fr; gap: var(--ayt-sp-5); min-height: 340px; }
+    .promo-card {
+      position: relative; border-radius: var(--ayt-radius-lg); overflow: hidden; padding: var(--ayt-sp-6);
+      display: flex; flex-direction: column; justify-content: flex-end; color: #fff; isolation: isolate;
+      transition: transform var(--ayt-normal);
+    }
+    .promo-card:hover { transform: translateY(-3px); }
+    .promo-card::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .16;
+      background-image: repeating-linear-gradient(45deg, #fff 0 2px, transparent 2px 22px); }
+    .promo-1 { grid-row: 1 / 3; background: linear-gradient(150deg, #0B4238, #163D2C 60%, #0A2620); }
+    .promo-2 { background: linear-gradient(150deg, #8E2E2E, #5B1F22); }
+    .promo-3 { background: linear-gradient(150deg, #96751A, #4A3609); }
+    .promo-eyebrow { font-family: var(--ayt-font-num); font-size: 11px; letter-spacing: .14em; color: var(--ayt-gold-light); text-transform: uppercase; margin-bottom: 6px; }
+    .promo-title { font-size: clamp(18px, 2.2vw, 26px); font-weight: 700; margin-bottom: 6px; line-height: 1.25; }
+    .promo-text { font-size: 13.5px; opacity: .85; margin-bottom: var(--ayt-sp-3); max-width: 30ch; }
+    .promo-link { font-size: 13px; font-weight: 700; color: var(--ayt-gold-light); display: inline-flex; align-items: center; gap: 6px; }
+    @media (max-width: 720px) { .promo-grid { grid-template-columns: 1fr; grid-template-rows: none; } .promo-1 { grid-row: auto; } }
+
+    /* ==========================================================================
+       FLASH SALE
+       ========================================================================== */
+    .flash-banner {
+      display: flex; align-items: center; justify-content: space-between; gap: var(--ayt-sp-5);
+      background: linear-gradient(120deg, var(--ayt-rose), var(--ayt-rose-dark));
+      color: #fff; border-radius: var(--ayt-radius-lg); padding: var(--ayt-sp-6) var(--ayt-sp-8);
+      margin-bottom: var(--ayt-sp-8); flex-wrap: wrap;
+    }
+    .flash-heading { display: flex; align-items: center; gap: var(--ayt-sp-3); }
+    .flash-heading svg { width: 34px; height: 34px; flex-shrink: 0; }
+    .flash-heading h2 { font-size: clamp(20px, 2.6vw, 28px); font-weight: 700; }
+    .flash-heading p { font-size: 13.5px; opacity: .9; }
+    .flash-countdown { display: flex; align-items: center; gap: var(--ayt-sp-2); }
+    .flash-countdown .cd-label { font-size: 12px; opacity: .85; margin-right: 4px; }
+    .cd-box { background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35); border-radius: var(--ayt-radius-sm); min-width: 52px; text-align: center; padding: 6px 4px; font-family: var(--ayt-font-num); }
+    .cd-box .cd-num { font-size: 20px; font-weight: 700; line-height: 1; display: block; }
+    .cd-box .cd-unit { font-size: 10px; opacity: .8; }
+    .cd-colon { font-weight: 700; opacity: .7; }
+
+    /* ==========================================================================
+       PRODUCT CARDS (grid container / classes required by JS — enhanced)
+       ========================================================================== */
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: var(--ayt-sp-6); }
+    .product-card {
+      position: relative; background: var(--ayt-surface); border: 1px solid var(--ayt-border);
+      border-radius: var(--ayt-radius-md); overflow: hidden; display: flex; flex-direction: column;
+      box-shadow: var(--ayt-shadow-sm);
+      transition: box-shadow var(--ayt-normal), border-color var(--ayt-normal), transform var(--ayt-normal);
+    }
+    .product-card:hover { box-shadow: var(--ayt-shadow-lg); border-color: var(--ayt-gold); transform: translateY(-4px); }
+    .product-img-wrapper { position: relative; background: var(--ayt-surface-alt); aspect-ratio: 1; overflow: hidden; }
+    .product-img { width: 100%; height: 100%; object-fit: cover; transition: opacity var(--ayt-normal), transform var(--ayt-normal); }
+    .product-img-primary { position: relative; z-index: 1; }
+    .product-img-secondary { position: absolute; inset: 0; z-index: 2; opacity: 0; transform: scale(1.04); }
+    .product-card:hover .product-img-primary { transform: scale(1.06); }
+    .product-card:hover .product-img-secondary { opacity: 1; }
+
+    .product-badge {
+      position: absolute; top: var(--ayt-sp-2); left: var(--ayt-sp-2); z-index: 3;
+      background: var(--ayt-primary); color: #fff; font-size: var(--font-xs, 11px); font-weight: 700;
+      padding: 4px var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); letter-spacing: .02em;
+    }
+    .product-badge.has-discount { background: var(--ayt-rose); }
+    .discount-pill {
+      position: absolute; top: var(--ayt-sp-2); right: var(--ayt-sp-2); z-index: 3;
+      background: var(--ayt-gold); color: #241A03; font-family: var(--ayt-font-num); font-weight: 700; font-size: 11px;
+      padding: 4px 8px; border-radius: var(--ayt-radius-sm);
+    }
+    .wishlist-btn {
+      position: absolute; bottom: var(--ayt-sp-2); right: var(--ayt-sp-2); z-index: 3;
+      width: 34px; height: 34px; border-radius: 50%; border: none; background: rgba(255,255,255,.92);
+      display: flex; align-items: center; justify-content: center; box-shadow: var(--ayt-shadow-sm);
+      opacity: 0; transform: translateY(6px); transition: opacity var(--ayt-fast), transform var(--ayt-fast), background var(--ayt-fast);
+    }
+    .product-card:hover .wishlist-btn, .wishlist-btn.is-active { opacity: 1; transform: translateY(0); }
+    .wishlist-btn .heart-icon { width: 17px; height: 17px; fill: none; stroke: var(--ayt-ink); stroke-width: 1.8; transition: fill var(--ayt-fast), stroke var(--ayt-fast); }
+    .wishlist-btn.is-active { background: var(--ayt-rose); }
+    .wishlist-btn.is-active .heart-icon { fill: #fff; stroke: #fff; }
+
+    .quickview-btn {
+      position: absolute; left: var(--ayt-sp-2); right: var(--ayt-sp-2); bottom: var(--ayt-sp-2); z-index: 3;
+      background: rgba(11, 66, 56, .92); color: #fff; border: none; padding: 9px; font-size: 12.5px; font-weight: 600;
+      border-radius: var(--ayt-radius-sm); opacity: 0; transform: translateY(8px);
+      transition: opacity var(--ayt-fast), transform var(--ayt-fast);
+    }
+    .product-card:hover .quickview-btn { opacity: 1; transform: translateY(0); }
+
+    .product-info { padding: var(--ayt-sp-4); display: flex; flex-direction: column; flex: 1; gap: 7px; }
+    .product-title { font-size: var(--font-sm, 14px); font-weight: 600; line-height: 1.4; height: 40px; overflow: hidden; }
+    .product-rating { display: flex; align-items: center; gap: 6px; }
+    .product-rating .stars { display: inline-flex; gap: 1px; }
+    .star-icon { width: 13px; height: 13px; fill: #DCD6C4; }
+    .star-icon.is-filled { fill: var(--ayt-gold); }
+    .review-count { font-size: 11.5px; color: var(--ayt-muted); }
+    .product-pricing { display: flex; align-items: center; gap: var(--ayt-sp-2); font-family: var(--ayt-font-num); }
+    .price-sale { color: var(--ayt-rose); font-weight: 700; font-size: var(--font-base, 16px); }
+    .price-regular { text-decoration: line-through; color: var(--ayt-muted); font-size: var(--font-sm, 13px); }
+    .product-meta-row { display: flex; align-items: center; justify-content: space-between; font-size: 11px; }
+    .stock-status { font-weight: 600; padding: 2px 8px; border-radius: var(--ayt-radius-full); }
+    .stock-status.in-stock { color: #1B6E4A; background: #E4F3EA; }
+    .stock-status.low-stock { color: #9C5B0E; background: #FBEBD6; }
+    .stock-status.out-of-stock { color: #9C2B2B; background: #FBE1E1; }
+    .sold-count { color: var(--ayt-muted); }
+    .product-actions { display: flex; gap: 8px; margin-top: auto; }
+    .btn-add-cart {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+      background: var(--ayt-surface-alt); color: var(--ayt-primary-dark); border: 1px solid var(--ayt-border);
+      padding: var(--ayt-sp-2); font-size: 12.5px; font-weight: 600; border-radius: var(--ayt-radius-sm);
+      transition: background var(--ayt-fast), border-color var(--ayt-fast);
+    }
+    .btn-add-cart:hover { background: #fff; border-color: var(--ayt-gold); }
+    .cart-icon { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+    .product-btn.buy-now-btn {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      background: var(--ayt-primary); color: #fff; padding: var(--ayt-sp-2); font-size: 12.5px; font-weight: 600;
+      text-align: center; border-radius: var(--ayt-radius-sm); transition: background var(--ayt-fast);
+    }
+    .product-btn.buy-now-btn:hover { background: var(--ayt-gold); color: #241A03; }
+    .out-of-stock ~ .product-actions .product-btn.buy-now-btn,
+    .product-card:has(.stock-status.out-of-stock) .buy-now-btn { pointer-events: none; opacity: .5; }
+
+    /* ==========================================================================
+       COLLECTIONS
+       ========================================================================== */
+    .collection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--ayt-sp-5); }
+    .collection-card {
+      position: relative; border-radius: var(--ayt-radius-lg); overflow: hidden; min-height: 220px;
+      display: flex; align-items: flex-end; padding: var(--ayt-sp-5); color: #fff;
+      transition: transform var(--ayt-normal), box-shadow var(--ayt-normal);
+    }
+    .collection-card:hover { transform: translateY(-4px); box-shadow: var(--ayt-shadow-lg); }
+    .collection-card::before { content: ""; position: absolute; inset: 0; opacity: .18;
+      background-image: repeating-linear-gradient(120deg, #fff 0 2px, transparent 2px 24px); }
+    .collection-1 { background: linear-gradient(160deg, #14614F, #072722); }
+    .collection-2 { background: linear-gradient(160deg, #96751A, #3B2A08); }
+    .collection-3 { background: linear-gradient(160deg, #8E2E2E, #3A1414); }
+    .collection-name { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
+    .collection-count { font-size: 12.5px; opacity: .85; }
+    @media (max-width: 860px) { .collection-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .collection-grid { grid-template-columns: 1fr; } }
+
+    /* ==========================================================================
+       WHY CHOOSE
+       ========================================================================== */
+    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--ayt-sp-6); }
+    .why-card { text-align: center; padding: var(--ayt-sp-5); }
+    .why-icon {
+      width: 64px; height: 64px; margin: 0 auto var(--ayt-sp-3); border-radius: 50%;
+      background: rgba(201,162,39,.12); border: 1px solid var(--ayt-gold);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .why-icon svg { width: 28px; height: 28px; stroke: var(--ayt-gold-dark); fill: none; stroke-width: 1.6; }
+    .why-card h3 { font-size: 15.5px; font-weight: 700; margin-bottom: 6px; color: var(--ayt-primary-dark); }
+    .why-card p { font-size: 13px; color: var(--ayt-muted); line-height: 1.6; }
+
+    /* ==========================================================================
+       STATS
+       ========================================================================== */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--ayt-sp-6); text-align: center; }
+    .stat-num { font-family: var(--ayt-font-num); font-size: clamp(28px, 4vw, 42px); font-weight: 700; color: var(--ayt-gold-light); }
+    .stat-label { font-size: 13px; color: #D9D2BC; margin-top: 4px; }
+    @media (max-width: 640px) { .stats-grid { grid-template-columns: repeat(2, 1fr); row-gap: var(--ayt-sp-8); } }
+
+    /* ==========================================================================
+       BRAND MARQUEE
+       ========================================================================== */
+    .brand-marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+    .brand-track { display: flex; align-items: center; gap: var(--ayt-sp-12); width: max-content; animation: aytTicker 22s linear infinite; }
+    .brand-item { font-family: var(--ayt-font-num); font-weight: 700; font-size: 22px; letter-spacing: .04em; color: var(--ayt-muted); opacity: .7; white-space: nowrap; }
+
+    /* ==========================================================================
+       TESTIMONIALS
+       ========================================================================== */
+    .testi-strip { display: flex; gap: var(--ayt-sp-5); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: var(--ayt-sp-3); scrollbar-width: none; }
+    .testi-strip::-webkit-scrollbar { display: none; }
+    .testi-card {
+      scroll-snap-align: start; flex: 0 0 min(340px, 86vw); background: var(--ayt-surface); border: 1px solid var(--ayt-border);
+      border-radius: var(--ayt-radius-lg); padding: var(--ayt-sp-6);
+    }
+    .testi-stars { display: flex; gap: 2px; margin-bottom: var(--ayt-sp-3); }
+    .testi-stars .star-icon { width: 15px; height: 15px; }
+    .testi-quote { font-size: 14.5px; line-height: 1.75; color: var(--ayt-ink); margin-bottom: var(--ayt-sp-5); }
+    .testi-person { display: flex; align-items: center; gap: 10px; }
+    .testi-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--ayt-primary); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: var(--ayt-font-num); flex-shrink: 0; }
+    .testi-name { font-size: 13.5px; font-weight: 700; }
+    .testi-loc { font-size: 12px; color: var(--ayt-muted); }
+    .testi-nav { display: flex; gap: 10px; justify-content: center; margin-top: var(--ayt-sp-5); }
+    .testi-nav button { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--ayt-border); background: var(--ayt-surface); display: flex; align-items: center; justify-content: center; transition: border-color var(--ayt-fast); }
+    .testi-nav button:hover { border-color: var(--ayt-gold); }
+    .testi-nav svg { width: 16px; height: 16px; stroke: var(--ayt-ink); fill: none; stroke-width: 2; }
+
+    /* ==========================================================================
+       NEWSLETTER
+       ========================================================================== */
+    .newsletter-box {
+      background: linear-gradient(135deg, var(--ayt-primary), var(--ayt-primary-dark));
+      border-radius: var(--ayt-radius-lg); padding: var(--ayt-sp-10) var(--ayt-sp-8); text-align: center; color: #fff;
+      position: relative; overflow: hidden;
+    }
+    .newsletter-box::before { content: ""; position: absolute; inset: 0; opacity: .12;
+      background-image: repeating-linear-gradient(45deg, #fff 0 2px, transparent 2px 26px); }
+    .newsletter-box > * { position: relative; z-index: 1; }
+    .newsletter-box h2 { font-size: clamp(20px, 2.6vw, 28px); margin-bottom: 8px; }
+    .newsletter-box p { font-size: 14px; opacity: .85; max-width: 46ch; margin: 0 auto var(--ayt-sp-6); }
+    .newsletter-form { display: flex; gap: 10px; max-width: 440px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+    .newsletter-form input {
+      flex: 1; min-width: 220px; padding: 13px var(--ayt-sp-4); border-radius: var(--ayt-radius-full); border: none;
+      font-size: 14px; font-family: inherit;
+    }
+    .newsletter-form button {
+      background: var(--ayt-gold); color: #241A03; border: none; padding: 13px var(--ayt-sp-6); border-radius: var(--ayt-radius-full);
+      font-weight: 700; font-size: 14px; transition: background var(--ayt-fast);
+    }
+    .newsletter-form button:hover { background: var(--ayt-gold-light); }
+
+    /* ==========================================================================
+       TRUST BADGES / DELIVERY / PAYMENT
+       ========================================================================== */
+    .trust-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--ayt-sp-4); }
+    .trust-chip { display: flex; align-items: center; gap: 10px; padding: var(--ayt-sp-4); background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); }
+    .trust-chip svg { width: 24px; height: 24px; stroke: var(--ayt-primary); fill: none; stroke-width: 1.6; flex-shrink: 0; }
+    .trust-chip span { font-size: 12.5px; font-weight: 600; line-height: 1.4; }
+    @media (max-width: 760px) { .trust-strip { grid-template-columns: repeat(2, 1fr); } }
+
+    .delivery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--ayt-sp-5); }
+    .delivery-card { background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); padding: var(--ayt-sp-6); text-align: center; }
+    .delivery-card svg { width: 30px; height: 30px; stroke: var(--ayt-gold-dark); fill: none; stroke-width: 1.6; margin: 0 auto var(--ayt-sp-3); }
+    .delivery-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .delivery-card p { font-size: 13px; color: var(--ayt-muted); line-height: 1.6; }
+    @media (max-width: 700px) { .delivery-grid { grid-template-columns: 1fr; } }
+
+    .payment-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .payment-badge {
+      padding: 10px 20px; border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-full);
+      font-family: var(--ayt-font-num); font-weight: 600; font-size: 13px; background: var(--ayt-surface); color: var(--ayt-ink);
+    }
+
+    /* ==========================================================================
+       RECENTLY VIEWED / SOCIAL
+       ========================================================================== */
+    #recently-viewed-section { display: none; }
+    #recently-viewed-section.has-items { display: block; }
+
+    .social-grid { display: flex; justify-content: center; gap: var(--ayt-sp-4); flex-wrap: wrap; }
+    .social-chip {
+      display: flex; align-items: center; gap: 10px; padding: var(--ayt-sp-3) var(--ayt-sp-5);
+      border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-full); background: var(--ayt-surface);
+      font-size: 13.5px; font-weight: 600; transition: border-color var(--ayt-fast), transform var(--ayt-fast);
+    }
+    .social-chip:hover { border-color: var(--ayt-gold); transform: translateY(-2px); }
+    .social-chip svg { width: 18px; height: 18px; stroke: var(--ayt-primary); fill: none; stroke-width: 1.7; }
+
+    /* ==========================================================================
+       QUICK VIEW MODAL + TOAST
+       ========================================================================== */
+    .ayt-modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: var(--ayt-sp-5); }
+    .ayt-modal.is-open { display: flex; }
+    .ayt-modal-backdrop { position: absolute; inset: 0; background: rgba(11, 20, 17, .55); backdrop-filter: blur(2px); }
+    .ayt-modal-panel {
+      position: relative; background: var(--ayt-surface); border-radius: var(--ayt-radius-lg); max-width: 640px; width: 100%;
+      max-height: 86vh; overflow: auto; padding: var(--ayt-sp-6); box-shadow: var(--ayt-shadow-lg);
+    }
+    .ayt-modal-close { position: absolute; top: var(--ayt-sp-3); right: var(--ayt-sp-3); width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--ayt-border); background: var(--ayt-surface); font-size: 16px; }
+    .qv-layout { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ayt-sp-6); }
+    .qv-layout img { border-radius: var(--ayt-radius-md); aspect-ratio: 1; object-fit: cover; }
+    .qv-title { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+    @media (max-width: 560px) { .qv-layout { grid-template-columns: 1fr; } }
+
+    .ayt-toast {
+      position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 16px); z-index: 200;
+      background: var(--ayt-ink); color: #fff; padding: 12px 22px; border-radius: var(--ayt-radius-full);
+      font-size: 13.5px; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity var(--ayt-fast), transform var(--ayt-fast);
+    }
+    .ayt-toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+    /* ==========================================================================
+       RESPONSIVE TUNING
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .collection-grid, .stats-grid { gap: var(--ayt-sp-4); }
+      .flash-banner { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 560px) {
+      .ayt-section { padding: var(--ayt-sp-8) 0; }
+      .trust-strip { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+
+  <!-- ==========================================================================
+       3D VIRTUAL SHOP — promo banner styles (scoped, additive only).
+       Uses the existing --ayt-* design tokens defined above; does not modify
+       any existing rule. Safe to remove this block + the .ayt3d-banner
+       section below without affecting the rest of the page.
+       ========================================================================== -->
+  <style>
+    .ayt3d-banner {
+      position: relative;
+      margin: var(--ayt-sp-8) auto 0;
+      max-width: 1240px;
+      padding: 0 var(--ayt-sp-5);
+    }
+    .ayt3d-banner-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--ayt-sp-6);
+      flex-wrap: wrap;
+      padding: var(--ayt-sp-8) var(--ayt-sp-10);
+      border-radius: var(--ayt-radius-lg);
+      background: radial-gradient(120% 160% at 15% 20%, #14614F 0%, #0B4238 45%, #072722 100%);
+      box-shadow: var(--ayt-shadow-lg);
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .ayt3d-banner-inner::before,
+    .ayt3d-banner-inner::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(2px);
+      z-index: -1;
+    }
+    .ayt3d-banner-inner::before {
+      width: 260px; height: 260px;
+      right: -60px; top: -90px;
+      background: radial-gradient(circle, rgba(201,162,39,0.35), transparent 70%);
+    }
+    .ayt3d-banner-inner::after {
+      width: 220px; height: 220px;
+      left: 10%; bottom: -120px;
+      background: radial-gradient(circle, rgba(20,97,79,0.55), transparent 70%);
+    }
+    .ayt3d-banner-text { position: relative; z-index: 1; max-width: 560px; }
+    .ayt3d-eyebrow {
+      display: inline-flex; align-items: center; gap: var(--ayt-sp-2);
+      font-family: var(--ayt-font-num);
+      font-size: 12.5px; font-weight: 700; letter-spacing: .08em;
+      color: var(--ayt-gold-light);
+      background: rgba(201,162,39,0.12);
+      border: 1px solid rgba(201,162,39,0.35);
+      padding: 6px 14px;
+      border-radius: var(--ayt-radius-full);
+      margin-bottom: var(--ayt-sp-4);
+    }
+    .ayt3d-eyebrow svg { width: 14px; height: 14px; }
+    .ayt3d-banner-title {
+      font-family: var(--ayt-font-display);
+      color: #FBF7EF;
+      font-size: clamp(22px, 3vw, 30px);
+      line-height: 1.3;
+      margin: 0 0 var(--ayt-sp-2);
+    }
+    .ayt3d-banner-title span { color: var(--ayt-gold-light); }
+    .ayt3d-banner-sub {
+      font-family: var(--ayt-font-body);
+      color: rgba(251,247,239,0.78);
+      font-size: 15px;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .ayt3d-banner-cta {
+      position: relative; z-index: 1;
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--ayt-font-num);
+      font-weight: 700; font-size: 15px;
+      color: var(--ayt-primary-dark);
+      background: linear-gradient(135deg, var(--ayt-gold-light), var(--ayt-gold));
+      padding: 14px 26px;
+      border-radius: var(--ayt-radius-full);
+      box-shadow: var(--ayt-shadow-gold);
+      white-space: nowrap;
+      text-decoration: none;
+      transition: transform var(--ayt-fast), box-shadow var(--ayt-fast);
+    }
+    .ayt3d-banner-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(201,162,39,0.35); }
+    .ayt3d-banner-cta svg { width: 18px; height: 18px; }
+    @media (max-width: 640px) {
+      .ayt3d-banner-inner { padding: var(--ayt-sp-6); flex-direction: column; align-items: flex-start; }
+      .ayt3d-banner-cta { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Header Injection Placeholder -->
+  <header id="global-header"></header>
+
+  <!-- ==========================================================================
+       1. HERO — premium 3D supermarket shelf experience.
+       Categories/products below are populated entirely by JS from the
+       existing ProductService (backend-driven) — see initShelfHero().
+       ========================================================================== -->
+  <section class="hs-section" id="hero-shelf" aria-label="ক্যাটাগরি শোকেস">
+    <div class="hs-bg" aria-hidden="true">
+      <img src="assets/images/homepage/aisle-bg.svg" alt="" class="hs-bg-img" loading="eager" width="1600" height="900">
+      <div class="hs-bg-overlay"></div>
+      <div class="hs-bg-vignette"></div>
+    </div>
+
+    <div class="hs-content ayt-container">
+      <div class="hs-heading">
+        <p class="hs-eyebrow">স্বাগতম AYT MART-এ</p>
+        <h1 class="hs-title">আপনার প্রয়োজন, <span>এক জায়গায়</span></h1>
+        <p class="hs-subtitle">সারাদেশে ক্যাশ অন ডেলিভারি এবং দ্রুততম হোম ডেলিভারি!</p>
+        <div class="hs-cta-row">
+          <a href="products.html" class="hero-btn">কেনাকাটা শুরু করুন ➔</a>
+          <a href="products.html" class="hero-btn hero-btn-ghost">সব পণ্য দেখুন</a>
+        </div>
+      </div>
+
+      <div class="hs-stage-wrap">
+        <button type="button" class="hs-arrow hs-prev" aria-label="আগের ক্যাটাগরি">‹</button>
+        <div class="hs-stage" id="shelfStage" tabindex="0">
+          <div class="hs-skel"></div>
+          <div class="hs-skel"></div>
+          <div class="hs-skel"></div>
+          <div class="hs-skel"></div>
+          <div class="hs-skel"></div>
+        </div>
+        <button type="button" class="hs-arrow hs-next" aria-label="পরের ক্যাটাগরি">›</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       3D VIRTUAL SHOP — promo banner linking to the standalone 3D shop
+       experience at /3d-shop/. Purely additive; does not touch any existing
+       section, script, or stylesheet.
+       ========================================================================== -->
+  <div class="ayt3d-banner">
+    <div class="ayt3d-banner-inner">
+      <div class="ayt3d-banner-text">
+        <span class="ayt3d-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          একদম নতুন
+        </span>
+        <h2 class="ayt3d-banner-title">ঘুরে দেখুন আমাদের <span>৩D ভার্চুয়াল শপ</span></h2>
+        <p class="ayt3d-banner-sub">সরাসরি দোকানের ভেতরে ঢুকে পণ্য দেখার মতো অভিজ্ঞতা — হেঁটে হেঁটে বিভিন্ন জোন ঘুরুন, পণ্য ৩৬০° দেখুন এবং সরাসরি কার্টে যোগ করুন।</p>
+      </div>
+      <a href="3d-shop/index.html" class="ayt3d-banner-cta" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        ৩D শপ এক্সপ্লোর করুন
+      </a>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FEATURES STRIP — same trust content as the existing
+       "কেন AYT Mart বেছে নেবেন" section further down, condensed here to sit
+       directly beneath the hero per the reference design's visual hierarchy.
+       ========================================================================== -->
+  <div class="hs-features">
+    <div class="hs-feature ayt-reveal">
+      <span class="hs-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="18.5" r="1.6"/><circle cx="17.5" cy="18.5" r="1.6"/></svg></span>
+      <div class="hs-feature-text"><h4>দ্রুত ডেলিভারি</h4><p>সারা দেশে দ্রুত ডেলিভারি</p></div>
+    </div>
+    <div class="hs-feature ayt-reveal">
+      <span class="hs-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <div class="hs-feature-text"><h4>নিরাপদ পেমেন্ট</h4><p>১০০% নিরাপদ লেনদেন</p></div>
+    </div>
+    <div class="hs-feature ayt-reveal">
+      <span class="hs-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg></span>
+      <div class="hs-feature-text"><h4>সহজ রিটার্ন</h4><p>সহজ ও ঝামেলামুক্ত রিটার্ন</p></div>
+    </div>
+    <div class="hs-feature ayt-reveal">
+      <span class="hs-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.59 13.41 12 22l-9-9V4a1 1 0 0 1 1-1h9zM7 7h.01"/></svg></span>
+      <div class="hs-feature-text"><h4>সেরা অফার</h4><p>নিয়মিত থাকছে সেরা অফার</p></div>
+    </div>
+    <div class="hs-feature ayt-reveal">
+      <span class="hs-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h4v4H4zM16 4h4v4h-4zM4 16h4v4H4zM14 14h6v6h-6z"/></svg></span>
+      <div class="hs-feature-text"><h4>২৪/৭ সহায়তা</h4><p>আমরা আছি আপনার সাথে</p></div>
+    </div>
+  </div>
+
+  <div class="ayt-ticker" aria-hidden="true">
+    <div class="ayt-ticker-track">
+      <span>সারাদেশে হোম ডেলিভারি</span><span>ক্যাশ অন ডেলিভারি</span><span>১০০% অরিজিনাল পণ্য</span><span>৭ দিনের সহজ রিটার্ন</span>
+      <span>সারাদেশে হোম ডেলিভারি</span><span>ক্যাশ অন ডেলিভারি</span><span>১০০% অরিজিনাল পণ্য</span><span>৭ দিনের সহজ রিটার্ন</span>
+    </div>
+  </div>
+
+  <main class="main-container">
+    <div class="ayt-container">
+
+      <!-- ==========================================================================
+           3. PROMOTIONAL BANNER GRID
+           ========================================================================== -->
+      <section class="ayt-section" aria-label="প্রচারণামূলক ব্যানার">
+        <div class="promo-grid">
+          <a href="products.html" class="promo-card promo-1 ayt-reveal">
+            <p class="promo-eyebrow">নতুন সংগ্রহ</p>
+            <h3 class="promo-title">দেশীয় হস্তশিল্পের অনন্য সংগ্রহ</h3>
+            <p class="promo-text">ঐতিহ্য আর আধুনিকতার মেলবন্ধনে তৈরি নির্বাচিত পণ্য।</p>
+            <span class="promo-link">কালেকশন দেখুন ➔</span>
+          </a>
+          <a href="products.html" class="promo-card promo-2 ayt-reveal">
+            <p class="promo-eyebrow">সীমিত সময়</p>
+            <h3 class="promo-title">উইকএন্ড স্পেশাল ছাড়</h3>
+            <span class="promo-link">অফার দেখুন ➔</span>
+          </a>
+          <a href="products.html" class="promo-card promo-3 ayt-reveal">
+            <p class="promo-eyebrow">নিশ্চয়তা</p>
+            <h3 class="promo-title">সেরা মূল্য গ্যারান্টি</h3>
+            <span class="promo-link">বিস্তারিত ➔</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           FLASH SALE
+           ========================================================================== -->
+      <section class="ayt-section" id="flash-sale">
+        <div class="flash-banner">
+          <div class="flash-heading">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>
+            <div>
+              <h2>ফ্ল্যাশ সেল ⚡</h2>
+              <p>আজকের বিশেষ ছাড়, স্টক শেষ হওয়ার আগেই অর্ডার করুন</p>
+            </div>
+          </div>
+          <div class="flash-countdown" aria-live="polite">
+            <span class="cd-label">শেষ হতে বাকি:</span>
+            <div class="cd-box"><span class="cd-num" id="flash-hours">00</span><span class="cd-unit">ঘণ্টা</span></div>
+            <span class="cd-colon">:</span>
+            <div class="cd-box"><span class="cd-num" id="flash-minutes">00</span><span class="cd-unit">মিনিট</span></div>
+            <span class="cd-colon">:</span>
+            <div class="cd-box"><span class="cd-num" id="flash-seconds">00</span><span class="cd-unit">সেকেন্ড</span></div>
+          </div>
+        </div>
+        <div class="product-grid" id="flash-sale-grid"></div>
+      </section>
+
+      <div class="ayt-divider" aria-hidden="true"></div>
+
+      <!-- ==========================================================================
+           FEATURED PRODUCTS  (container id & item classes required by JS)
+           ========================================================================== -->
+      <section class="ayt-section" id="featured-section">
+        <div class="ayt-head-row ayt-section-head is-left">
+          <div>
+            <p class="ayt-eyebrow">আমাদের নির্বাচন</p>
+            <h2 class="ayt-section-title">হট ডিল প্রোডাক্টস</h2>
+          </div>
+          <a href="products.html" class="ayt-view-all">সব দেখুন ➔</a>
+        </div>
+        <div class="product-grid" id="featured-products">
+          <div class="ayt-skel" style="aspect-ratio:.72;"></div><div class="ayt-skel" style="aspect-ratio:.72;"></div>
+          <div class="ayt-skel" style="aspect-ratio:.72;"></div><div class="ayt-skel" style="aspect-ratio:.72;"></div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           BEST SELLERS
+           ========================================================================== -->
+      <section class="ayt-section ayt-section-alt" id="best-sellers-section" style="border-radius:var(--ayt-radius-lg);">
+        <div class="ayt-head-row ayt-section-head is-left">
+          <div>
+            <p class="ayt-eyebrow">গ্রাহকদের পছন্দ</p>
+            <h2 class="ayt-section-title">বেস্ট সেলার</h2>
+          </div>
+          <a href="products.html" class="ayt-view-all">সব দেখুন ➔</a>
+        </div>
+        <div class="product-grid" id="best-sellers-grid"></div>
+      </section>
+
+      <!-- ==========================================================================
+           NEW ARRIVALS
+           ========================================================================== -->
+      <section class="ayt-section" id="new-arrivals-section">
+        <div class="ayt-head-row ayt-section-head is-left">
+          <div>
+            <p class="ayt-eyebrow">সদ্য এসেছে</p>
+            <h2 class="ayt-section-title">নতুন সংযোজন</h2>
+          </div>
+          <a href="products.html" class="ayt-view-all">সব দেখুন ➔</a>
+        </div>
+        <div class="product-grid" id="new-arrivals-grid"></div>
+      </section>
+
+      <!-- ==========================================================================
+           TRENDING
+           ========================================================================== -->
+      <section class="ayt-section ayt-section-alt" id="trending-section" style="border-radius:var(--ayt-radius-lg);">
+        <div class="ayt-head-row ayt-section-head is-left">
+          <div>
+            <p class="ayt-eyebrow">এই মুহূর্তে জনপ্রিয়</p>
+            <h2 class="ayt-section-title">ট্রেন্ডিং প্রোডাক্টস</h2>
+          </div>
+          <a href="products.html" class="ayt-view-all">সব দেখুন ➔</a>
+        </div>
+        <div class="product-grid" id="trending-grid"></div>
+      </section>
+
+      <div class="ayt-divider" aria-hidden="true"></div>
+
+      <!-- ==========================================================================
+           FEATURED COLLECTIONS
+           ========================================================================== -->
+      <section class="ayt-section">
+        <div class="ayt-section-head">
+          <p class="ayt-eyebrow">কিউরেটেড</p>
+          <h2 class="ayt-section-title">ফিচারড কালেকশন</h2>
+        </div>
+        <div class="collection-grid">
+          <a href="products.html" class="collection-card collection-1 ayt-reveal">
+            <div><div class="collection-name">প্রিমিয়াম গৃহস্থালি</div><div class="collection-count">ঘর সাজানোর নির্বাচিত পণ্য</div></div>
+          </a>
+          <a href="products.html" class="collection-card collection-2 ayt-reveal">
+            <div><div class="collection-name">ফ্যাশন এসেনশিয়ালস</div><div class="collection-count">স্টাইল ও আরামের সমন্বয়</div></div>
+          </a>
+          <a href="products.html" class="collection-card collection-3 ayt-reveal">
+            <div><div class="collection-name">ইলেকট্রনিক্স ডিল</div><div class="collection-count">প্রযুক্তি পণ্যে সেরা মূল্য</div></div>
+          </a>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ==========================================================================
+         WHY CHOOSE AYT MART
+         ========================================================================== -->
+    <section class="ayt-section ayt-section-alt">
+      <div class="ayt-container">
+        <div class="ayt-section-head">
+          <p class="ayt-eyebrow">কেন আমরা</p>
+          <h2 class="ayt-section-title">কেন AYT Mart বেছে নেবেন</h2>
+        </div>
+        <div class="why-grid">
+          <div class="why-card ayt-reveal">
+            <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="18.5" r="1.6"/><circle cx="17.5" cy="18.5" r="1.6"/></svg></div>
+            <h3>দ্রুত ডেলিভারি</h3><p>নির্ভরযোগ্য পার্টনারের মাধ্যমে দ্রুততম হোম ডেলিভারি।</p>
+          </div>
+          <div class="why-card ayt-reveal">
+            <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5z"/></svg></div>
+            <h3>ক্যাশ অন ডেলিভারি</h3><p>পণ্য হাতে পেয়ে তবেই মূল্য পরিশোধ করুন।</p>
+          </div>
+          <div class="why-card ayt-reveal">
+            <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <h3>১০০% অথেনটিক পণ্য</h3><p>প্রতিটি পণ্য যাচাই করে মানসম্পন্নতা নিশ্চিত করা হয়।</p>
+          </div>
+          <div class="why-card ayt-reveal">
+            <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg></div>
+            <h3>সহজ রিটার্ন</h3><p>৭ দিনের মধ্যে ঝামেলাহীন রিটার্ন সুবিধা।</p>
+          </div>
+          <div class="why-card ayt-reveal">
+            <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <h3>নিরাপদ পেমেন্ট</h3><p>এনক্রিপ্টেড ও সুরক্ষিত লেনদেন প্রক্রিয়া।</p>
+          </div>
+          <div class="why-card ayt-reveal">
+            <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M4 4h4v4H4zM16 4h4v4h-4zM4 16h4v4H4zM14 14h6v6h-6z"/></svg></div>
+            <h3>২৪/৭ সহায়তা</h3><p>যেকোনো প্রয়োজনে আমরা সবসময় পাশে আছি।</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         STATISTICS
+         ========================================================================== -->
+    <section class="ayt-section ayt-section-dark">
+      <div class="ayt-container">
+        <div class="stats-grid">
+          <div class="ayt-reveal"><div class="stat-num" data-count-to="15000">0</div><div class="stat-label">সন্তুষ্ট গ্রাহক</div></div>
+          <div class="ayt-reveal"><div class="stat-num" data-count-to="3200">0</div><div class="stat-label">পণ্যের সংগ্রহ</div></div>
+          <div class="ayt-reveal"><div class="stat-num" data-count-to="64">0</div><div class="stat-label">জেলায় ডেলিভারি</div></div>
+          <div class="ayt-reveal"><div class="stat-num" data-count-to="98">0</div><div class="stat-label">% ইতিবাচক রিভিউ</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         BRAND / PARTNER MARQUEE
+         ========================================================================== -->
+    <section class="ayt-section" style="padding-top: var(--ayt-sp-8); padding-bottom: var(--ayt-sp-8);">
+     <div class="ayt-container">
+        <p class="ayt-eyebrow" style="display:flex; justify-content:center;">
+            আস্থার সাথে যুক্ত পার্টনার
+        </p>
+     </div>
+
+     <div class="brand-marquee">
+        <div class="brand-track" aria-label="Trusted Brand Partners">
+
+            <!-- Set 1 -->
+            <span class="brand-item">AYT</span>
+            <span class="brand-item">Noor Craft</span>
+            <span class="brand-item">RehalBD</span>
+            <span class="brand-item">AFIQ</span>
+
+            <!-- Duplicate for Infinite Loop -->
+            <span class="brand-item">AYT</span>
+            <span class="brand-item">Noor Craft</span>
+            <span class="brand-item">RehalBD</span>
+            <span class="brand-item">AFIQ</span>
+
+         </div>
+     </div>
+    </section>
+
+    <div class="ayt-container"><div class="ayt-divider" aria-hidden="true"></div></div>
+
+    <!-- ==========================================================================
+         TESTIMONIALS
+         ========================================================================== -->
+    <section class="ayt-section" hidden>
+      <div class="ayt-container">
+        <div class="ayt-section-head">
+          <p class="ayt-eyebrow">গ্রাহকের অভিজ্ঞতা</p>
+          <h2 class="ayt-section-title">আমাদের গ্রাহকরা যা বলছেন</h2>
+        </div>
+        <div class="testi-strip" id="testi-strip">
+          <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-quote">পণ্যের মান আশাতীত ভালো ছিল এবং ডেলিভারিও খুব দ্রুত পেয়েছি। প্যাকেজিং ছিল যত্নসহকারে করা।</p>
+            <div class="testi-person"><div class="testi-avatar">র</div><div><div class="testi-name">রাফিয়া হক</div><div class="testi-loc">ঢাকা</div></div></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-quote">কাস্টমার সাপোর্ট খুবই আন্তরিক। অর্ডার নিয়ে কোনো সমস্যা হলে সাথে সাথে সমাধান দিয়েছে।</p>
+            <div class="testi-person"><div class="testi-avatar">ত</div><div><div class="testi-name">তানভীর আহমেদ</div><div class="testi-loc">চট্টগ্রাম</div></div></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">★★★★☆</div>
+            <p class="testi-quote">দামের তুলনায় গুণগত মান অনেক ভালো। নিয়মিত কেনাকাটা করার মতো একটি জায়গা পেয়েছি।</p>
+            <div class="testi-person"><div class="testi-avatar">ম</div><div><div class="testi-name">মাহমুদা সুলতানা</div><div class="testi-loc">সিলেট</div></div></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-quote">ক্যাশ অন ডেলিভারি সুবিধাটা সবচেয়ে ভালো লেগেছে, নিশ্চিন্তে অর্ডার করা যায়।</p>
+            <div class="testi-person"><div class="testi-avatar">ই</div><div><div class="testi-name">ইমরান খান</div><div class="testi-loc">রাজশাহী</div></div></div>
+          </div>
+        </div>
+        <div class="testi-nav">
+          <button type="button" id="testi-prev" aria-label="আগেরটি দেখুন"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button type="button" id="testi-next" aria-label="পরেরটি দেখুন"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         RECENTLY VIEWED  (hidden automatically when no data is available)
+         ========================================================================== -->
+    <section class="ayt-section ayt-section-alt" id="recently-viewed-section">
+      <div class="ayt-container">
+        <div class="ayt-section-head is-left">
+          <p class="ayt-eyebrow">আপনার ইতিহাস</p>
+          <h2 class="ayt-section-title">সম্প্রতি দেখেছেন</h2>
+        </div>
+        <div class="product-grid" id="recently-viewed-grid"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         NEWSLETTER
+         ========================================================================== -->
+    <section class="ayt-section">
+      <div class="ayt-container">
+        <div class="newsletter-box ayt-reveal">
+          <h2>বিশেষ অফার সবার আগে পান</h2>
+          <p>আমাদের নিউজলেটার সাবস্ক্রাইব করুন এবং নতুন পণ্য ও এক্সক্লুসিভ ছাড়ের খবর সরাসরি ইমেইলে পান।</p>
+          <form class="newsletter-form" id="newsletter-form" novalidate>
+            <label for="newsletter-email" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">ইমেইল ঠিকানা</label>
+            <input type="email" id="newsletter-email" name="email" placeholder="আপনার ইমেইল ঠিকানা" required autocomplete="email">
+            <button type="submit">সাবস্ক্রাইব করুন</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         TRUST BADGES
+         ========================================================================== -->
+    <section class="ayt-section" style="padding-top:0;">
+      <div class="ayt-container">
+        <div class="trust-strip">
+          <div class="trust-chip"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5z"/></svg><span>SSL সুরক্ষিত চেকআউট</span></div>
+          <div class="trust-chip"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><span>যাচাইকৃত বিক্রেতা</span></div>
+          <div class="trust-chip"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg><span>সহজ রিটার্ন নীতি</span></div>
+          <div class="trust-chip"><svg viewBox="0 0 24 24"><path d="M4 4h4v4H4zM16 4h4v4h-4zM4 16h4v4H4zM14 14h6v6h-6z"/></svg><span>২৪/৭ গ্রাহক সহায়তা</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         DELIVERY INFORMATION
+         ========================================================================== -->
+    <section class="ayt-section ayt-section-alt">
+      <div class="ayt-container">
+        <div class="ayt-section-head">
+          <p class="ayt-eyebrow">শিপিং তথ্য</p>
+          <h2 class="ayt-section-title">ডেলিভারি সংক্রান্ত তথ্য</h2>
+        </div>
+        <div class="delivery-grid">
+          <div class="delivery-card">
+            <svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="18.5" r="1.6"/><circle cx="17.5" cy="18.5" r="1.6"/></svg>
+            <h3>ঢাকার ভিতরে</h3><p>অর্ডারের ২-৪ দিনের মধ্যে ডেলিভারি সম্পন্ন হয়।</p>
+          </div>
+          <div class="delivery-card">
+            <svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8M5 10v10h14V10"/></svg>
+            <h3>ঢাকার বাইরে</h3><p>দেশের যেকোনো প্রান্তে ৩-৫ কার্যদিবসের মধ্যে পৌঁছে যাবে।</p>
+          </div>
+          <div class="delivery-card">
+            <svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5z"/></svg>
+            <h3>ক্যাশ অন ডেলিভারি</h3><p>সারাদেশে পণ্য হাতে পেয়ে মূল্য পরিশোধের সুবিধা।</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PAYMENT METHODS
+         ========================================================================== -->
+    <section class="ayt-section" style="padding-bottom: var(--ayt-sp-8);">
+      <div class="ayt-container">
+        <div class="ayt-section-head">
+          <p class="ayt-eyebrow">নিরাপদ লেনদেন</p>
+          <h2 class="ayt-section-title">পেমেন্ট পদ্ধতি</h2>
+        </div>
+        <div class="payment-row">
+          <span class="payment-badge">bKash</span>
+          <span class="payment-badge">Nagad</span>
+          <span class="payment-badge">Rocket</span>
+          <span class="payment-badge">Visa</span>
+          <span class="payment-badge">Mastercard</span>
+          <span class="payment-badge">ক্যাশ অন ডেলিভারি</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SOCIAL MEDIA
+         ========================================================================== -->
+    <section class="ayt-section ayt-section-alt" style="padding-top: var(--ayt-sp-8);">
+      <div class="ayt-container">
+        <div class="ayt-section-head">
+          <p class="ayt-eyebrow">যুক্ত থাকুন</p>
+          <h2 class="ayt-section-title">সোশ্যাল মিডিয়ায় আমাদের ফলো করুন</h2>
+        </div>
+        <div class="social-grid">
+          <a href="https://www.facebook.com/aytmartbd" target="_blank" rel="noopener" class="social-chip"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a>
+          <a href="https://www.facebook.com/groups/ayt.mart.seller.community" target="_blank" rel="noopener" class="social-chip"><svg viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 20v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Seller Community</a>
+          <a href="https://www.tiktok.com/@aytmartbd" target="_blank" rel="noopener" class="social-chip"><svg viewBox="0 0 24 24"><path d="M16 3a5 5 0 0 0 5 5v3a8 8 0 0 1-5-1.7V15a6 6 0 1 1-6-6c.34 0 .67.03 1 .08V12.2a2.5 2.5 0 1 0 2 2.45V3z"/></svg>TikTok</a>
+          <a href="https://www.youtube.com/@aytmart" target="_blank" rel="noopener" class="social-chip"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg>YouTube</a>
+          <a href="https://wa.me/8801786840952" target="_blank" rel="noopener" class="social-chip"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.6 8.6 0 0 1-4-1L3 20l1.2-5.1a8.5 8.5 0 1 1 16.8-3.4z"/></svg>WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Quick View Modal -->
+  <div class="ayt-modal" id="ayt-quickview-modal" role="dialog" aria-modal="true" aria-labelledby="qv-title">
+    <div class="ayt-modal-backdrop" data-modal-close></div>
+    <div class="ayt-modal-panel">
+      <button type="button" class="ayt-modal-close" data-modal-close aria-label="বন্ধ করুন">✕</button>
+      <div id="ayt-quickview-body"></div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="ayt-toast" id="ayt-toast" role="status" aria-live="polite"></div>
+
+  <!-- Dynamic Footer Injection Placeholder -->
+  <footer id="global-footer"></footer>
+
+  <!-- App Services & Scripts -->
+  <script src="config/environment/env.js"></script>
+  <script src="utils/storage/storage.js"></script>
+  <script src="api/shared/api-client.js"></script>
+  <script src="components/header/header.js"></script>
+  <script src="components/footer/footer.js"></script>
+  <script src="components/whatsapp/whatsapp.js"></script>
+  <script src="services/products/product-service.js"></script>
+  <script src="assets/js/homepage-shelf-carousel.js"></script>
+
+  <script>
+    /* ==========================================================================
+       AYT MART — Homepage runtime
+       Compatibility notes:
+       - loadHomepageData() is preserved as the DOMContentLoaded entry point and
+         still populates #featured-products using ProductService.getFeatured().
+         Categories now live in the 3D shelf hero (initShelfHero(), below),
+         driven by the same ProductService.getCategories()/getAll().
+       - Extra sections (flash sale, best sellers, new arrivals, trending) call
+         ProductService.getBestSellers/getNewArrivals/getTrending() if those
+         methods exist on the already-implemented service. If they don't exist
+         yet, a safe client-side fallback derives a reasonable set from the
+         featured products so the page never breaks — swap in real endpoints
+         on the backend whenever they're ready.
+       ========================================================================== */
+    const AYT = {
+      productCache: new Map(),
+      featuredCache: [],
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initScrollReveal();
+      initStatsCounters();
+      initFlashCountdown();
+      initTestimonialNav();
+      initNewsletterForm();
+      initModal();
+      initGlobalCardActions();
+
+      await Promise.all([
+        loadHomepageData(),
+        initShelfHero(),
+      ]);
+      await Promise.all([
+        loadFlashSale(),
+        loadBestSellers(),
+        loadNewArrivals(),
+        loadTrending(),
+      ]);
+      loadRecentlyViewed();
+
+      initScrollReveal(); // re-scan for cards injected after the initial pass
+    });
+
+    /* ---------- 3D shelf hero — categories & their products come straight from
+       the existing ProductService (i.e. whatever the backend returns); nothing
+       here is hardcoded. Falls back gracefully (hides the section) if the
+       category list is ever empty. ---------- */
+    async function initShelfHero() {
+      try {
+        const categories = await ProductService.getCategories();
+        if (!Array.isArray(categories) || !categories.length) {
+          document.getElementById('hero-shelf')?.style.setProperty('display', 'none');
+          return;
+        }
+
+        await Promise.all(categories.map(async (cat) => {
+          try {
+            const products = await ProductService.getAll({ category: cat.id });
+            cat._products = Array.isArray(products) ? products : [];
+          } catch (e) {
+            console.warn(`Shelf: failed loading products for category "${cat.id}".`, e);
+            cat._products = [];
+          }
+        }));
+
+        window.AYTShelfCarousel?.init(categories);
+      } catch (err) {
+        console.error('Failed loading shelf hero:', err);
+        document.getElementById('hero-shelf')?.style.setProperty('display', 'none');
+      }
+    }
+
+    /* ---------- Original entry point (kept intact; category-grid removed —
+       categories now live in the 3D shelf hero above, see initShelfHero()) ---------- */
+    async function loadHomepageData() {
+      const productsContainer = document.querySelector('#featured-products');
+
+      try {
+        // Load featured items
+        const products = await ProductService.getFeatured();
+        AYT.featuredCache = Array.isArray(products) ? products : [];
+        cacheProducts(AYT.featuredCache);
+        productsContainer.innerHTML = AYT.featuredCache.map(prod => renderProductCard(prod)).join('');
+
+      } catch (err) {
+        console.error('Failed loading homepage contents:', err);
+      }
+    }
+
+    /* ---------- Extra product rails (defensive against unknown API surface) ---------- */
+    async function fetchProductSet(methodName, fallbackFn) {
+      try {
+        if (typeof ProductService[methodName] === 'function') {
+          const result = await ProductService[methodName]();
+          if (Array.isArray(result) && result.length) return result;
+        }
+      } catch (err) {
+        console.warn(`ProductService.${methodName} unavailable, using fallback.`, err);
+      }
+      return fallbackFn(AYT.featuredCache);
+    }
+
+    async function loadFlashSale() {
+      const grid = document.querySelector('#flash-sale-grid');
+      if (!grid) return;
+      const items = await fetchProductSet('getFlashSale', (all) => all.filter(p => p.sale_price).slice(0, 4).length
+        ? all.filter(p => p.sale_price).slice(0, 4) : all.slice(0, 4));
+      cacheProducts(items);
+      grid.innerHTML = items.map(p => renderProductCard(p, { badgeText: 'ফ্ল্যাশ সেল' })).join('') || emptyState('এই মুহূর্তে কোনো ফ্ল্যাশ সেল নেই');
+    }
+
+    async function loadBestSellers() {
+      const grid = document.querySelector('#best-sellers-grid');
+      if (!grid) return;
+      const items = await fetchProductSet('getBestSellers', (all) => [...all].slice(0, 4));
+      cacheProducts(items);
+      grid.innerHTML = items.map(p => renderProductCard(p, { badgeText: 'বেস্ট সেলার' })).join('') || emptyState('শীঘ্রই বেস্ট সেলার পণ্য যুক্ত হবে');
+    }
+
+    async function loadNewArrivals() {
+      const grid = document.querySelector('#new-arrivals-grid');
+      if (!grid) return;
+      const items = await fetchProductSet('getNewArrivals', (all) => [...all].reverse().slice(0, 4));
+      cacheProducts(items);
+      grid.innerHTML = items.map(p => renderProductCard(p, { badgeText: 'নতুন' })).join('') || emptyState('শীঘ্রই নতুন পণ্য যুক্ত হবে');
+    }
+
+    async function loadTrending() {
+      const grid = document.querySelector('#trending-grid');
+      if (!grid) return;
+      const items = await fetchProductSet('getTrending', (all) => shuffleArray([...all]).slice(0, 4));
+      cacheProducts(items);
+      grid.innerHTML = items.map(p => renderProductCard(p, { badgeText: 'ট্রেন্ডিং' })).join('') || emptyState('শীঘ্রই ট্রেন্ডিং পণ্য যুক্ত হবে');
+    }
+
+    function loadRecentlyViewed() {
+      const section = document.querySelector('#recently-viewed-section');
+      const grid = document.querySelector('#recently-viewed-grid');
+      if (!section || !grid) return;
+      try {
+        const raw = readStorage('ayt_recent');
+        const ids = Array.isArray(raw) ? raw : [];
+        const items = ids.map(id => AYT.productCache.get(String(id))).filter(Boolean).slice(0, 4);
+        if (items.length) {
+          grid.innerHTML = items.map(p => renderProductCard(p)).join('');
+          section.classList.add('has-items');
+        }
+      } catch (err) {
+        console.warn('Recently viewed data unavailable.', err);
+      }
+    }
+
+    function emptyState(message) {
+      return `<p style="grid-column:1/-1; text-align:center; color:var(--ayt-muted); padding: var(--ayt-sp-8) 0;">${message}</p>`;
+    }
+
+    function cacheProducts(list) {
+      (list || []).forEach(p => { if (p && p.id != null) AYT.productCache.set(String(p.id), p); });
+    }
+
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    /* ---------- Product card renderer (keeps required classes intact) ---------- */
+    function computeDiscount(price, salePrice) {
+      if (!salePrice || !price || Number(salePrice) >= Number(price)) return null;
+      return Math.round((1 - Number(salePrice) / Number(price)) * 100);
+    }
+
+    function renderStars(rating) {
+      const full = Math.round(rating);
+      let html = '';
+      for (let i = 1; i <= 5; i++) {
+        html += `<svg class="star-icon ${i <= full ? 'is-filled' : ''}" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5z"/></svg>`;
+      }
+      return html;
+    }
+
+    function renderProductCard(prod, opts = {}) {
+      if (!prod) return '';
+      const discount = computeDiscount(prod.price, prod.sale_price);
+      const hasRating = typeof prod.rating === 'number';
+      const reviewCount = prod.reviewCount ?? prod.review_count ?? 0;
+      const sold = prod.soldCount ?? prod.sold_count;
+      const hasSold = typeof sold === 'number';
+      const stockRaw = prod.stock ?? prod.stock_qty;
+
+      let stockLabel = 'স্টকে আছে';
+      let stockClass = 'in-stock';
+      if (stockRaw === 0) { stockLabel = 'স্টক শেষ'; stockClass = 'out-of-stock'; }
+      else if (typeof stockRaw === 'number' && stockRaw <= 5) { stockLabel = `মাত্র ${stockRaw}টি বাকি`; stockClass = 'low-stock'; }
+
+      const secondaryImg = prod.image_hover || prod.second_image || prod.image;
+      const badgeText = opts.badgeText || (prod.sale_price ? 'অফার!' : '');
+
+      return `
+        <div class="product-card ayt-reveal" data-product-id="${prod.id}">
+          <div class="product-img-wrapper">
+            ${badgeText ? `<span class="product-badge${discount ? ' has-discount' : ''}">${badgeText}</span>` : ''}
+            ${discount ? `<span class="discount-pill">-${discount}%</span>` : ''}
+            <button type="button" class="wishlist-btn" aria-label="পছন্দের তালিকায় যোগ করুন" data-wishlist-id="${prod.id}">
+              <svg viewBox="0 0 24 24" class="heart-icon" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.1C.4 8.7 1.8 5 5.4 4.2c2-.4 4 .5 5.1 2.2 1.1-1.7 3.1-2.6 5.1-2.2C19.2 5 20.6 8.7 19 11.9 16.5 16.4 12 21 12 21z"/></svg>
+            </button>
+            <img src="${prod.image}" alt="${prod.name}" class="product-img product-img-primary" loading="lazy" />
+            <img src="${secondaryImg}" alt="" class="product-img product-img-secondary" loading="lazy" aria-hidden="true" />
+            <button type="button" class="quickview-btn" data-quickview-id="${prod.id}">দ্রুত দেখুন</button>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">${prod.name}</h3>
+            ${hasRating ? `
+            <div class="product-rating" aria-label="রেটিং ৫ এর মধ্যে ${prod.rating}">
+              <span class="stars">${renderStars(prod.rating)}</span>
+              <span class="review-count">(${reviewCount})</span>
+            </div>` : ''}
+            <div class="product-pricing">
+              <span class="price-sale">৳${prod.sale_price || prod.price}</span>
+              ${prod.sale_price ? `<span class="price-regular">৳${prod.price}</span>` : ''}
+            </div>
+            <div class="product-meta-row">
+              <span class="stock-status ${stockClass}">${stockLabel}</span>
+              ${hasSold ? `<span class="sold-count">${sold}+ বিক্রি হয়েছে</span>` : ''}
+            </div>
+            <div class="product-actions">
+              <button type="button" class="btn-add-cart" data-cart-id="${prod.id}" ${stockClass === 'out-of-stock' ? 'disabled' : ''}>
+                <svg viewBox="0 0 24 24" class="cart-icon" aria-hidden="true"><path d="M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+                কার্টে যোগ করুন
+              </button>
+              <a href="product.html?id=${prod.id}" class="product-btn buy-now-btn">এখনই কিনুন</a>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    /* ---------- Scroll reveal ---------- */
+    function initScrollReveal() {
+      const items = document.querySelectorAll('.ayt-reveal:not(.is-visible)');
+      if (!items.length) return;
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(i => i.classList.add('is-visible'));
+        return;
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      items.forEach(i => io.observe(i));
+    }
+
+    /* ---------- Stats counters ---------- */
+    function initStatsCounters() {
+      const nums = document.querySelectorAll('.stat-num');
+      if (!nums.length || !('IntersectionObserver' in window)) return;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          animateCount(entry.target);
+          io.unobserve(entry.target);
+        });
+      }, { threshold: 0.4 });
+      nums.forEach(n => io.observe(n));
+    }
+    function animateCount(el) {
+      const target = parseInt(el.dataset.countTo, 10) || 0;
+      const duration = 1400;
+      const start = performance.now();
+      function tick(now) {
+        const progress = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(target * eased).toLocaleString('bn-BD');
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    /* ---------- Flash sale countdown (resets nightly) ---------- */
+    function initFlashCountdown() {
+      const h = document.getElementById('flash-hours');
+      const m = document.getElementById('flash-minutes');
+      const s = document.getElementById('flash-seconds');
+      if (!h || !m || !s) return;
+      function tick() {
+        const now = new Date();
+        const end = new Date();
+        end.setHours(23, 59, 59, 999);
+        const diff = Math.max(0, end - now);
+        h.textContent = String(Math.floor(diff / 3600000)).padStart(2, '0');
+        m.textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+        s.textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+      }
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    /* ---------- Testimonial strip nav ---------- */
+    function initTestimonialNav() {
+      const strip = document.getElementById('testi-strip');
+      const prev = document.getElementById('testi-prev');
+      const next = document.getElementById('testi-next');
+      if (!strip || !prev || !next) return;
+      const scrollAmount = () => strip.querySelector('.testi-card')?.offsetWidth + 20 || 320;
+      prev.addEventListener('click', () => strip.scrollBy({ left: -scrollAmount(), behavior: 'smooth' }));
+      next.addEventListener('click', () => strip.scrollBy({ left: scrollAmount(), behavior: 'smooth' }));
+    }
+
+    /* ---------- Newsletter (client-side only — wire to a real endpoint when available) ---------- */
+    function initNewsletterForm() {
+      const form = document.getElementById('newsletter-form');
+      if (!form) return;
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = document.getElementById('newsletter-email');
+        const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+        if (!valid) { showToast('সঠিক ইমেইল ঠিকানা দিন'); return; }
+        // TODO: replace with a real ApiClient/ProductService subscribe call once the endpoint exists.
+        showToast('সাবস্ক্রাইব করার জন্য ধন্যবাদ!');
+        form.reset();
+      });
+    }
+
+    /* ---------- Quick view modal + wishlist + add-to-cart (event delegation) ---------- */
+    function initModal() {
+      const modal = document.getElementById('ayt-quickview-modal');
+      if (!modal) return;
+      modal.querySelectorAll('[data-modal-close]').forEach(el => el.addEventListener('click', () => closeModal()));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    }
+    function openModal(prod) {
+      const modal = document.getElementById('ayt-quickview-modal');
+      const body = document.getElementById('ayt-quickview-body');
+      if (!modal || !body || !prod) return;
+      const discount = computeDiscount(prod.price, prod.sale_price);
+      body.innerHTML = `
+        <div class="qv-layout">
+          <img src="${prod.image}" alt="${prod.name}">
+          <div>
+            <h2 id="qv-title" class="qv-title">${prod.name}</h2>
+            <div class="product-pricing" style="margin-bottom:12px;">
+              <span class="price-sale">৳${prod.sale_price || prod.price}</span>
+              ${prod.sale_price ? `<span class="price-regular">৳${prod.price}</span>` : ''}
+              ${discount ? `<span class="discount-pill" style="position:static;">-${discount}%</span>` : ''}
+            </div>
+            <div class="product-actions">
+              <button type="button" class="btn-add-cart" data-cart-id="${prod.id}">কার্টে যোগ করুন</button>
+              <a href="product.html?id=${prod.id}" class="product-btn buy-now-btn">এখনই কিনুন</a>
+            </div>
+          </div>
+        </div>`;
+      modal.classList.add('is-open');
+      modal.querySelector('.ayt-modal-close')?.focus();
+    }
+    function closeModal() {
+      document.getElementById('ayt-quickview-modal')?.classList.remove('is-open');
+    }
+
+    function initGlobalCardActions() {
+      document.addEventListener('click', (e) => {
+        const wishBtn = e.target.closest('.wishlist-btn');
+        if (wishBtn) { toggleWishlist(wishBtn); return; }
+
+        const cartBtn = e.target.closest('.btn-add-cart');
+        if (cartBtn && !cartBtn.disabled) { addToCart(cartBtn.dataset.cartId); return; }
+
+        const qvBtn = e.target.closest('.quickview-btn');
+        if (qvBtn) { openModal(AYT.productCache.get(String(qvBtn.dataset.quickviewId))); return; }
+      });
+    }
+
+    function toggleWishlist(btn) {
+      btn.classList.toggle('is-active');
+      const id = btn.dataset.wishlistId;
+      try {
+        const list = readStorage('ayt_wishlist') || [];
+        const set = new Set(list.map(String));
+        if (set.has(String(id))) set.delete(String(id)); else set.add(String(id));
+        writeStorage('ayt_wishlist', Array.from(set));
+      } catch (err) { /* storage optional — UI toggle still works */ }
+      showToast(btn.classList.contains('is-active') ? 'পছন্দের তালিকায় যোগ করা হয়েছে' : 'পছন্দের তালিকা থেকে সরানো হয়েছে');
+    }
+
+    function addToCart(id) {
+      const prod = AYT.productCache.get(String(id));
+      try {
+        if (window.CartService && typeof CartService.add === 'function') {
+          CartService.add(id, 1);
+        } else {
+          const cart = readStorage('ayt_cart') || [];
+          cart.push({ id, qty: 1, ts: Date.now() });
+          writeStorage('ayt_cart', cart);
+        }
+      } catch (err) {
+        console.warn('Cart storage unavailable, showing UI feedback only.', err);
+      }
+      showToast(prod ? `${prod.name} কার্টে যোগ করা হয়েছে` : 'পণ্যটি কার্টে যোগ করা হয়েছে');
+    }
+
+    /* ---------- Storage helper wrapper (feature-detects the project's StorageHelper) ---------- */
+    function readStorage(key) {
+      try {
+        if (window.StorageHelper) {
+          if (typeof StorageHelper.get === 'function') return StorageHelper.get(key);
+          if (typeof StorageHelper.getItem === 'function') {
+            const raw = StorageHelper.getItem(key);
+            return raw ? JSON.parse(raw) : null;
+          }
+        }
+      } catch (err) { /* ignore */ }
+      return null;
+    }
+    function writeStorage(key, value) {
+      try {
+        if (window.StorageHelper) {
+          if (typeof StorageHelper.set === 'function') return StorageHelper.set(key, value);
+          if (typeof StorageHelper.setItem === 'function') return StorageHelper.setItem(key, JSON.stringify(value));
+        }
+      } catch (err) { /* ignore */ }
+    }
+
+    /* ---------- Toast ---------- */
+    let toastTimer;
+    function showToast(message) {
+      const toast = document.getElementById('ayt-toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2600);
+    }
+  </script>
+</body>
+</html>

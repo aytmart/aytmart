@@ -1,0 +1,39 @@
+/* ==========================================================================
+   AYT MART CONTROL — PRODUCT EDIT PAGE
+   sidebar.css — left navigation rail (brand, menu, collapse control)
+   ========================================================================== */
+
+.admin-sidebar {
+  position: sticky; top: 0; height: 100vh;
+  background: linear-gradient(190deg, var(--ayt-primary-dark) 0%, var(--ayt-primary) 100%);
+  color: rgba(243,239,226,.72);
+  padding: var(--ayt-sp-5) var(--ayt-sp-4);
+  display: flex; flex-direction: column; gap: var(--ayt-sp-6);
+  overflow: hidden; z-index: 20;
+}
+
+.sidebar-brand { display: flex; align-items: center; gap: var(--ayt-sp-3); padding-bottom: var(--ayt-sp-4); border-bottom: 1px solid rgba(251,247,239,.12); white-space: nowrap; }
+.sidebar-brand .mark { width: 38px; height: 38px; flex-shrink: 0; border-radius: var(--ayt-radius-sm); background: linear-gradient(150deg, var(--ayt-gold-light), var(--ayt-gold) 60%, var(--ayt-gold-dark)); display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: var(--ayt-shadow-gold); }
+.sidebar-brand .txt { color: #fff; font-family: var(--ayt-font-display); font-size: 16px; font-weight: 700; overflow: hidden; }
+.sidebar-brand .txt small { display: block; font-family: var(--ayt-font-num); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ayt-gold-light); font-weight: 500; }
+.is-collapsed .sidebar-brand .txt { display: none; }
+
+.sidebar-menu { display: flex; flex-direction: column; gap: var(--ayt-sp-1); }
+.menu-section-label { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(243,239,226,.4); padding: var(--ayt-sp-3) var(--ayt-sp-3) var(--ayt-sp-1); white-space: nowrap; }
+.is-collapsed .menu-section-label { opacity: 0; height: 0; padding: 0; overflow: hidden; }
+
+.menu-link { position: relative; display: flex; align-items: center; gap: var(--ayt-sp-3); padding: 11px var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 13.5px; font-weight: 500; white-space: nowrap; overflow: hidden; transition: background-color var(--ayt-fast), color var(--ayt-fast); }
+.menu-link svg { width: 19px; height: 19px; flex-shrink: 0; opacity: .85; }
+.menu-link:hover { background-color: rgba(251,247,239,.08); color: #fff; }
+.menu-link.active { background: linear-gradient(135deg, var(--ayt-gold) 0%, var(--ayt-gold-dark) 100%); color: #241C05; font-weight: 700; box-shadow: var(--ayt-shadow-gold); }
+.menu-link.active svg { opacity: 1; }
+.is-collapsed .menu-link .label-txt { display: none; }
+.is-collapsed .menu-link { justify-content: center; }
+
+.sidebar-foot { margin-top: auto; padding-top: var(--ayt-sp-4); border-top: 1px solid rgba(251,247,239,.12); }
+.sidebar-collapse-btn { display: flex; align-items: center; gap: var(--ayt-sp-2); width: 100%; background: rgba(251,247,239,.06); border: 1px solid rgba(251,247,239,.14); color: rgba(243,239,226,.75); padding: var(--ayt-sp-2) var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 12.5px; transition: background var(--ayt-fast); }
+.sidebar-collapse-btn:hover { background: rgba(251,247,239,.12); }
+.sidebar-collapse-btn svg { width: 16px; height: 16px; transition: transform var(--ayt-normal); flex-shrink: 0; }
+.is-collapsed .sidebar-collapse-btn svg { transform: rotate(180deg); }
+.is-collapsed .sidebar-collapse-btn .label-txt { display: none; }
+.is-collapsed .sidebar-collapse-btn { justify-content: center; }

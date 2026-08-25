@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1c2420"/>
+      <stop offset="100%" stop-color="#0a0f0c"/>
+    </linearGradient>
+    <linearGradient id="ceil" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#050807"/>
+      <stop offset="100%" stop-color="#141b17"/>
+    </linearGradient>
+    <linearGradient id="aisleGlow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2c4a3a" stop-opacity=".55"/>
+      <stop offset="55%" stop-color="#12211b" stop-opacity=".35"/>
+      <stop offset="100%" stop-color="#060a08" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="warmBulb" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffdca0" stop-opacity=".95"/>
+      <stop offset="45%" stop-color="#f2b45a" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#f2b45a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="shelfWood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a2a1a"/>
+      <stop offset="100%" stop-color="#241a10"/>
+    </linearGradient>
+    <linearGradient id="vignette" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#000" stop-opacity=".55"/>
+      <stop offset="30%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="75%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity=".6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="#0d1512"/>
+  <rect width="1600" height="470" fill="url(#ceil)"/>
+  <rect y="470" width="1600" height="430" fill="url(#floor)"/>
+
+  <!-- central receding aisle -->
+  <polygon points="620,900 980,900 860,430 740,430" fill="url(#aisleGlow)"/>
+
+  <!-- floor reflection streaks -->
+  <g opacity=".5">
+    <polygon points="640,900 760,900 780,760 660,760" fill="#233227"/>
+    <polygon points="840,900 960,900 940,760 820,760" fill="#233227"/>
+  </g>
+
+  <!-- left shelving rows (receding perspective) -->
+  <g>
+    <polygon points="0,900 480,900 560,430 60,430" fill="#182420"/>
+    <polygon points="0,540 520,470 500,440 0,500" fill="url(#shelfWood)"/>
+    <polygon points="0,640 500,560 480,530 0,600" fill="url(#shelfWood)"/>
+    <polygon points="0,740 470,650 450,620 0,700" fill="url(#shelfWood)"/>
+    <polygon points="0,840 440,740 420,710 0,800" fill="url(#shelfWood)"/>
+  </g>
+
+  <!-- right shelving rows (receding perspective) -->
+  <g>
+    <polygon points="1600,900 1120,900 1040,430 1540,430" fill="#182420"/>
+    <polygon points="1600,540 1080,470 1100,440 1600,500" fill="url(#shelfWood)"/>
+    <polygon points="1600,640 1100,560 1120,530 1600,600" fill="url(#shelfWood)"/>
+    <polygon points="1600,740 1130,650 1150,620 1600,700" fill="url(#shelfWood)"/>
+    <polygon points="1600,840 1160,740 1180,710 1600,800" fill="url(#shelfWood)"/>
+  </g>
+
+  <!-- warm ceiling bulbs -->
+  <g>
+    <circle cx="300" cy="120" r="160" fill="url(#warmBulb)"/>
+    <circle cx="800" cy="70" r="220" fill="url(#warmBulb)"/>
+    <circle cx="1300" cy="130" r="160" fill="url(#warmBulb)"/>
+    <circle cx="550" cy="260" r="90" fill="url(#warmBulb)" opacity=".6"/>
+    <circle cx="1050" cy="260" r="90" fill="url(#warmBulb)" opacity=".6"/>
+  </g>
+
+  <!-- faint product-color blur blocks on shelves for depth without literal detail -->
+  <g opacity=".35">
+    <rect x="30" y="470" width="60" height="40" rx="4" fill="#c9a227"/>
+    <rect x="100" y="470" width="60" height="40" rx="4" fill="#8e2e2e"/>
+    <rect x="170" y="470" width="60" height="40" rx="4" fill="#14614f"/>
+    <rect x="1420" y="470" width="60" height="40" rx="4" fill="#c9a227"/>
+    <rect x="1350" y="470" width="60" height="40" rx="4" fill="#8e2e2e"/>
+    <rect x="1280" y="470" width="60" height="40" rx="4" fill="#14614f"/>
+  </g>
+
+  <rect width="1600" height="900" fill="url(#vignette)"/>
+</svg>

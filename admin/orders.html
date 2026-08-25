@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AYT Mart Enterprise ERP - Order Management, Tracking & Fulfillment Console">
+  <meta name="theme-color" content="#0B4238">
+  <title>অর্ডার ম্যানেজমেন্ট | AYT Mart Control Panel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../styles/themes/variables.css">
+  <link rel="stylesheet" href="../styles/base/reset.css">
+  <style>
+    /* ==========================================================================
+       AYT MART CONTROL — ADMIN ORDERS DESIGN SYSTEM
+       Shares tokens + shell with dashboard.html / products.html / categories.html
+       so Orders reads as one continuous premium ERP ecosystem.
+       ========================================================================== */
+    :root {
+      --ayt-primary:        var(--color-primary, #0B4238);
+      --ayt-primary-dark:   #072722;
+      --ayt-primary-light:  var(--color-primary-light, #14614F);
+      --ayt-gold:           var(--color-gold, #C9A227);
+      --ayt-gold-light:     #E7CD73;
+      --ayt-gold-dark:      #96751A;
+      --ayt-cream:          #FBF7EF;
+      --ayt-ink:            #1C2420;
+      --ayt-rose:           #B23B3B;
+      --ayt-rose-dark:      #8E2E2E;
+      --ayt-amber:          #B5750F;
+      --ayt-emerald:        #1E7A5F;
+      --ayt-blue:           #2563A8;
+      --ayt-surface:        var(--bg-surface, #FFFFFF);
+      --ayt-surface-alt:    var(--bg-surface-alt, #F5F2E9);
+      --ayt-border:         var(--border-color, #E5E0D2);
+      --ayt-muted:          var(--text-muted, #756F62);
+
+      --ayt-sp-1: var(--space-1, 4px);  --ayt-sp-2: var(--space-2, 8px);
+      --ayt-sp-3: var(--space-3, 12px); --ayt-sp-4: var(--space-4, 16px);
+      --ayt-sp-5: var(--space-5, 20px); --ayt-sp-6: var(--space-6, 24px);
+      --ayt-sp-8: var(--space-8, 32px); --ayt-sp-10: var(--space-10, 40px);
+
+      --ayt-radius-sm: var(--border-radius-sm, 6px);
+      --ayt-radius-md: var(--border-radius-md, 12px);
+      --ayt-radius-lg: var(--border-radius-lg, 18px);
+      --ayt-radius-full: var(--border-radius-full, 999px);
+      --ayt-shadow-sm: 0 2px 8px rgba(15, 35, 30, .06);
+      --ayt-shadow-md: var(--shadow-md, 0 10px 30px rgba(15, 35, 30, .10));
+      --ayt-shadow-lg: 0 24px 60px rgba(15, 35, 30, .16);
+      --ayt-shadow-gold: 0 8px 20px rgba(201, 162, 39, .22);
+      --ayt-fast: var(--transition-fast, 150ms ease);
+      --ayt-normal: var(--transition-normal, 320ms cubic-bezier(.22,.61,.36,1));
+
+      --ayt-font-display: 'Tiro Bangla', 'Noto Serif Bengali', serif;
+      --ayt-font-body: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+      --ayt-font-num: 'Poppins', 'Hind Siliguri', sans-serif;
+
+      --sidebar-w: 264px;
+      --sidebar-w-collapsed: 84px;
+      --topbar-h: 72px;
+    }
+
+    html[data-theme="dark"] {
+      --ayt-cream: #0F1613;
+      --ayt-ink: #EDEAE0;
+      --ayt-surface: #16201C;
+      --ayt-surface-alt: #1B2622;
+      --ayt-border: #263129;
+      --ayt-muted: #93998F;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+    }
+
+    * { box-sizing: border-box; }
+    body { font-family: var(--ayt-font-body); color: var(--ayt-ink); background: var(--ayt-cream); }
+    :focus-visible { outline: 2px solid var(--ayt-gold-dark); outline-offset: 2px; }
+    button { font-family: inherit; cursor: pointer; }
+    a { text-decoration: none; color: inherit; }
+    ::selection { background: rgba(201,162,39,.28); }
+    .num { font-family: var(--ayt-font-num); }
+
+    /* ---------- Layout shell (shared with dashboard.html / products.html) ---------- */
+    .admin-layout { display: grid; grid-template-columns: var(--sidebar-w) 1fr; min-height: 100vh; transition: grid-template-columns var(--ayt-normal); }
+    .admin-layout.is-collapsed { grid-template-columns: var(--sidebar-w-collapsed) 1fr; }
+
+    .admin-sidebar {
+      position: sticky; top: 0; height: 100vh;
+      background: linear-gradient(190deg, var(--ayt-primary-dark) 0%, var(--ayt-primary) 100%);
+      color: rgba(243,239,226,.72);
+      padding: var(--ayt-sp-5) var(--ayt-sp-4);
+      display: flex; flex-direction: column; gap: var(--ayt-sp-6);
+      overflow: hidden; z-index: 20;
+    }
+    .sidebar-brand { display: flex; align-items: center; gap: var(--ayt-sp-3); padding-bottom: var(--ayt-sp-4); border-bottom: 1px solid rgba(251,247,239,.12); white-space: nowrap; }
+    .sidebar-brand .mark { width: 38px; height: 38px; flex-shrink: 0; border-radius: var(--ayt-radius-sm); background: linear-gradient(150deg, var(--ayt-gold-light), var(--ayt-gold) 60%, var(--ayt-gold-dark)); display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: var(--ayt-shadow-gold); }
+    .sidebar-brand .txt { color: #fff; font-family: var(--ayt-font-display); font-size: 16px; font-weight: 700; overflow: hidden; }
+    .sidebar-brand .txt small { display: block; font-family: var(--ayt-font-num); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ayt-gold-light); font-weight: 500; }
+    .is-collapsed .sidebar-brand .txt { display: none; }
+
+    .sidebar-menu { display: flex; flex-direction: column; gap: var(--ayt-sp-1); }
+    .menu-section-label { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(243,239,226,.4); padding: var(--ayt-sp-3) var(--ayt-sp-3) var(--ayt-sp-1); white-space: nowrap; }
+    .is-collapsed .menu-section-label { opacity: 0; height: 0; padding: 0; overflow: hidden; }
+
+    .menu-link { position: relative; display: flex; align-items: center; gap: var(--ayt-sp-3); padding: 11px var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 13.5px; font-weight: 500; white-space: nowrap; overflow: hidden; transition: background-color var(--ayt-fast), color var(--ayt-fast); }
+    .menu-link svg { width: 19px; height: 19px; flex-shrink: 0; opacity: .85; }
+    .menu-link:hover { background-color: rgba(251,247,239,.08); color: #fff; }
+    .menu-link.active { background: linear-gradient(135deg, var(--ayt-gold) 0%, var(--ayt-gold-dark) 100%); color: #241C05; font-weight: 700; box-shadow: var(--ayt-shadow-gold); }
+    .menu-link.active svg { opacity: 1; }
+    .menu-link .badge-mini { margin-left: auto; font-family: var(--ayt-font-num); font-size: 10px; font-weight: 700; background: rgba(251,247,239,.16); color: #fff; padding: 1px 7px; border-radius: var(--ayt-radius-full); }
+    .menu-link.active .badge-mini { background: rgba(36,28,5,.18); color: #241C05; }
+    .is-collapsed .menu-link .label-txt, .is-collapsed .menu-link .badge-mini { display: none; }
+    .is-collapsed .menu-link { justify-content: center; }
+
+    .sidebar-foot { margin-top: auto; padding-top: var(--ayt-sp-4); border-top: 1px solid rgba(251,247,239,.12); }
+    .sidebar-collapse-btn { display: flex; align-items: center; gap: var(--ayt-sp-2); width: 100%; background: rgba(251,247,239,.06); border: 1px solid rgba(251,247,239,.14); color: rgba(243,239,226,.75); padding: var(--ayt-sp-2) var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 12.5px; transition: background var(--ayt-fast); }
+    .sidebar-collapse-btn:hover { background: rgba(251,247,239,.12); }
+    .sidebar-collapse-btn svg { width: 16px; height: 16px; transition: transform var(--ayt-normal); flex-shrink: 0; }
+    .is-collapsed .sidebar-collapse-btn svg { transform: rotate(180deg); }
+    .is-collapsed .sidebar-collapse-btn .label-txt { display: none; }
+    .is-collapsed .sidebar-collapse-btn { justify-content: center; }
+
+    /* ---------- Main console ---------- */
+    .admin-console { display: flex; flex-direction: column; min-width: 0; }
+    .console-header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(251,247,239,.86); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
+      height: var(--topbar-h); border-bottom: 1px solid var(--ayt-border);
+      display: flex; align-items: center; justify-content: space-between; padding: 0 var(--ayt-sp-6); gap: var(--ayt-sp-4);
+    }
+    html[data-theme="dark"] .console-header { background: rgba(15,22,19,.86); }
+    .header-left { display: flex; align-items: center; gap: var(--ayt-sp-4); min-width: 0; }
+    .icon-btn.mobile-menu-btn { display: none; }
+    .breadcrumb { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .breadcrumb .crumb-trail { font-size: 11px; color: var(--ayt-muted); display: flex; align-items: center; gap: 6px; }
+    .breadcrumb .crumb-trail .sep { opacity: .5; }
+    .breadcrumb h1 { font-family: var(--ayt-font-display); font-size: 19px; font-weight: 700; color: var(--ayt-primary-dark); }
+    html[data-theme="dark"] .breadcrumb h1 { color: var(--ayt-gold-light); }
+
+    .header-search { display: flex; align-items: center; gap: var(--ayt-sp-2); background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-full); padding: 9px 16px; width: 260px; transition: border-color var(--ayt-fast), box-shadow var(--ayt-fast); }
+    .header-search:focus-within { border-color: var(--ayt-gold); box-shadow: 0 0 0 4px rgba(201,162,39,.12); }
+    .header-search svg { width: 16px; height: 16px; color: var(--ayt-muted); flex-shrink: 0; }
+    .header-search input { border: none; background: none; outline: none; font-size: 13px; width: 100%; color: var(--ayt-ink); font-family: var(--ayt-font-body); }
+    .header-search input::placeholder { color: #A79F8E; }
+
+    .header-right { display: flex; align-items: center; gap: var(--ayt-sp-2); }
+    .icon-btn { position: relative; width: 40px; height: 40px; border-radius: var(--ayt-radius-full); display: flex; align-items: center; justify-content: center; background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); color: var(--ayt-ink); transition: background var(--ayt-fast), border-color var(--ayt-fast), transform var(--ayt-fast); }
+    .icon-btn:hover { background: var(--ayt-surface); border-color: var(--ayt-gold); transform: translateY(-1px); }
+    .icon-btn svg { width: 17px; height: 17px; }
+    .icon-btn .dot { position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--ayt-rose); border: 2px solid var(--ayt-cream); }
+    #theme-toggle .icon-moon { display: none; }
+    html[data-theme="dark"] #theme-toggle .icon-sun { display: none; }
+    html[data-theme="dark"] #theme-toggle .icon-moon { display: block; }
+
+    .profile-menu { position: relative; }
+    .admin-profile-badge { display: flex; align-items: center; gap: var(--ayt-sp-2); padding: 6px 10px 6px 6px; border-radius: var(--ayt-radius-full); border: 1px solid var(--ayt-border); background: var(--ayt-surface-alt); transition: border-color var(--ayt-fast); }
+    .admin-profile-badge:hover { border-color: var(--ayt-gold); }
+    .admin-profile-badge .avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(150deg, var(--ayt-gold-light), var(--ayt-gold-dark)); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #241C05; }
+    .admin-profile-badge .who { display: flex; flex-direction: column; line-height: 1.25; }
+    .admin-profile-badge .who b { font-size: 12.5px; font-weight: 700; }
+    .admin-profile-badge .who span { font-size: 10.5px; color: var(--ayt-muted); }
+    .admin-profile-badge .chev { width: 14px; height: 14px; color: var(--ayt-muted); transition: transform var(--ayt-fast); }
+    .profile-menu.is-open .chev { transform: rotate(180deg); }
+    .profile-dropdown { position: absolute; right: 0; top: calc(100% + 10px); width: 220px; background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); box-shadow: var(--ayt-shadow-lg); padding: var(--ayt-sp-2); display: none; z-index: 30; }
+    .profile-menu.is-open .profile-dropdown { display: block; animation: aytFadeDown 160ms ease both; }
+    @keyframes aytFadeDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    .profile-dropdown a, .profile-dropdown .btn-logout { display: flex; align-items: center; gap: var(--ayt-sp-2); padding: var(--ayt-sp-2) var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 13px; color: var(--ayt-ink); transition: background var(--ayt-fast); }
+    .profile-dropdown a:hover, .profile-dropdown .btn-logout:hover { background: var(--ayt-surface-alt); }
+    .profile-dropdown svg { width: 15px; height: 15px; color: var(--ayt-muted); }
+    .profile-dropdown hr { border: none; border-top: 1px solid var(--ayt-border); margin: var(--ayt-sp-1) 0; }
+    .btn-logout { width: 100%; background: none; border: none; text-align: left; color: var(--ayt-rose-dark) !important; }
+    .btn-logout svg { color: var(--ayt-rose-dark); }
+
+    .console-body { padding: var(--ayt-sp-6); display: flex; flex-direction: column; gap: var(--ayt-sp-6); }
+
+    /* ---------- Page head ---------- */
+    .page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--ayt-sp-4); flex-wrap: wrap; }
+    .page-head .eyebrow { font-family: var(--ayt-font-num); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ayt-gold-dark); }
+    .page-head h1 { font-family: var(--ayt-font-display); font-size: 24px; font-weight: 700; color: var(--ayt-primary-dark); margin-top: 2px; }
+    html[data-theme="dark"] .page-head h1 { color: #FBF7EF; }
+    .page-head p { font-size: 13px; color: var(--ayt-muted); margin-top: 2px; }
+    .page-head-actions { display: flex; align-items: center; gap: var(--ayt-sp-2); flex-wrap: wrap; }
+
+    .btn-gold { display: flex; align-items: center; gap: 7px; background: linear-gradient(135deg, var(--ayt-gold-light) 0%, var(--ayt-gold) 55%, var(--ayt-gold-dark) 100%); color: #241C05; font-size: 13px; font-weight: 700; padding: 11px 18px; border: none; border-radius: var(--ayt-radius-sm); box-shadow: var(--ayt-shadow-gold); transition: transform var(--ayt-fast), box-shadow var(--ayt-fast); }
+    .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(201,162,39,.32); }
+    .btn-gold svg { width: 15px; height: 15px; }
+
+    .btn-ghost { display: flex; align-items: center; gap: 7px; background: var(--ayt-surface); color: var(--ayt-ink); font-size: 13px; font-weight: 600; padding: 10px 16px; border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-sm); transition: border-color var(--ayt-fast), background var(--ayt-fast), transform var(--ayt-fast); }
+    .btn-ghost:hover { border-color: var(--ayt-gold); background: var(--ayt-surface-alt); transform: translateY(-1px); }
+    .btn-ghost svg { width: 15px; height: 15px; }
+    .btn-ghost:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+    /* ---------- KPI grid ---------- */
+    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: var(--ayt-sp-4); }
+    .metric-card { position: relative; background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); padding: var(--ayt-sp-5); display: flex; flex-direction: column; gap: var(--ayt-sp-3); box-shadow: var(--ayt-shadow-sm); overflow: hidden; transition: box-shadow var(--ayt-normal), border-color var(--ayt-normal), transform var(--ayt-normal); }
+    .metric-card:hover { box-shadow: var(--ayt-shadow-lg); border-color: var(--ayt-gold); transform: translateY(-3px); }
+    .metric-top { display: flex; align-items: flex-start; justify-content: space-between; }
+    .metric-ico { width: 36px; height: 36px; border-radius: var(--ayt-radius-sm); display: flex; align-items: center; justify-content: center; }
+    .metric-ico svg { width: 18px; height: 18px; }
+    .metric-ico.tone-gold { background: rgba(201,162,39,.14); color: var(--ayt-gold-dark); }
+    .metric-ico.tone-emerald { background: rgba(30,122,95,.12); color: var(--ayt-emerald); }
+    .metric-ico.tone-blue { background: rgba(37,99,168,.12); color: var(--ayt-blue); }
+    .metric-ico.tone-rose { background: rgba(178,59,59,.12); color: var(--ayt-rose); }
+    .metric-ico.tone-amber { background: rgba(181,117,15,.14); color: var(--ayt-amber); }
+    .metric-title { font-size: 11.5px; font-weight: 600; color: var(--ayt-muted); }
+    .metric-value { font-family: var(--ayt-font-num); font-size: 23px; font-weight: 700; color: var(--ayt-primary-dark); }
+    html[data-theme="dark"] .metric-value { color: #FBF7EF; }
+
+    /* ---------- Toolbar ---------- */
+    .toolbar-card { background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); padding: var(--ayt-sp-4) var(--ayt-sp-5); box-shadow: var(--ayt-shadow-sm); display: flex; align-items: center; justify-content: space-between; gap: var(--ayt-sp-4); flex-wrap: wrap; }
+    .toolbar-left { display: flex; align-items: center; gap: var(--ayt-sp-3); flex-wrap: wrap; flex: 1; min-width: 260px; }
+    .toolbar-right { display: flex; align-items: center; gap: var(--ayt-sp-2); flex-wrap: wrap; }
+
+    .search-admin { display: flex; align-items: center; gap: var(--ayt-sp-2); background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-full); padding: 9px 16px; min-width: 220px; flex: 1; max-width: 300px; transition: border-color var(--ayt-fast), box-shadow var(--ayt-fast); }
+    .search-admin:focus-within { border-color: var(--ayt-gold); box-shadow: 0 0 0 4px rgba(201,162,39,.12); }
+    .search-admin svg { width: 15px; height: 15px; color: var(--ayt-muted); flex-shrink: 0; }
+    .search-admin input { border: none; background: none; outline: none; font-size: 13px; width: 100%; color: var(--ayt-ink); font-family: var(--ayt-font-body); }
+    .search-admin input::placeholder { color: #A79F8E; }
+
+    .select-admin { background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-sm); padding: 9px 12px; font-size: 12.5px; font-family: var(--ayt-font-body); color: var(--ayt-ink); transition: border-color var(--ayt-fast); }
+    .select-admin:focus { outline: none; border-color: var(--ayt-gold); }
+
+    /* ---------- Bulk bar ---------- */
+    .bulk-bar { display: none; align-items: center; justify-content: space-between; gap: var(--ayt-sp-4); background: var(--ayt-primary-dark); color: #F3EFE2; border-radius: var(--ayt-radius-md); padding: var(--ayt-sp-3) var(--ayt-sp-5); box-shadow: var(--ayt-shadow-md); flex-wrap: wrap; }
+    .bulk-bar.is-visible { display: flex; animation: aytFadeDown 180ms ease both; }
+    .bulk-bar .count { font-size: 13px; font-weight: 600; }
+    .bulk-bar .count b { color: var(--ayt-gold-light); font-family: var(--ayt-font-num); }
+    .bulk-actions { display: flex; gap: var(--ayt-sp-2); flex-wrap: wrap; }
+    .bulk-actions button { font-size: 12px; font-weight: 600; padding: 8px 14px; border-radius: var(--ayt-radius-sm); border: 1px solid rgba(251,247,239,.25); background: rgba(251,247,239,.08); color: #F3EFE2; transition: background var(--ayt-fast); }
+    .bulk-actions button:hover { background: rgba(251,247,239,.16); }
+    .bulk-actions button.danger { border-color: rgba(178,59,59,.5); color: #F3B4B4; }
+
+    /* ---------- Table ---------- */
+    .table-card { background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); box-shadow: var(--ayt-shadow-sm); overflow: hidden; }
+    .table-scroll { overflow-x: auto; }
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th, .data-table td { padding: 12px var(--ayt-sp-4); font-size: 12.5px; text-align: left; white-space: nowrap; }
+    .data-table th { background: var(--ayt-surface-alt); font-weight: 700; font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--ayt-muted); }
+    .data-table tbody tr { border-top: 1px solid var(--ayt-border); transition: background var(--ayt-fast); }
+    .data-table tbody tr:hover { background: var(--ayt-surface-alt); }
+    .data-table td.oid { font-family: var(--ayt-font-num); font-weight: 700; color: var(--ayt-primary-dark); }
+    .data-table td.price { font-family: var(--ayt-font-num); font-weight: 700; }
+    .data-table td.muted { color: var(--ayt-muted); }
+    .chk { appearance: none; width: 16px; height: 16px; border: 1.5px solid var(--ayt-border); border-radius: 4px; display: grid; place-content: center; cursor: pointer; background: var(--ayt-surface); transition: border-color var(--ayt-fast), background var(--ayt-fast); }
+    .chk::before { content: ""; width: 9px; height: 9px; transform: scale(0); transition: transform 120ms ease; clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); background: var(--ayt-surface); }
+    .chk:checked { background: var(--ayt-gold-dark); border-color: var(--ayt-gold-dark); }
+    .chk:checked::before { transform: scale(1); }
+
+    .cust-cell { display: flex; align-items: center; gap: var(--ayt-sp-3); white-space: normal; min-width: 170px; }
+    .cust-avatar { width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #241C05; background: linear-gradient(150deg, var(--ayt-gold-light), var(--ayt-gold-dark)); }
+    .cust-info b { display: block; font-size: 12.5px; font-weight: 600; color: var(--ayt-ink); white-space: nowrap; }
+    .cust-info span { font-size: 11px; color: var(--ayt-muted); }
+
+    .prod-summary { white-space: normal; max-width: 220px; font-size: 12px; color: var(--ayt-ink); }
+    .prod-summary .more { color: var(--ayt-muted); font-size: 11px; }
+
+    .status-badge, .badge-status { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; padding: 4px 10px; border-radius: var(--ayt-radius-full); white-space: nowrap; }
+    .status-badge::before, .badge-status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+    /* Order status - WCAG AA Compliant Contrast Colors */
+    .status-processing { background: #DCEBFB; color: #1D4ED8; }
+    .status-confirmed   { background: #E4F3EE; color: #115E59; }
+    .status-delivered   { background: #D1FAE5; color: #065F46; }
+    .status-cancelled   { background: #FDECEC; color: #991B1B; }
+    /* Delivery status */
+    .deliv-pending   { background: #F5F2E9; color: #4B5563; }
+    .deliv-shipped   { background: #DCEBFB; color: #1D4ED8; }
+    .deliv-delivered { background: #D1FAE5; color: #065F46; }
+    /* Payment status */
+    .pay-pending { background: #FEF3C7; color: #92400E; }
+    .pay-paid    { background: #D1FAE5; color: #065F46; }
+    .pay-failed  { background: #FDECEC; color: #991B1B; }
+
+    /* Enterprise Print Styles */
+    @media print {
+      body { background: #fff !important; color: #000 !important; }
+      .admin-sidebar, .console-header, .page-head-actions, .toolbar-card, .bulk-bar, .pagination-bar, .row-actions, #sidebar-collapse-btn { display: none !important; }
+      .admin-layout { grid-template-columns: 1fr !important; }
+      .table-card { border: none !important; box-shadow: none !important; }
+      .data-table th, .data-table td { border-bottom: 1px solid #ddd !important; color: #000 !important; }
+      .modal-overlay { position: static !important; background: none !important; display: block !important; }
+      .modal-card { max-width: 100% !important; height: auto !important; box-shadow: none !important; border: none !important; }
+    }
+
+    .row-actions { display: flex; align-items: center; gap: var(--ayt-sp-2); position: relative; }
+    .btn-row { font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: var(--ayt-radius-sm); border: 1px solid var(--ayt-border); background: var(--ayt-surface); transition: background var(--ayt-fast), border-color var(--ayt-fast), color var(--ayt-fast); }
+    .btn-row.view { color: var(--ayt-blue); }
+    .btn-row.view:hover { background: rgba(37,99,168,.08); border-color: var(--ayt-blue); }
+
+    .row-menu-wrap { position: relative; }
+    .row-menu-btn { width: 30px; height: 30px; border-radius: var(--ayt-radius-sm); border: 1px solid var(--ayt-border); background: var(--ayt-surface); display: flex; align-items: center; justify-content: center; color: var(--ayt-muted); transition: background var(--ayt-fast), border-color var(--ayt-fast); }
+    .row-menu-btn:hover { background: var(--ayt-surface-alt); border-color: var(--ayt-gold); color: var(--ayt-ink); }
+    .row-menu-btn svg { width: 15px; height: 15px; }
+    .row-menu-dropdown { position: absolute; right: 0; top: calc(100% + 6px); width: 190px; background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); box-shadow: var(--ayt-shadow-lg); padding: var(--ayt-sp-2); display: none; z-index: 25; text-align: left; white-space: normal; }
+    .row-menu-wrap.is-open .row-menu-dropdown { display: block; animation: aytFadeDown 140ms ease both; }
+    .row-menu-dropdown button { display: flex; align-items: center; gap: var(--ayt-sp-2); width: 100%; padding: 8px 10px; border-radius: var(--ayt-radius-sm); font-size: 12.5px; font-weight: 500; color: var(--ayt-ink); background: none; border: none; text-align: left; transition: background var(--ayt-fast); }
+    .row-menu-dropdown button:hover { background: var(--ayt-surface-alt); }
+    .row-menu-dropdown button svg { width: 14px; height: 14px; color: var(--ayt-muted); flex-shrink: 0; }
+    .row-menu-dropdown button.danger { color: var(--ayt-rose-dark); }
+    .row-menu-dropdown button.danger svg { color: var(--ayt-rose-dark); }
+    .row-menu-dropdown hr { border: none; border-top: 1px solid var(--ayt-border); margin: var(--ayt-sp-1) 0; }
+
+    /* ---------- Pagination ---------- */
+    .pagination-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--ayt-sp-4); padding: var(--ayt-sp-4) var(--ayt-sp-5); border-top: 1px solid var(--ayt-border); flex-wrap: wrap; }
+    .pagination-info { font-size: 12px; color: var(--ayt-muted); }
+    .pagination-controls { display: flex; align-items: center; gap: var(--ayt-sp-2); }
+    .page-btn { min-width: 32px; height: 32px; padding: 0 8px; display: flex; align-items: center; justify-content: center; border-radius: var(--ayt-radius-sm); border: 1px solid var(--ayt-border); background: var(--ayt-surface); font-size: 12.5px; font-family: var(--ayt-font-num); font-weight: 600; color: var(--ayt-ink); transition: background var(--ayt-fast), border-color var(--ayt-fast); }
+    .page-btn:hover:not(:disabled) { border-color: var(--ayt-gold); background: var(--ayt-surface-alt); }
+    .page-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .page-btn.active { background: var(--ayt-primary); color: #fff; border-color: var(--ayt-primary); }
+
+    /* ---------- Empty & skeleton states ---------- */
+    .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--ayt-sp-10) var(--ayt-sp-6); gap: var(--ayt-sp-3); }
+    .empty-state .ico { font-size: 40px; }
+    .empty-state h3 { font-family: var(--ayt-font-display); font-size: 17px; font-weight: 700; color: var(--ayt-primary-dark); }
+    .empty-state p { font-size: 13px; color: var(--ayt-muted); max-width: 340px; }
+    .skeleton { position: relative; overflow: hidden; background: var(--ayt-surface-alt); border-radius: var(--ayt-radius-sm); display: inline-block; }
+    .skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent); animation: aytShimmer 1.5s infinite; }
+    @keyframes aytShimmer { 100% { transform: translateX(100%); } }
+    .sk-line { height: 12px; width: 90px; }
+
+    .ayt-reveal { opacity: 0; transform: translateY(14px); animation: aytRevealIn 560ms cubic-bezier(.22,.61,.36,1) forwards; }
+    @keyframes aytRevealIn { to { opacity: 1; transform: translateY(0); } }
+
+    /* ==========================================================================
+       Order Details Drawer (right-side slide panel)
+       Reuses .modal-overlay / .modal-card / .active hooks from existing JS —
+       no JS identifiers changed, only presentation.
+       ========================================================================== */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(15,22,19,.5); backdrop-filter: blur(3px);
+      display: none; align-items: stretch; justify-content: flex-end;
+      z-index: 100;
+    }
+    .modal-overlay.active { display: flex; animation: aytOverlayIn 200ms ease both; }
+    @keyframes aytOverlayIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .modal-card {
+      width: 100%; max-width: 460px; height: 100vh; background: var(--ayt-surface);
+      border-left: 1px solid var(--ayt-border); box-shadow: var(--ayt-shadow-lg);
+      display: flex; flex-direction: column; overflow-y: auto;
+      animation: aytDrawerIn 320ms cubic-bezier(.22,.61,.36,1) both;
+    }
+    @keyframes aytDrawerIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+    .modal-header {
+      position: sticky; top: 0; z-index: 2;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--ayt-sp-5) var(--ayt-sp-6); border-bottom: 1px solid var(--ayt-border);
+      background: var(--ayt-surface-alt);
+    }
+    .modal-title { font-family: var(--ayt-font-display); font-size: 17px; font-weight: 700; color: var(--ayt-primary-dark); }
+    .modal-close { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--ayt-surface); border: 1px solid var(--ayt-border); color: var(--ayt-muted); font-size: 20px; line-height: 1; transition: border-color var(--ayt-fast), color var(--ayt-fast); }
+    .modal-close:hover { border-color: var(--ayt-gold); color: var(--ayt-ink); }
+
+    .drawer-section { padding: var(--ayt-sp-5) var(--ayt-sp-6); border-bottom: 1px dashed var(--ayt-border); display: flex; flex-direction: column; gap: var(--ayt-sp-3); }
+    .drawer-section:last-of-type { border-bottom: none; }
+    .drawer-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ayt-gold-dark); display: flex; align-items: center; gap: 6px; }
+    .drawer-section-title svg { width: 14px; height: 14px; }
+
+    .drawer-info-row { display: flex; align-items: flex-start; gap: var(--ayt-sp-3); font-size: 13px; }
+    .drawer-info-row .ico { width: 28px; height: 28px; border-radius: var(--ayt-radius-sm); background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px; }
+    .drawer-info-row b { display: block; font-weight: 600; color: var(--ayt-ink); }
+    .drawer-info-row span { color: var(--ayt-muted); font-size: 12.5px; }
+
+    .drawer-item-row { display: flex; align-items: center; justify-content: space-between; gap: var(--ayt-sp-3); font-size: 12.5px; padding: var(--ayt-sp-2) 0; border-bottom: 1px dashed var(--ayt-border); }
+    .drawer-item-row:last-child { border-bottom: none; }
+    .drawer-item-row .qty { color: var(--ayt-muted); }
+    .drawer-item-row .amt { font-family: var(--ayt-font-num); font-weight: 700; }
+    .drawer-total-row { display: flex; align-items: center; justify-content: space-between; font-size: 13.5px; font-weight: 700; padding-top: var(--ayt-sp-2); }
+    .drawer-total-row .amt { font-family: var(--ayt-font-num); color: var(--ayt-primary-dark); font-size: 16px; }
+
+    .timeline { display: flex; flex-direction: column; }
+    .timeline-item { position: relative; display: flex; gap: var(--ayt-sp-3); padding-bottom: var(--ayt-sp-4); }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before { content: ""; position: absolute; left: 5px; top: 16px; bottom: -4px; width: 1px; background: var(--ayt-border); }
+    .timeline-item:last-child::before { display: none; }
+    .timeline-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--ayt-gold); flex-shrink: 0; margin-top: 3px; box-shadow: 0 0 0 3px rgba(201,162,39,.18); }
+    .timeline-item.done .timeline-dot { background: var(--ayt-emerald); box-shadow: 0 0 0 3px rgba(30,122,95,.18); }
+    .timeline-body b { display: block; font-size: 12.5px; font-weight: 600; color: var(--ayt-ink); }
+    .timeline-body span { font-size: 11.5px; color: var(--ayt-muted); }
+
+    .drawer-notes-box { background: var(--ayt-surface-alt); border: 1px dashed var(--ayt-border); border-radius: var(--ayt-radius-sm); padding: var(--ayt-sp-3) var(--ayt-sp-4); font-size: 12.5px; color: var(--ayt-muted); line-height: 1.6; }
+
+    .status-update-grid { display: grid; grid-template-columns: 1fr; gap: var(--ayt-sp-3); }
+    .status-select-wrapper { display: flex; flex-direction: column; gap: var(--ayt-sp-2); }
+    .form-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ayt-primary-dark); }
+    html[data-theme="dark"] .form-label { color: var(--ayt-gold-light); }
+    .status-select, .form-select { width: 100%; background: var(--ayt-surface-alt); border: 1.5px solid var(--ayt-border); border-radius: var(--ayt-radius-sm); padding: 10px 12px; font-size: 13px; font-family: var(--ayt-font-body); color: var(--ayt-ink); transition: border-color var(--ayt-fast), background var(--ayt-fast), box-shadow var(--ayt-fast); }
+    .status-select:focus, .form-select:focus { outline: none; border-color: var(--ayt-gold); background: var(--ayt-surface); box-shadow: 0 0 0 4px rgba(201,162,39,.12); }
+
+    .btn-update-status { display: flex; align-items: center; justify-content: center; gap: 7px; background: linear-gradient(135deg, var(--ayt-primary) 0%, var(--ayt-primary-dark) 100%); color: #fff; font-size: 13px; font-weight: 700; padding: 12px; border: none; border-radius: var(--ayt-radius-sm); box-shadow: var(--ayt-shadow-md); transition: transform var(--ayt-fast), box-shadow var(--ayt-fast); margin-top: var(--ayt-sp-1); }
+    .btn-update-status:hover { transform: translateY(-1px); box-shadow: var(--ayt-shadow-lg); }
+    .btn-update-status svg { width: 15px; height: 15px; }
+
+    @media (max-width: 992px) {
+      .admin-layout, .admin-layout.is-collapsed { grid-template-columns: 1fr; }
+      .admin-sidebar { position: fixed; left: 0; top: 0; width: 264px; transform: translateX(-100%); transition: transform var(--ayt-normal); box-shadow: var(--ayt-shadow-lg); }
+      .admin-sidebar.is-open { transform: translateX(0); }
+      .icon-btn.mobile-menu-btn { display: flex; }
+      .header-search { display: none; }
+    }
+    @media (max-width: 640px) {
+      .console-header { padding: 0 var(--ayt-sp-4); }
+      .console-body { padding: var(--ayt-sp-4); }
+      .admin-profile-badge .who { display: none; }
+      .page-head-actions .label-txt { display: none; }
+      .modal-card { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-layout" id="admin-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <div class="sidebar-brand">
+        <div class="mark">🛒</div>
+        <div class="txt">AYT Mart<small>Control Panel</small></div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <span class="menu-section-label">প্রধান মেনু</span>
+        <a href="dashboard.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          <span class="label-txt">ড্যাশবোর্ড</span>
+        </a>
+        <a href="products.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>
+          <span class="label-txt">প্রোডাক্টস</span>
+        </a>
+        <a href="categories.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+          <span class="label-txt">ক্যাটাগরি</span>
+        </a>
+        <a href="orders.html" class="menu-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+          <span class="label-txt">অর্ডারসমূহ</span>
+          <span class="badge-mini" id="sidebar-orders-badge">—</span>
+        </a>
+        <a href="inventory.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7Z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>
+          <span class="label-txt">ইনভেন্টরি</span>
+        </a>
+
+        <span class="menu-section-label">সিস্টেম</span>
+        <a href="settings.html" class="menu-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+          <span class="label-txt">সেটিংস</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-foot">
+        <button class="sidebar-collapse-btn" id="sidebar-collapse-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
+          <span class="label-txt">সাইডবার সংকুচিত করুন</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Console -->
+    <main class="admin-console">
+      <header class="console-header">
+        <div class="header-left">
+          <button class="icon-btn mobile-menu-btn" id="mobile-menu-btn" aria-label="মেনু খুলুন">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <span class="crumb-trail">ড্যাশবোর্ড <span class="sep">/</span> অর্ডারসমূহ</span>
+            <h1>অর্ডার ম্যানেজমেন্ট</h1>
+          </div>
+        </div>
+
+        <div class="header-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="global-header-search" placeholder="দ্রুত খুঁজুন..." aria-label="গ্লোবাল সার্চ" />
+        </div>
+
+        <div class="header-right">
+          <button class="icon-btn" id="theme-toggle" aria-label="থিম পরিবর্তন করুন">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+          </button>
+          <button class="icon-btn" aria-label="নোটিফিকেশন">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+            <span class="dot"></span>
+          </button>
+          <div class="profile-menu" id="profile-menu">
+            <button class="admin-profile-badge" id="profile-badge-btn">
+              <span class="avatar">এ</span>
+              <span class="who"><b>এডমিন</b><span>admin@aytmart.com</span></span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="profile-dropdown">
+              <a href="settings.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/></svg> প্রোফাইল সেটিংস
+              </a>
+              <hr>
+              <button class="btn-logout" onclick="performLogout()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> লগআউট
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="console-body">
+
+        <!-- Page header -->
+        <div class="page-head ayt-reveal">
+          <div>
+            <span class="eyebrow">ফুলফিলমেন্ট কেন্দ্র</span>
+            <h1>অর্ডার ট্র্যাকিং ও ফুলফিলমেন্ট</h1>
+            <p>সকল অর্ডার, পেমেন্ট ও ডেলিভারি স্ট্যাটাস এখান থেকে পরিচালনা করুন</p>
+          </div>
+          <div class="page-head-actions">
+            <button class="btn-ghost" onclick="fetchOrders()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              <span class="label-txt">রিফ্রেশ</span>
+            </button>
+            <button class="btn-ghost" onclick="exportOrdersCsv()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span class="label-txt">এক্সপোর্ট</span>
+            </button>
+            <button class="btn-ghost" onclick="printAllOrders()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              <span class="label-txt">প্রিন্ট</span>
+            </button>
+            <button class="btn-gold" onclick="createOrder()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              নতুন অর্ডার
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI cards -->
+        <div class="metrics-grid ayt-reveal" style="animation-delay: 40ms" id="orders-kpi-grid">
+          <div class="metric-card">
+            <div class="metric-top"><div class="metric-ico tone-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg></div></div>
+            <span class="metric-title">মোট অর্ডার</span>
+            <span class="metric-value num" id="kpi-total">—</span>
+          </div>
+          <div class="metric-card">
+            <div class="metric-top"><div class="metric-ico tone-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div></div>
+            <span class="metric-title">Pending</span>
+            <span class="metric-value num" id="kpi-pending">—</span>
+          </div>
+          <div class="metric-card">
+            <div class="metric-top"><div class="metric-ico tone-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><polyline points="21 3 21 9 15 9"/></svg></div></div>
+            <span class="metric-title">Processing</span>
+            <span class="metric-value num" id="kpi-processing">—</span>
+          </div>
+          <div class="metric-card">
+            <div class="metric-top"><div class="metric-ico tone-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7Z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg></div></div>
+            <span class="metric-title">Shipped</span>
+            <span class="metric-value num" id="kpi-shipped">—</span>
+          </div>
+          <div class="metric-card">
+            <div class="metric-top"><div class="metric-ico tone-emerald"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg></div></div>
+            <span class="metric-title">Delivered</span>
+            <span class="metric-value num" id="kpi-delivered">—</span>
+          </div>
+          <div class="metric-card">
+            <div class="metric-top"><div class="metric-ico tone-rose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></div></div>
+            <span class="metric-title">Cancelled</span>
+            <span class="metric-value num" id="kpi-cancelled">—</span>
+          </div>
+          <div class="metric-card">
+            <div class="metric-top"><div class="metric-ico tone-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div></div>
+            <span class="metric-title">আজকের অর্ডার</span>
+            <span class="metric-value num" id="kpi-today-orders">—</span>
+          </div>
+          <div class="metric-card">
+            <div class="metric-top"><div class="metric-ico tone-emerald"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div></div>
+            <span class="metric-title">আজকের বিক্রয়</span>
+            <span class="metric-value num" id="kpi-today-revenue">—</span>
+          </div>
+        </div>
+
+        <!-- Toolbar + Filters -->
+        <div class="toolbar-card ayt-reveal" style="animation-delay: 100ms">
+          <div class="toolbar-left">
+            <div class="search-admin">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="order-search" placeholder="অর্ডার আইডি বা মোবাইল খুঁজুন..." aria-label="অর্ডার সার্চ" oninput="debounceFilterOrders()"/>
+            </div>
+
+            <select id="order-status-filter" class="select-admin" aria-label="অর্ডার স্ট্যাটাস ফিল্টার" onchange="filterOrders()">
+              <option value="all">অর্ডার স্ট্যাটাস (All)</option>
+              <option value="processing">Processing</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+
+            <select id="payment-status-filter" class="select-admin" aria-label="পেমেন্ট স্ট্যাটাস ফিল্টার" onchange="filterOrders()">
+              <option value="all">পেমেন্ট স্ট্যাটাস (All)</option>
+              <option value="pending">Pending</option>
+              <option value="paid">Paid</option>
+              <option value="failed">Failed</option>
+            </select>
+
+            <select id="delivery-status-filter" class="select-admin" aria-label="ডেলিভারি স্ট্যাটাস ফিল্টার" onchange="filterOrders()">
+              <option value="all">ডেলিভারি স্ট্যাটাস (All)</option>
+              <option value="pending">Pending</option>
+              <option value="shipped">Shipped</option>
+              <option value="delivered">Delivered</option>
+            </select>
+
+            <select id="payment-method-filter" class="select-admin" aria-label="পেমেন্ট মেথড ফিল্টার" onchange="filterOrders()">
+              <option value="all">পেমেন্ট মেথড (All)</option>
+              <option value="cod">Cash on Delivery</option>
+              <option value="bkash">bKash</option>
+              <option value="nagad">Nagad</option>
+              <option value="card">Card</option>
+            </select>
+
+            <select id="date-range-filter" class="select-admin" aria-label="তারিখ পরিসীমা ফিল্টার" onchange="filterOrders()">
+              <option value="all">তারিখ পরিসীমা (All)</option>
+              <option value="today">আজ</option>
+              <option value="7d">গত ৭ দিন</option>
+              <option value="30d">গত ৩০ দিন</option>
+            </select>
+
+            <select id="customer-filter" class="select-admin" aria-label="গ্রাহক ফিল্টার" onchange="filterOrders()">
+              <option value="all">সকল গ্রাহক</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Bulk action bar -->
+        <div class="bulk-bar" id="bulk-bar">
+          <span class="count"><b id="bulk-count">0</b>টি অর্ডার নির্বাচিত</span>
+          <div class="bulk-actions">
+            <button onclick="bulkPrintSelected()">ইনভয়েস প্রিন্ট</button>
+            <button onclick="bulkCancelSelected()" class="danger">নির্বাচিত বাতিল করুন</button>
+            <button onclick="clearOrderSelection()">নির্বাচন বাতিল</button>
+          </div>
+        </div>
+
+        <!-- Master Orders Table -->
+        <div class="table-card ayt-reveal" style="animation-delay: 140ms">
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 34px;"><input type="checkbox" class="chk" id="chk-select-all" aria-label="সকল অর্ডার নির্বাচন করুন" onchange="toggleSelectAllOrders(this)"/></th>
+                  <th scope="col">অর্ডার আইডি</th>
+                  <th scope="col">গ্রাহক</th>
+                  <th scope="col">মোবাইল</th>
+                  <th scope="col">প্রোডাক্টস</th>
+                  <th scope="col">পরিমাণ</th>
+                  <th scope="col">পেমেন্ট মেথড</th>
+                  <th scope="col">পেমেন্ট স্ট্যাটাস</th>
+                  <th scope="col">ডেলিভারি স্ট্যাটাস</th>
+                  <th scope="col">অর্ডার স্ট্যাটাস</th>
+                  <th scope="col">অর্ডার তারিখ</th>
+                  <th scope="col" style="text-align:right;">অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody id="admin-orders-table">
+                <tr><td colspan="12"><span class="skeleton sk-line"></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pagination-bar" id="pagination-bar" style="display:none;">
+            <span class="pagination-info" id="pagination-info"></span>
+            <div class="pagination-controls" id="pagination-controls"></div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Order Details Drawer -->
+  <div class="modal-overlay" id="order-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="inspector-order-id" onclick="if(event.target===this) closeInspector();">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="inspector-order-id">অর্ডার বিবরণী</h3>
+        <button class="modal-close" onclick="closeInspector()" aria-label="বন্ধ করুন">×</button>
+      </div>
+
+      <div id="inspector-content">
+        <!-- Rendered dynamically: customer info, shipping address, items, timeline, notes, payment info -->
+      </div>
+
+      <!-- Independent Status Change Form -->
+      <div class="drawer-section">
+        <span class="drawer-section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><polyline points="21 3 21 9 15 9"/></svg>
+          স্ট্যাটাস আপডেট করুন
+        </span>
+        <form class="status-update-grid" onsubmit="saveStatuses(event)">
+          <div class="status-select-wrapper">
+            <label class="form-label">Order Status</label>
+            <select id="update-order-status" class="status-select">
+              <option value="Processing">Processing</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="status-select-wrapper">
+            <label class="form-label">Delivery Status</label>
+            <select id="update-delivery-status" class="status-select">
+              <option value="Pending">Pending</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Delivered">Delivered</option>
+            </select>
+          </div>
+
+          <div class="status-select-wrapper">
+            <label class="form-label">Payment Status</label>
+            <select id="update-payment-status" class="status-select">
+              <option value="Pending">Pending</option>
+              <option value="Paid">Paid</option>
+              <option value="Failed">Failed</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-update-status">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg>
+            স্ট্যাটাস সমূহ আপডেট করুন
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Services & Scripts -->
+  <script src="../config/environment/env.js"></script>
+  <script src="../utils/storage/storage.js"></script>
+  <script src="../api/shared/api-client.js"></script>
+
+  <script>
+    let localOrdersList = [];
+    let inspectedOrderId = null;
+    let currentFilteredList = [];
+    let selectedOrderIds = new Set();
+    let currentPage = 1;
+    let pageSize = 10;
+    let filterDebounceTimer = null;
+
+    // Security Helper: HTML Entity Escaping to prevent Stored XSS
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function debounceFilterOrders() {
+      clearTimeout(filterDebounceTimer);
+      filterDebounceTimer = setTimeout(filterOrders, 250);
+    }
+
+    // Default mock orders to supplement simulated database records [2]
+    const MOCK_ADMIN_ORDERS = [
+      {
+        Order_ID: 'AYT-20260803-5097',
+        Customer_Name: 'মো: হাবিবুর রহমান',
+        Customer_Phone: '01786840952',
+        Shipping_Address: 'বাসা ৪২, রোড ৫, ধানমন্ডি, ঢাকা',
+        Grand_Total: 1010.00,
+        Order_Status: 'Processing',
+        Delivery_Status: 'Pending',
+        Payment_Status: 'Pending',
+        Payment_Method: 'Cash on Delivery',
+        Created_At: '2026-08-03T11:00:00Z',
+        Notes: 'গ্রাহক দ্রুত ডেলিভারি চেয়েছেন।',
+        Items: [
+          { Product_Name: 'প্রিমিয়াম কাঠের রেহাল', Quantity: 1, Price: 950 }
+        ]
+      },
+      {
+        Order_ID: 'AYT-20260801-4412',
+        Customer_Name: 'তাসনিম সুলতানা',
+        Customer_Phone: '01928374650',
+        Shipping_Address: 'সেক্টর ৪, রোড ১২, উত্তরা, ঢাকা',
+        Grand_Total: 1910.00,
+        Order_Status: 'Delivered',
+        Delivery_Status: 'Delivered',
+        Payment_Status: 'Paid',
+        Payment_Method: 'bKash',
+        Created_At: '2026-08-01T15:30:00Z',
+        Notes: '',
+        Items: [
+          { Product_Name: 'ব্লুটুথ ওয়্যারলেস এয়ারবাডস', Quantity: 1, Price: 1850 }
+        ]
+      },
+      {
+        Order_ID: 'AYT-20260731-3390',
+        Customer_Name: 'রাকিব হাসান',
+        Customer_Phone: '01812345678',
+        Shipping_Address: 'বাড়ি ৯, ব্লক সি, সিলেট',
+        Grand_Total: 2450.00,
+        Order_Status: 'Confirmed',
+        Delivery_Status: 'Shipped',
+        Payment_Status: 'Paid',
+        Payment_Method: 'Nagad',
+        Created_At: '2026-07-31T09:15:00Z',
+        Notes: '',
+        Items: [
+          { Product_Name: 'কটন পাঞ্জাবি — মেরুন', Quantity: 2, Price: 850 },
+          { Product_Name: 'প্রিমিয়াম আতর কালেকশন', Quantity: 1, Price: 750 }
+        ]
+      },
+      {
+        Order_ID: 'AYT-20260729-2205',
+        Customer_Name: 'সাবরিনা আক্তার',
+        Customer_Phone: '01711223344',
+        Shipping_Address: 'বাসা ১৭, রোড ৩, চট্টগ্রাম',
+        Grand_Total: 620.00,
+        Order_Status: 'Cancelled',
+        Delivery_Status: 'Pending',
+        Payment_Status: 'Failed',
+        Payment_Method: 'Card',
+        Created_At: '2026-07-29T18:40:00Z',
+        Notes: 'গ্রাহকের অনুরোধে বাতিল করা হয়েছে।',
+        Items: [
+          { Product_Name: 'স্মার্ট ডিজিটাল তাসবীহ', Quantity: 1, Price: 620 }
+        ]
+      }
+    ];
+
+    // ---------- Init ----------
+    document.addEventListener('DOMContentLoaded', async () => {
+      const session = StorageHelper.get(ENV.STORAGE_KEYS.SESSION, null);
+      if (!session || session.role !== 'Admin') {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      await fetchOrders();
+    });
+
+    // ---------- Data fetching (unchanged API contract) ----------
+    async function fetchOrders() {
+      renderTableSkeleton();
+      try {
+        const response = await ApiClient.request('orders.list', {}, 'GET');
+        if (response && response.success && response.data && response.data.items) {
+          localOrdersList = response.data.items;
+        } else {
+          localOrdersList = loadMergedLocalOrders();
+        }
+      } catch (err) {
+        console.warn('Backend Orders API timeout. Compiling local transaction storage lists.', err);
+        localOrdersList = loadMergedLocalOrders();
+      }
+
+      normalizeOrders(localOrdersList);
+      currentPage = 1;
+      selectedOrderIds.clear();
+      populateCustomerFilter();
+      updateKpis(localOrdersList);
+      filterOrders();
+    }
+
+    /**
+     * Merges last checkout orders from client-side simulator with admin defaults [2]
+     */
+    function loadMergedLocalOrders() {
+      const merged = [...MOCK_ADMIN_ORDERS];
+      const lastCheckout = StorageHelper.get('ayt_last_order', null);
+
+      if (lastCheckout) {
+        const alreadyInList = merged.some(o => o.Order_ID === lastCheckout.Order_ID);
+        if (!alreadyInList) {
+          // Normalize checkout fields
+          merged.unshift({
+            Order_ID: lastCheckout.Order_ID,
+            Customer_Name: lastCheckout.Customer_Name,
+            Customer_Phone: lastCheckout.Customer_Phone,
+            Shipping_Address: lastCheckout.Shipping_Address,
+            Grand_Total: parseFloat(lastCheckout.Grand_Total),
+            Order_Status: lastCheckout.Order_Status || 'Processing',
+            Delivery_Status: lastCheckout.Delivery_Status || 'Pending',
+            Payment_Status: lastCheckout.Payment_Status || 'Pending',
+            Payment_Method: lastCheckout.Payment_Method || 'Cash on Delivery',
+            Created_At: lastCheckout.Created_At || new Date().toISOString(),
+            Notes: lastCheckout.Notes || '',
+            Items: lastCheckout.Items || [{ Product_Name: 'ইনভয়েস প্রোডাক্টস বিবরণী', Quantity: 1, Price: lastCheckout.Grand_Total }]
+          });
+        }
+      }
+      return merged;
+    }
+
+    // Fill in any UI-only fields that may be missing from a real backend payload
+    function normalizeOrders(list) {
+      list.forEach(o => {
+        if (!o.Payment_Method) o.Payment_Method = 'Cash on Delivery';
+        if (!o.Notes) o.Notes = '';
+        if (!o.Items) o.Items = [];
+      });
+    }
+
+    function populateCustomerFilter() {
+      const sel = document.querySelector('#customer-filter');
+      const names = Array.from(new Set(localOrdersList.map(o => o.Customer_Name))).sort();
+      sel.innerHTML = `<option value="all">সকল গ্রাহক</option>` +
+        names.map(n => `<option value="${n}">${n}</option>`).join('');
+    }
+
+    // ---------- KPIs ----------
+    function updateKpis(list) {
+      const now = new Date();
+      const localTodayYMD = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+      const total = list.length;
+      const pending = list.filter(o => o.Delivery_Status === 'Pending' && o.Order_Status !== 'Cancelled').length;
+      const processing = list.filter(o => o.Order_Status === 'Processing').length;
+      const shipped = list.filter(o => o.Delivery_Status === 'Shipped').length;
+      const delivered = list.filter(o => o.Order_Status === 'Delivered').length;
+      const cancelled = list.filter(o => o.Order_Status === 'Cancelled').length;
+
+      const todaysOrders = list.filter(o => {
+        if (!o.Created_At) return false;
+        const d = new Date(o.Created_At);
+        if (isNaN(d.getTime())) return false;
+        const orderYMD = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        return orderYMD === localTodayYMD;
+      });
+      const todaysRevenue = todaysOrders.reduce((sum, o) => sum + (parseFloat(o.Grand_Total) || 0), 0);
+
+      document.querySelector('#kpi-total').textContent = total;
+      document.querySelector('#kpi-pending').textContent = pending;
+      document.querySelector('#kpi-processing').textContent = processing;
+      document.querySelector('#kpi-shipped').textContent = shipped;
+      document.querySelector('#kpi-delivered').textContent = delivered;
+      document.querySelector('#kpi-cancelled').textContent = cancelled;
+      document.querySelector('#kpi-today-orders').textContent = todaysOrders.length;
+      document.querySelector('#kpi-today-revenue').textContent = `৳${todaysRevenue.toFixed(0)}`;
+      document.querySelector('#sidebar-orders-badge').textContent = total;
+    }
+
+    // ---------- Table rendering ----------
+    function renderTableSkeleton() {
+      const tbody = document.querySelector('#admin-orders-table');
+      tbody.innerHTML = Array.from({length: 5}).map(() => `
+        <tr>
+          <td><span class="skeleton" style="width:16px;height:16px;display:inline-block;"></span></td>
+          <td><span class="skeleton sk-line" style="width:110px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:100px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:80px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:120px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:60px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:70px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:70px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:70px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:70px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:80px;"></span></td>
+          <td><span class="skeleton sk-line" style="width:60px;"></span></td>
+        </tr>
+      `).join('');
+    }
+
+    function renderTable(list) {
+      currentFilteredList = list;
+      const tbody = document.querySelector('#admin-orders-table');
+
+      if (list.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="12">
+              <div class="empty-state">
+                <span class="ico">🛒</span>
+                <h3>কোনো সক্রিয় অর্ডার পাওয়া যায়নি</h3>
+                <p>ফিল্টার পরিবর্তন করে আবার চেষ্টা করুন অথবা নতুন অর্ডার তৈরি করুন।</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        document.querySelector('#pagination-bar').style.display = 'none';
+        return;
+      }
+
+      const totalPages = Math.max(1, Math.ceil(list.length / pageSize));
+      if (currentPage > totalPages) currentPage = totalPages;
+      const start = (currentPage - 1) * pageSize;
+      const pageItems = list.slice(start, start + pageSize);
+
+      tbody.innerHTML = pageItems.map(order => {
+        const safeId = escapeHtml(order.Order_ID);
+        const safeName = escapeHtml(order.Customer_Name || '—');
+        const safePhone = escapeHtml(order.Customer_Phone || '—');
+        const safeMethod = escapeHtml(order.Payment_Method || 'Cash on Delivery');
+        const safePayStatus = escapeHtml(order.Payment_Status || 'Pending');
+        const safeDelivStatus = escapeHtml(order.Delivery_Status || 'Pending');
+        const safeOrderStatus = escapeHtml(order.Order_Status || 'Processing');
+
+        const initial = safeName.trim().charAt(0);
+        const itemsCount = (order.Items || []).length;
+        const firstItemName = itemsCount ? escapeHtml(order.Items[0].Product_Name) : '—';
+        const moreText = itemsCount > 1 ? `<div class="more">+${itemsCount - 1}টি আরও প্রোডাক্ট</div>` : '';
+        const dateLabel = formatOrderDate(order.Created_At);
+
+        return `
+        <tr>
+          <td><input type="checkbox" class="chk" aria-label="অর্ডার ${safeId} নির্বাচন করুন" ${selectedOrderIds.has(order.Order_ID) ? 'checked' : ''} onchange="toggleOrderSelect('${safeId}', this.checked)"/></td>
+          <td class="oid">${safeId}</td>
+          <td>
+            <div class="cust-cell">
+              <span class="cust-avatar">${initial}</span>
+              <div class="cust-info"><b>${safeName}</b></div>
+            </div>
+          </td>
+          <td><code>${safePhone}</code></td>
+          <td class="prod-summary">${firstItemName}${moreText}</td>
+          <td class="price">৳${parseFloat(order.Grand_Total || 0).toFixed(2)}</td>
+          <td class="muted">${safeMethod}</td>
+          <td><span class="badge-status pay-${safePayStatus.toLowerCase()}">${safePayStatus}</span></td>
+          <td><span class="badge-status deliv-${safeDelivStatus.toLowerCase()}">${safeDelivStatus}</span></td>
+          <td><span class="badge-status status-${safeOrderStatus.toLowerCase()}">${safeOrderStatus}</span></td>
+          <td class="muted">${dateLabel}</td>
+          <td>
+            <div class="row-actions" style="justify-content:flex-end;">
+              <button class="btn-row view" onclick="inspectOrder('${safeId}')">ফুলফিল করুন</button>
+              <div class="row-menu-wrap" id="row-menu-${safeId}">
+                <button class="row-menu-btn" onclick="toggleRowMenu('${safeId}', event)" aria-label="অর্ডার ${safeId} এর অপশনসমূহ">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                </button>
+                <div class="row-menu-dropdown">
+                  <button onclick="inspectOrder('${safeId}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg> বিবরণী ও স্ট্যাটাস
+                  </button>
+                  <button onclick="editOrder('${safeId}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg> সম্পাদনা করুন
+                  </button>
+                  <button onclick="printInvoice('${safeId}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> ইনভয়েস প্রিন্ট
+                  </button>
+                  <hr>
+                  <button class="danger" onclick="cancelOrder('${safeId}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg> অর্ডার বাতিল করুন
+                  </button>
+                  <button class="danger" onclick="deleteOrder('${safeId}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg> ডিলিট করুন
+                  </button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      `;
+      }).join('');
+
+      renderOrdersPagination(list.length, totalPages);
+      syncOrdersSelectAllState(pageItems);
+    }
+
+    function formatOrderDate(iso) {
+      if (!iso) return '—';
+      const d = new Date(iso);
+      if (isNaN(d.getTime())) return iso;
+      const bnMonths = ['জানু','ফেব্রু','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টে','অক্টো','নভে','ডিসে'];
+      return `${d.getDate()} ${bnMonths[d.getMonth()]}, ${d.getFullYear()}`;
+    }
+
+    // ---------- Pagination ----------
+    function renderOrdersPagination(totalItems, totalPages) {
+      const bar = document.querySelector('#pagination-bar');
+      const info = document.querySelector('#pagination-info');
+      const controls = document.querySelector('#pagination-controls');
+      bar.style.display = 'flex';
+
+      const start = (currentPage - 1) * pageSize + 1;
+      const end = Math.min(currentPage * pageSize, totalItems);
+      info.textContent = `${totalItems} টির মধ্যে ${start}–${end} টি দেখানো হচ্ছে`;
+
+      let html = `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="goToOrdersPage(${currentPage - 1})">‹</button>`;
+      for (let i = 1; i <= totalPages; i++) {
+        if (totalPages > 7 && i !== 1 && i !== totalPages && Math.abs(i - currentPage) > 1) {
+          if (i === 2 || i === totalPages - 1) html += `<span class="pagination-info">…</span>`;
+          continue;
+        }
+        html += `<button class="page-btn num ${i === currentPage ? 'active' : ''}" onclick="goToOrdersPage(${i})">${i}</button>`;
+      }
+      html += `<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="goToOrdersPage(${currentPage + 1})">›</button>`;
+      controls.innerHTML = html;
+    }
+
+    function goToOrdersPage(page) {
+      if (page < 1) return;
+      currentPage = page;
+      renderTable(currentFilteredList);
+    }
+
+    function changeOrdersPageSize(size) {
+      pageSize = parseInt(size, 10) || 10;
+      currentPage = 1;
+      renderTable(currentFilteredList);
+    }
+
+    // ---------- Selection / bulk actions ----------
+    function toggleOrderSelect(id, checked) {
+      if (checked) selectedOrderIds.add(id); else selectedOrderIds.delete(id);
+      syncOrdersBulkBar();
+    }
+
+    function toggleSelectAllOrders(checkboxEl) {
+      const start = (currentPage - 1) * pageSize;
+      const pageItems = currentFilteredList.slice(start, start + pageSize);
+      pageItems.forEach(o => {
+        if (checkboxEl.checked) selectedOrderIds.add(o.Order_ID); else selectedOrderIds.delete(o.Order_ID);
+      });
+      renderTable(currentFilteredList);
+      syncOrdersBulkBar();
+    }
+
+    function syncOrdersSelectAllState(pageItems) {
+      const allSelected = pageItems.length > 0 && pageItems.every(o => selectedOrderIds.has(o.Order_ID));
+      const selectAll = document.querySelector('#chk-select-all');
+      if (selectAll) selectAll.checked = allSelected;
+    }
+
+    function syncOrdersBulkBar() {
+      const bar = document.querySelector('#bulk-bar');
+      const count = document.querySelector('#bulk-count');
+      count.textContent = selectedOrderIds.size;
+      bar.classList.toggle('is-visible', selectedOrderIds.size > 0);
+    }
+
+    function clearOrderSelection() {
+      selectedOrderIds.clear();
+      syncOrdersBulkBar();
+      renderTable(currentFilteredList);
+    }
+
+    function bulkCancelSelected() {
+      if (selectedOrderIds.size === 0) return;
+      if (!confirm(`নির্বাচিত ${selectedOrderIds.size}টি অর্ডার বাতিল করতে চান?`)) return;
+      selectedOrderIds.forEach(id => {
+        const target = localOrdersList.find(o => o.Order_ID === id);
+        if (target) target.Order_Status = 'Cancelled';
+      });
+      selectedOrderIds.clear();
+      updateKpis(localOrdersList);
+      syncOrdersBulkBar();
+      filterOrders();
+    }
+
+    function bulkPrintSelected() {
+      if (selectedOrderIds.size === 0) return;
+      window.print();
+    }
+
+    // ---------- Row menu (kebab dropdown) ----------
+    function toggleRowMenu(orderId, event) {
+      event.stopPropagation();
+      document.querySelectorAll('.row-menu-wrap').forEach(el => {
+        if (el.id !== `row-menu-${orderId}`) el.classList.remove('is-open');
+      });
+      document.querySelector(`#row-menu-${orderId}`).classList.toggle('is-open');
+    }
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.row-menu-wrap').forEach(el => el.classList.remove('is-open'));
+    });
+
+    // ---------- Order details drawer ----------
+    function inspectOrder(orderId) {
+      const order = localOrdersList.find(o => o.Order_ID === orderId);
+      if (!order) return;
+
+      inspectedOrderId = orderId;
+      document.querySelector('#inspector-order-id').innerText = `অর্ডার বিবরণী: ${orderId}`;
+
+      const itemsTotal = (order.Items || []).reduce((sum, it) => sum + (parseFloat(it.Price) * it.Quantity), 0);
+
+      const content = document.querySelector('#inspector-content');
+      content.innerHTML = `
+        <div class="drawer-section">
+          <span class="drawer-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
+            গ্রাহকের তথ্য
+          </span>
+          <div class="drawer-info-row">
+            <span class="ico">👤</span>
+            <span><b>${escapeHtml(order.Customer_Name)}</b><span>প্রাইমারি গ্রাহক</span></span>
+          </div>
+          <div class="drawer-info-row">
+            <span class="ico">📞</span>
+            <span><b>${escapeHtml(order.Customer_Phone)}</b><span>মোবাইল নাম্বার</span></span>
+          </div>
+        </div>
+
+        <div class="drawer-section">
+          <span class="drawer-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            শিপিং ঠিকানা
+          </span>
+          <div class="drawer-info-row">
+            <span class="ico">📍</span>
+            <span><b>ডেলিভারি ঠিকানা</b><span>${escapeHtml(order.Shipping_Address)}</span></span>
+          </div>
+        </div>
+
+        <div class="drawer-section">
+          <span class="drawer-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>
+            অর্ডারকৃত পণ্যসমূহ
+          </span>
+          ${(order.Items || []).map(item => `
+            <div class="drawer-item-row">
+              <span>${escapeHtml(item.Product_Name)} <span class="qty">× ${item.Quantity}</span></span>
+              <span class="amt">৳${(parseFloat(item.Price) * item.Quantity).toFixed(2)}</span>
+            </div>
+          `).join('')}
+          <div class="drawer-total-row">
+            <span>সর্বমোট বিলিং</span>
+            <span class="amt">৳${parseFloat(order.Grand_Total || 0).toFixed(2)}</span>
+          </div>
+        </div>
+
+        <div class="drawer-section">
+          <span class="drawer-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+            টাইমলাইন
+          </span>
+          <div class="timeline">
+            <div class="timeline-item done">
+              <span class="timeline-dot"></span>
+              <span class="timeline-body"><b>অর্ডার প্লেসড</b><span>${formatOrderDate(order.Created_At)}</span></span>
+            </div>
+            <div class="timeline-item ${order.Order_Status !== 'Processing' ? 'done' : ''}">
+              <span class="timeline-dot"></span>
+              <span class="timeline-body"><b>অর্ডার নিশ্চিত</b><span>${order.Order_Status === 'Cancelled' ? 'প্রযোজ্য নয়' : order.Order_Status}</span></span>
+            </div>
+            <div class="timeline-item ${order.Delivery_Status === 'Shipped' || order.Delivery_Status === 'Delivered' ? 'done' : ''}">
+              <span class="timeline-dot"></span>
+              <span class="timeline-body"><b>শিপমেন্ট প্রেরিত</b><span>${order.Delivery_Status}</span></span>
+            </div>
+            <div class="timeline-item ${order.Delivery_Status === 'Delivered' ? 'done' : ''}">
+              <span class="timeline-dot"></span>
+              <span class="timeline-body"><b>ডেলিভারি সম্পন্ন</b><span>${order.Delivery_Status === 'Delivered' ? 'সম্পন্ন হয়েছে' : 'অপেক্ষমাণ'}</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="drawer-section">
+          <span class="drawer-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>
+            মন্তব্য / নোট
+          </span>
+          <div class="drawer-notes-box">${order.Notes && order.Notes.trim() ? order.Notes : 'কোনো অতিরিক্ত মন্তব্য নেই।'}</div>
+        </div>
+
+        <div class="drawer-section">
+          <span class="drawer-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            পেমেন্ট তথ্য
+          </span>
+          <div class="drawer-info-row">
+            <span class="ico">💳</span>
+            <span><b>${order.Payment_Method || 'Cash on Delivery'}</b><span>পেমেন্ট মেথড</span></span>
+          </div>
+          <div class="drawer-info-row">
+            <span class="ico">✅</span>
+            <span><b>${order.Payment_Status}</b><span>পেমেন্ট স্ট্যাটাস</span></span>
+          </div>
+        </div>
+      `;
+
+      // Pre-select status selectors
+      document.querySelector('#update-order-status').value = order.Order_Status;
+      document.querySelector('#update-delivery-status').value = order.Delivery_Status;
+      document.querySelector('#update-payment-status').value = order.Payment_Status;
+
+      document.querySelector('#order-modal-overlay').classList.add('active');
+    }
+
+    async function saveStatuses(event) {
+      event.preventDefault();
+
+      const updated = {
+        orderId: inspectedOrderId,
+        orderStatus: document.querySelector('#update-order-status').value,
+        deliveryStatus: document.querySelector('#update-delivery-status').value,
+        paymentStatus: document.querySelector('#update-payment-status').value
+      };
+
+      try {
+        const response = await ApiClient.request('orders.updateStatus', updated);
+        if (response && response.success) {
+          alert('স্ট্যাটাস সমূহ সফলভাবে আপডেট করা হয়েছে।');
+          closeInspector();
+          await fetchOrders();
+          return;
+        }
+      } catch (err) {
+        console.warn('Backend order update transaction failed. Committing to local storage registry.', err);
+      }
+
+      // Local State Commit simulation [2]
+      const target = localOrdersList.find(o => o.Order_ID === inspectedOrderId);
+      if (target) {
+        target.Order_Status = updated.orderStatus;
+        target.Delivery_Status = updated.deliveryStatus;
+        target.Payment_Status = updated.paymentStatus;
+
+        // If last checkout, sync with last checkout local state to reflect update everywhere
+        const lastCheckout = StorageHelper.get('ayt_last_order', null);
+        if (lastCheckout && lastCheckout.Order_ID === inspectedOrderId) {
+          lastCheckout.Order_Status = updated.orderStatus;
+          lastCheckout.Delivery_Status = updated.deliveryStatus;
+          lastCheckout.Payment_Status = updated.paymentStatus;
+          StorageHelper.set('ayt_last_order', lastCheckout);
+        }
+
+        alert('সিমুলেশন: অর্ডার স্ট্যাটাস আপডেট সম্পন্ন!');
+        closeInspector();
+        updateKpis(localOrdersList);
+        filterOrders();
+      }
+    }
+
+    function closeInspector() {
+      document.querySelector('#order-modal-overlay').classList.remove('active');
+      inspectedOrderId = null;
+    }
+
+    // ---------- Filtering ----------
+    function filterOrders() {
+      const searchVal = document.querySelector('#order-search').value.trim().toLowerCase();
+      const statusVal = document.querySelector('#order-status-filter').value;
+      const delivVal = document.querySelector('#delivery-status-filter').value;
+      const payStatusVal = document.querySelector('#payment-status-filter').value;
+      const payMethodVal = document.querySelector('#payment-method-filter').value;
+      const dateRangeVal = document.querySelector('#date-range-filter').value;
+      const customerVal = document.querySelector('#customer-filter').value;
+
+      let filtered = [...localOrdersList];
+
+      if (searchVal) {
+        filtered = filtered.filter(o =>
+          o.Order_ID.toLowerCase().includes(searchVal) ||
+          o.Customer_Phone.includes(searchVal) ||
+          o.Customer_Name.toLowerCase().includes(searchVal)
+        );
+      }
+
+      if (statusVal !== 'all') {
+        filtered = filtered.filter(o => o.Order_Status.toLowerCase() === statusVal);
+      }
+
+      if (delivVal !== 'all') {
+        filtered = filtered.filter(o => o.Delivery_Status.toLowerCase() === delivVal);
+      }
+
+      if (payStatusVal !== 'all') {
+        filtered = filtered.filter(o => o.Payment_Status.toLowerCase() === payStatusVal);
+      }
+
+      if (payMethodVal !== 'all') {
+        const methodMap = { cod: 'cash on delivery', bkash: 'bkash', nagad: 'nagad', card: 'card' };
+        filtered = filtered.filter(o => (o.Payment_Method || '').toLowerCase().includes(methodMap[payMethodVal] || payMethodVal));
+      }
+
+      if (customerVal !== 'all') {
+        filtered = filtered.filter(o => o.Customer_Name === customerVal);
+      }
+
+      if (dateRangeVal !== 'all') {
+        const now = new Date();
+        filtered = filtered.filter(o => {
+          const created = new Date(o.Created_At);
+          if (isNaN(created.getTime())) return false;
+          const diffDays = (now - created) / (1000 * 60 * 60 * 24);
+          if (dateRangeVal === 'today') return created.toISOString().substring(0, 10) === now.toISOString().substring(0, 10);
+          if (dateRangeVal === '7d') return diffDays <= 7;
+          if (dateRangeVal === '30d') return diffDays <= 30;
+          return true;
+        });
+      }
+
+      currentPage = 1;
+      renderTable(filtered);
+    }
+
+    // ---------- Toolbar actions ----------
+    function createOrder() {
+      alert('নতুন অর্ডার তৈরির ফর্মটি শীঘ্রই যুক্ত করা হবে। আপাতত স্টোরফ্রন্ট চেকআউট থেকে অর্ডার সংগ্রহ করা হচ্ছে।');
+    }
+
+    function exportOrdersCsv() {
+      if (currentFilteredList.length === 0) { alert('এক্সপোর্ট করার জন্য কোনো অর্ডার নেই।'); return; }
+      const headers = ['Order ID', 'Customer', 'Phone', 'Amount', 'Payment Method', 'Payment Status', 'Delivery Status', 'Order Status', 'Order Date'];
+      const rows = currentFilteredList.map(o => [
+        o.Order_ID, o.Customer_Name, o.Customer_Phone, o.Grand_Total, o.Payment_Method, o.Payment_Status, o.Delivery_Status, o.Order_Status, o.Created_At
+      ]);
+      const csv = [headers, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `aytmart-orders-${Date.now()}.csv`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function printAllOrders() {
+      window.print();
+    }
+
+    function printInvoice(orderId) {
+      const order = localOrdersList.find(o => o.Order_ID === orderId);
+      if (!order) return;
+      inspectOrder(orderId);
+      setTimeout(() => window.print(), 200);
+    }
+
+    function editOrder(orderId) {
+      window.location.href = `order-edit.html?id=${orderId}`;
+    }
+
+    async function cancelOrder(orderId) {
+      if (!confirm('আপনি কি নিশ্চিতভাবে এই অর্ডারটি বাতিল করতে চান?')) return;
+
+      try {
+        const response = await ApiClient.request('orders.updateStatus', { orderId, orderStatus: 'Cancelled' });
+        if (response && response.success) {
+          alert('অর্ডারটি সফলভাবে বাতিল করা হয়েছে।');
+          await fetchOrders();
+          return;
+        }
+      } catch (err) {
+        console.warn('Backend cancel transaction failed. Committing to local simulation.', err);
+      }
+
+      const target = localOrdersList.find(o => o.Order_ID === orderId);
+      if (target) {
+        target.Order_Status = 'Cancelled';
+        alert('সিমুলেশন: অর্ডারটি বাতিল করা হয়েছে।');
+        updateKpis(localOrdersList);
+        filterOrders();
+      }
+    }
+
+    async function deleteOrder(orderId) {
+      if (!confirm('আপনি কি নিশ্চিতভাবে এই অর্ডারটি স্থায়ীভাবে ডিলিট করতে চান?')) return;
+
+      try {
+        const response = await ApiClient.request('orders.delete', { orderId });
+        if (response && response.success) {
+          alert('অর্ডারটি সফলভাবে ডিলিট করা হয়েছে।');
+          await fetchOrders();
+          return;
+        }
+      } catch (err) {
+        console.warn('Backend delete transaction failed. Committing to local simulation.', err);
+      }
+
+      localOrdersList = localOrdersList.filter(o => o.Order_ID !== orderId);
+      selectedOrderIds.delete(orderId);
+      alert('সিমুলেশন: অর্ডারটি ডিলিট করা হয়েছে।');
+      updateKpis(localOrdersList);
+      syncOrdersBulkBar();
+      filterOrders();
+    }
+
+    // ---------- Shell interactions ----------
+    function performLogout() {
+      if (confirm('আপনি কি এডমিন সেশন থেকে লগআউট করতে চান?')) {
+        StorageHelper.remove(ENV.STORAGE_KEYS.SESSION);
+        window.location.href = 'login.html';
+      }
+    }
+
+    // UI: sidebar collapse (desktop)
+    const layout = document.getElementById('admin-layout');
+    const collapseBtn = document.getElementById('sidebar-collapse-btn');
+    collapseBtn.addEventListener('click', () => layout.classList.toggle('is-collapsed'));
+
+    // UI: mobile sidebar drawer
+    const sidebar = document.getElementById('admin-sidebar');
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    mobileBtn.addEventListener('click', () => sidebar.classList.toggle('is-open'));
+
+    // UI: profile dropdown
+    const profileMenu = document.getElementById('profile-menu');
+    const profileBtn = document.getElementById('profile-badge-btn');
+    profileBtn.addEventListener('click', (e) => { e.stopPropagation(); profileMenu.classList.toggle('is-open'); });
+    document.addEventListener('click', () => profileMenu.classList.remove('is-open'));
+
+    // UI: theme toggle (light / dark)
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const html = document.documentElement;
+      html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+
+    // Accessibility: Keyboard listener for Escape key to close Modal Drawer
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.querySelector('#order-modal-overlay').classList.contains('active')) {
+        closeInspector();
+      }
+    });
+  </script>
+</body>
+</html>

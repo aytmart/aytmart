@@ -1,0 +1,85 @@
+/* ==========================================================================
+   File: /styles/base/reset.css
+   Description: Modern CSS Reset — AYT Mart Premium Storefront
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: var(--line-height-normal, 1.5);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-normal), color var(--transition-normal),
+    padding-top var(--transition-normal);
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ensure accessible and standard formatting for display elements */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display, serif);
+  font-weight: var(--weight-bold, 700);
+  line-height: var(--line-height-tight, 1.25);
+  color: var(--text-heading, #13201C);
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Remove default click delays on touch devices where supported */
+a, area, button, [role="button"], input, label, select, textarea {
+  touch-action: manipulation;
+}
+
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  user-select: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-fast);
+}
+
+ul, ol {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+/* Accessible focus outline default configurations */
+:focus-visible {
+  outline: 2px solid var(--color-gold-dark, #96751A);
+  outline-offset: 3px;
+}

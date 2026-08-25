@@ -1,0 +1,48 @@
+/* ==========================================================================
+   AYT MART CONTROL — PRODUCT EDIT PAGE
+   header.css — sticky top bar: breadcrumb, theme toggle, profile menu
+   ========================================================================== */
+
+.console-header {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(251,247,239,.86); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
+  height: var(--topbar-h); border-bottom: 1px solid var(--ayt-border);
+  display: flex; align-items: center; justify-content: space-between; padding: 0 var(--ayt-sp-6); gap: var(--ayt-sp-4);
+}
+html[data-theme="dark"] .console-header { background: rgba(15,22,19,.86); }
+
+.header-left { display: flex; align-items: center; gap: var(--ayt-sp-4); min-width: 0; }
+.icon-btn.mobile-menu-btn { display: none; }
+
+.breadcrumb { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.breadcrumb .crumb-trail { font-size: 11px; color: var(--ayt-muted); display: flex; align-items: center; gap: 6px; }
+.breadcrumb .crumb-trail .sep { opacity: .5; }
+.breadcrumb h1 { font-family: var(--ayt-font-display); font-size: 19px; font-weight: 700; color: var(--ayt-primary-dark); }
+html[data-theme="dark"] .breadcrumb h1 { color: var(--ayt-gold-light); }
+
+.header-right { display: flex; align-items: center; gap: var(--ayt-sp-2); }
+.icon-btn { position: relative; width: 40px; height: 40px; border-radius: var(--ayt-radius-full); display: flex; align-items: center; justify-content: center; background: var(--ayt-surface-alt); border: 1px solid var(--ayt-border); color: var(--ayt-ink); transition: background var(--ayt-fast), border-color var(--ayt-fast), transform var(--ayt-fast); }
+.icon-btn:hover { background: var(--ayt-surface); border-color: var(--ayt-gold); transform: translateY(-1px); }
+.icon-btn svg { width: 17px; height: 17px; }
+#theme-toggle .icon-moon { display: none; }
+html[data-theme="dark"] #theme-toggle .icon-sun { display: none; }
+html[data-theme="dark"] #theme-toggle .icon-moon { display: block; }
+
+.profile-menu { position: relative; }
+.admin-profile-badge { display: flex; align-items: center; gap: var(--ayt-sp-2); padding: 6px 10px 6px 6px; border-radius: var(--ayt-profile-badge); border: 1px solid var(--ayt-border); background: var(--ayt-surface-alt); transition: border-color var(--ayt-fast); }
+.admin-profile-badge:hover { border-color: var(--ayt-gold); }
+.admin-profile-badge .avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(150deg, var(--ayt-gold-light), var(--ayt-gold-dark)); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #241C05; }
+.admin-profile-badge .who { display: flex; flex-direction: column; line-height: 1.25; }
+.admin-profile-badge .who b { font-size: 12.5px; font-weight: 700; }
+.admin-profile-badge .who span { font-size: 10.5px; color: var(--ayt-muted); }
+.admin-profile-badge .chev { width: 14px; height: 14px; color: var(--ayt-muted); transition: transform var(--ayt-fast); }
+.profile-menu.is-open .chev { transform: rotate(180deg); }
+
+.profile-dropdown { position: absolute; right: 0; top: calc(100% + 10px); width: 220px; background: var(--ayt-surface); border: 1px solid var(--ayt-border); border-radius: var(--ayt-radius-md); box-shadow: var(--shadow-lg); padding: var(--ayt-sp-2); display: none; z-index: 30; }
+.profile-menu.is-open .profile-dropdown { display: block; animation: aytFadeDown 160ms ease both; }
+.profile-dropdown a, .profile-dropdown .btn-logout { display: flex; align-items: center; gap: var(--ayt-sp-2); padding: var(--ayt-sp-2) var(--ayt-sp-3); border-radius: var(--ayt-radius-sm); font-size: 13px; color: var(--ayt-ink); transition: background var(--ayt-fast); }
+.profile-dropdown a:hover, .profile-dropdown .btn-logout:hover { background: var(--ayt-surface-alt); }
+.profile-dropdown svg { width: 15px; height: 15px; color: var(--ayt-muted); }
+.profile-dropdown hr { border: none; border-top: 1px solid var(--ayt-border); margin: var(--ayt-sp-1) 0; }
+.btn-logout { width: 100%; background: none; border: none; text-align: left; color: var(--ayt-rose-dark) !important; cursor: pointer; }
+.btn-logout svg { color: var(--ayt-rose-dark); }

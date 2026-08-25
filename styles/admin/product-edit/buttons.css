@@ -1,0 +1,19 @@
+/* ==========================================================================
+   AYT MART CONTROL — PRODUCT EDIT PAGE
+   buttons.css — page-head action buttons + loading state
+   Note: .btn-ghost is defined globally (shared with products.html /
+   product-add.html) and intentionally left unstyled here.
+   ========================================================================== */
+
+.btn-save-draft { background: var(--ayt-surface-alt); border: 1.5px solid var(--ayt-border); color: var(--ayt-ink); font-weight: 700; font-size: 13px; padding: 12px 20px; border-radius: var(--ayt-radius-sm); transition: border-color var(--ayt-fast); }
+.btn-save-draft:hover { border-color: var(--ayt-gold); }
+.btn-save-draft:disabled { opacity: .6; cursor: not-allowed; }
+
+.btn-publish { display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, var(--ayt-primary) 0%, var(--ayt-primary-dark) 100%); color: #fff; font-size: 13px; font-weight: 700; padding: 12px 24px; border: none; border-radius: var(--ayt-radius-sm); box-shadow: var(--ayt-shadow-md); transition: transform var(--ayt-fast), box-shadow var(--ayt-fast); cursor: pointer; }
+.btn-publish:hover { transform: translateY(-1px); box-shadow: var(--ayt-shadow-lg); }
+.btn-publish:disabled { cursor: not-allowed; transform: none; }
+
+/* Loading spinner shown inside .btn-publish while a save request is in flight */
+.btn-spinner { display: none; width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,.35); border-top-color: #fff; animation: spin .7s linear infinite; }
+.btn-publish.is-loading .btn-spinner { display: inline-block; }
+.btn-publish.is-loading .btn-text-content { display: none; }

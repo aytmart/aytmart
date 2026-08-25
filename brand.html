@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ব্র্যান্ড | AYT Mart</title>
+  <link rel="stylesheet" href="styles/themes/variables.css">
+  <link rel="stylesheet" href="styles/base/reset.css">
+  <link rel="stylesheet" href="styles/layout/layout.css">
+  <style>
+    .empty-state {
+      max-width: 520px;
+      margin: var(--space-12) auto;
+      text-align: center;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-10) var(--space-6);
+    }
+    .empty-state .icon { font-size: 2.6rem; margin-bottom: var(--space-3); display: block; }
+    .empty-state h2 { font-size: var(--font-lg); margin-bottom: var(--space-2); }
+    .empty-state p { color: var(--text-muted); font-size: var(--font-sm); margin-bottom: var(--space-5); line-height: var(--line-height-relaxed); }
+  </style>
+</head>
+<body>
+  <header id="global-header"></header>
+
+  <main class="container">
+    <div class="empty-state">
+      <span class="icon">🏷️</span>
+      <h2>এই ব্র্যান্ড পেইজটি এখনো প্রস্তুত হয়নি</h2>
+      <p>ব্র্যান্ড-ভিত্তিক ক্যাটালগ শীঘ্রই যুক্ত হবে। এই মুহূর্তে সকল প্রোডাক্ট ব্রাউজ করুন অথবা সরাসরি সার্চ করুন।</p>
+      <a href="products.html" class="btn btn-primary">সকল প্রোডাক্ট দেখুন</a>
+    </div>
+  </main>
+
+  <footer id="global-footer"></footer>
+
+  <script src="config/environment/env.js"></script>
+  <script src="utils/storage/storage.js"></script>
+  <script src="api/shared/api-client.js"></script>
+  <script src="components/header/header.js"></script>
+  <script src="components/footer/footer.js"></script>
+  <script src="components/whatsapp/whatsapp.js"></script>
+</body>
+</html>

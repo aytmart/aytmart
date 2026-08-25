@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>জিজ্ঞাসিত প্রশ্নাবলী | AYT Mart</title>
+  <link rel="stylesheet" href="styles/themes/variables.css">
+  <link rel="stylesheet" href="styles/base/reset.css">
+  <link rel="stylesheet" href="styles/layout/layout.css">
+  <style>
+    .page-head { text-align: center; margin: var(--space-8) auto var(--space-8); max-width: 640px; }
+    .page-head h1 { font-size: var(--font-3xl); font-weight: var(--weight-bold); margin-bottom: var(--space-2); }
+    .page-head p { color: var(--text-muted); }
+    .faq-list { max-width: 760px; margin: 0 auto var(--space-16); display: flex; flex-direction: column; gap: var(--space-3); }
+    .faq-item { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); overflow: hidden; }
+    .faq-question {
+      width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+      padding: var(--space-4) var(--space-5); display: flex; justify-content: space-between; align-items: center;
+      font-size: var(--font-md); font-weight: var(--weight-semibold); color: var(--text-heading);
+      font-family: inherit;
+    }
+    .faq-question .chev { transition: transform var(--transition-fast); color: var(--color-gold); flex-shrink: 0; margin-left: var(--space-3); }
+    .faq-item.is-open .faq-question .chev { transform: rotate(180deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height var(--transition-normal); }
+    .faq-answer-inner { padding: 0 var(--space-5) var(--space-4); color: var(--text-muted); font-size: var(--font-sm); line-height: var(--line-height-relaxed); }
+    .faq-cta { text-align: center; }
+  </style>
+</head>
+<body>
+  <header id="global-header"></header>
+
+  <main class="container">
+    <div class="page-head">
+      <h1>জিজ্ঞাসিত প্রশ্নাবলী</h1>
+      <p>আপনার প্রশ্নের উত্তর এখানে না পেলে সরাসরি আমাদের সাথে যোগাযোগ করুন।</p>
+    </div>
+
+    <div class="faq-list" id="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" type="button">অর্ডার করার পর কতদিনে পণ্য পাবো? <span class="chev">▾</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">সাধারণত ঢাকার মধ্যে ১-২ কার্যদিবস এবং ঢাকার বাইরে ২-৪ কার্যদিবসের মধ্যে ডেলিভারি সম্পন্ন হয়। প্রোডাক্টের স্টক ও এলাকাভেদে সময় কিছুটা কম-বেশি হতে পারে।</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button">পেমেন্ট পদ্ধতি কী কী? <span class="chev">▾</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">আমরা ক্যাশ অন ডেলিভারি (COD), বিকাশ, নগদ, রকেট এবং Visa/Mastercard-এ পেমেন্ট গ্রহণ করি। ক্যাশ অন ডেলিভারিতে পণ্য হাতে পেয়ে মূল্য পরিশোধ করতে পারবেন।</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button">পণ্য ফেরত বা এক্সচেঞ্জ করা যাবে কি? <span class="chev">▾</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">পণ্য হাতে পাওয়ার ৩ দিনের মধ্যে ত্রুটিপূর্ণ বা ভুল পণ্যের ক্ষেত্রে ফেরত/এক্সচেঞ্জ করা যাবে। পণ্যটি অব্যবহৃত ও মূল প্যাকেজিং-সহ থাকতে হবে। বিস্তারিত জানতে আমাদের WhatsApp-এ যোগাযোগ করুন।</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button">অর্ডার ট্র্যাক করব কীভাবে? <span class="chev">▾</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">অর্ডার আইডি ও মোবাইল নাম্বার দিয়ে <a href="track-order.html">অর্ডার ট্র্যাক</a> পেইজ থেকে যেকোনো সময় আপনার অর্ডারের সর্বশেষ অবস্থা জানতে পারবেন।</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button">সারাদেশে কি ডেলিভারি দেওয়া হয়? <span class="chev">▾</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">হ্যাঁ, আমরা বাংলাদেশের সব জেলায় কুরিয়ার পার্টনারের মাধ্যমে ক্যাশ অন ডেলিভারি সুবিধা দিয়ে থাকি।</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button">প্রোডাক্ট নিয়ে কোনো সমস্যা হলে কার সাথে যোগাযোগ করব? <span class="chev">▾</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">যেকোনো সমস্যায় আমাদের <a href="contact.html">যোগাযোগ পেইজ</a> থেকে অথবা সরাসরি WhatsApp-এ (নিচে ফ্লোটিং আইকনে ক্লিক করে) যোগাযোগ করতে পারেন — আমরা দ্রুত সাড়া দেওয়ার চেষ্টা করি।</div></div>
+      </div>
+    </div>
+
+    <div class="faq-cta">
+      <a href="contact.html" class="btn btn-primary btn-lg">আরও প্রশ্ন আছে? যোগাযোগ করুন</a>
+    </div>
+  </main>
+
+  <footer id="global-footer"></footer>
+
+  <script src="config/environment/env.js"></script>
+  <script src="utils/storage/storage.js"></script>
+  <script src="api/shared/api-client.js"></script>
+  <script src="components/header/header.js"></script>
+  <script src="components/footer/footer.js"></script>
+  <script src="components/whatsapp/whatsapp.js"></script>
+  <script>
+    document.querySelectorAll('.faq-question').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const answer = item.querySelector('.faq-answer');
+        const isOpen = item.classList.contains('is-open');
+
+        document.querySelectorAll('.faq-item.is-open').forEach((openItem) => {
+          if (openItem !== item) {
+            openItem.classList.remove('is-open');
+            openItem.querySelector('.faq-answer').style.maxHeight = null;
+          }
+        });
+
+        item.classList.toggle('is-open', !isOpen);
+        answer.style.maxHeight = !isOpen ? answer.scrollHeight + 'px' : null;
+      });
+    });
+  </script>
+</body>
+</html>

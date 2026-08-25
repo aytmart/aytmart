@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>রিভিউ মডারেশন | AYT Mart Control Panel</title>
+  <link rel="stylesheet" href="../styles/themes/variables.css">
+  <link rel="stylesheet" href="../styles/base/reset.css">
+  <style>
+    /* Reuse Admin grid structure */
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Panel */
+    .admin-sidebar {
+      background-color: var(--color-primary);
+      color: #94a3b8;
+      padding: var(--space-6) var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+      border-right: 1px solid var(--border-color);
+    }
+    .sidebar-brand {
+      color: #ffffff;
+      font-size: var(--font-lg);
+      font-weight: var(--weight-bold);
+      text-align: center;
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid #1e293b;
+    }
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .menu-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--border-radius-sm);
+      font-size: var(--font-sm);
+      font-weight: var(--weight-medium);
+      transition: background-color var(--transition-fast), color var(--transition-fast);
+      color: #94a3b8;
+    }
+    .menu-link:hover, .menu-link.active {
+      background-color: var(--color-accent);
+      color: #ffffff;
+    }
+
+    /* Main Board Console */
+    .admin-console {
+      background-color: var(--bg-color);
+      display: flex;
+      flex-direction: column;
+    }
+    .console-header {
+      background-color: var(--bg-surface);
+      height: var(--header-height);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-6);
+    }
+    .admin-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-sm);
+      font-weight: var(--weight-semibold);
+    }
+    .btn-logout {
+      font-size: var(--font-xs);
+      color: var(--color-error);
+      cursor: pointer;
+    }
+
+    .console-body {
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    /* Controls Header panel */
+    .catalog-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      background-color: var(--bg-surface);
+      padding: var(--space-4) var(--space-6);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+    }
+    .controls-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    .search-input-admin {
+      background-color: var(--bg-surface-alt);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--font-sm);
+      min-width: 200px;
+    }
+    .select-filter-admin {
+      background-color: var(--bg-surface-alt);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--font-sm);
+    }
+
+    /* Table Container Styling */
+    .table-container {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      overflow-x: auto;
+      box-shadow: var(--shadow-sm);
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .data-table th, .data-table td {
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--font-xs);
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .data-table th {
+      background-color: var(--bg-surface-alt);
+      font-weight: var(--weight-bold);
+      color: var(--text-color);
+    }
+
+    /* Statuses Badge styling */
+    .badge-status {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: var(--weight-bold);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--border-radius-full);
+      text-transform: uppercase;
+    }
+    .badge-approved { background-color: #d1fae5; color: #065f46; }
+    .badge-pending { background-color: #fef3c7; color: #d97706; }
+    .badge-rejected { background-color: #fee2e2; color: #991b1b; }
+
+    /* Action buttons rows */
+    .row-actions {
+      display: flex;
+      gap: var(--space-2);
+    }
+    .btn-action {
+      font-size: 11px;
+      font-weight: var(--weight-semibold);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--border-radius-sm);
+    }
+    .btn-approve { background-color: #d1fae5; color: #065f46; }
+    .btn-reject { background-color: #fee2e2; color: #b91c1c; }
+    .btn-delete { background-color: #f3f4f6; color: #374151; }
+
+    /* Visual stars rating style */
+    .stars-indicator {
+      color: var(--color-gold);
+      font-size: 1rem;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 992px) {
+      .admin-layout { grid-template-columns: 1fr; }
+      .admin-sidebar { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">AYT Mart Control</div>
+      <nav class="sidebar-menu">
+        <a href="dashboard.html" class="menu-link">📊 ড্যাশবোর্ড</a>
+        <a href="products.html" class="menu-link">📦 প্রোডাক্টস</a>
+        <a href="categories.html" class="menu-link">📁 ক্যাটাগরি</a>
+        <a href="orders.html" class="menu-link">🛒 অর্ডারসমূহ</a>
+        <a href="inventory.html" class="menu-link">🏭 ইনভেন্টরি</a>
+        <a href="settings.html" class="menu-link">⚙️ সেটিংস</a>
+      </nav>
+    </aside>
+
+    <!-- Main Console -->
+    <main class="admin-console">
+      <header class="console-header">
+        <h2 style="font-size: var(--font-lg); font-weight: var(--weight-bold)">গ্রাহক রিভিউ ও রেটিং মডারেশন</h2>
+        <div class="admin-profile-badge">
+          <span>👤 এডমিন</span>
+          <span class="btn-logout" onclick="performLogout()">[লগআউট]</span>
+        </div>
+      </header>
+
+      <div class="console-body">
+        <!-- Filters Controls Area -->
+        <div class="catalog-controls">
+          <div class="controls-left">
+            <input type="text" id="review-search" class="search-input-admin" placeholder="গ্রাহক আইডি বা টেক্সট খুঁজুন..." oninput="filterReviews()"/>
+            
+            <select id="review-status-filter" class="select-filter-admin" onchange="filterReviews()">
+              <option value="all">মডারেশন স্ট্যাটাস (All)</option>
+              <option value="pending">Pending (পেন্ডিং)</option>
+              <option value="approved">Approved (অনুমোদিত)</option>
+              <option value="rejected">Rejected (বাতিলকৃত)</option>
+            </select>
+
+            <select id="review-rating-filter" class="select-filter-admin" onchange="filterReviews()">
+              <option value="all">রেটিং স্টার (All)</option>
+              <option value="5">⭐⭐⭐⭐⭐ (5 Star)</option>
+              <option value="4">⭐⭐⭐⭐ (4 Star)</option>
+              <option value="3">⭐⭐⭐ (3 Star)</option>
+              <option value="2">⭐⭐ (2 Star)</option>
+              <option value="1">⭐ (1 Star)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Master Reviews List Table -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>রিভিউ আইডি</th>
+                <th>প্রোডাক্ট</th>
+                <th>গ্রাহক আইডি</th>
+                <th>রেটিং স্টার</th>
+                <th>রিভিউ মন্তব্য (Text)</th>
+                <th>স্ট্যাটাস</th>
+                <th>অ্যাকশন</th>
+              </tr>
+            </thead>
+            <tbody id="admin-reviews-table">
+              <tr>
+                <td colspan="7" style="text-align: center; color: var(--text-muted);">রিভিউ ডাটা লোড হচ্ছে...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- App Services & Scripts -->
+  <script src="../config/environment/env.js"></script>
+  <script src="../utils/storage/storage.js"></script>
+  <script src="../api/shared/api-client.js"></script>
+  
+  <script>
+    let localReviewsList = [];
+
+    // Offline mock reviews for directory backfills [2]
+    const MOCK_REVIEWS_LIST = [
+      {
+        'Review ID': 'REV-00001',
+        'Product ID': 'PRD-00001',
+        'Customer ID': 'CUS-00102',
+        'Rating': 5,
+        'Review': 'কাঠের রেহালটি অত্যন্ত মজবুত ও খোদাই নকশাটি বেশ আকর্ষণীয়। ডেলিভারিও দ্রুত পেয়েছি। ধন্যবাদ!',
+        'Status': 'Pending',
+        'Created At': '2026-08-04'
+      },
+      {
+        'Review ID': 'REV-00002',
+        'Product ID': 'PRD-00002',
+        'Customer ID': 'CUS-00244',
+        'Rating': 4,
+        'Review': 'তাসবীহ কাউন্টারটি খুবই সুন্দর এবং আরামদায়ক সিলিকন গ্রিপ। তবে চার্জিং ক্যাবলটি আরেকটু লম্বা হলে ভালো হতো।',
+        'Status': 'Approved',
+        'Created At': '2026-08-02'
+      },
+      {
+        'Review ID': 'REV-00003',
+        'Product ID': 'PRD-00003',
+        'Customer ID': 'CUS-00451',
+        'Rating': 1,
+        'Review': 'আতরটির গন্ধ বেশি তীব্র, মিষ্টি নয়। আমার পছন্দ হয়নি। ফেরত দেওয়া যাবে?',
+        'Status': 'Rejected',
+        'Created At': '2026-08-01'
+      }
+    ];
+
+    // Guard: Validate session as Admin
+    document.addEventListener('DOMContentLoaded', async () => {
+      const session = StorageHelper.get(ENV.STORAGE_KEYS.SESSION, null);
+      if (!session || session.role !== 'Admin') {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      await fetchReviews();
+    });
+
+    async function fetchReviews() {
+      try {
+        const response = await ApiClient.request('reviews.list', { includePending: true }, 'GET');
+        if (response && response.success && response.data) {
+          localReviewsList = response.data;
+        } else {
+          localReviewsList = [...MOCK_REVIEWS_LIST];
+        }
+        renderTable(localReviewsList);
+      } catch (err) {
+        console.warn('Backend Reviews API query timed out. Loading simulated local log list.', err);
+        localReviewsList = [...MOCK_REVIEWS_LIST];
+        renderTable(localReviewsList);
+      }
+    }
+
+    function renderTable(list) {
+      const tbody = document.querySelector('#admin-reviews-table');
+
+      if (list.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align: center; color: var(--text-muted); padding: var(--space-4);">কোনো রিভিউ রেকর্ড পাওয়া যায়নি।</td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = list.map(rev => {
+        const starsText = '⭐'.repeat(parseInt(rev['Rating'], 10) || 5);
+        const statusVal = rev['Status'] || 'Pending';
+
+        return `
+          <tr style="border-bottom: 1px solid var(--bg-surface-alt)">
+            <td><strong>${rev['Review ID']}</strong></td>
+            <td><code>${rev['Product ID']}</code></td>
+            <td><code>${rev['Customer ID']}</code></td>
+            <td><span class="stars-indicator">${starsText}</span></td>
+            <td style="max-width: 300px; word-wrap: break-word;">${rev['Review']}</td>
+            <td>
+              <span class="badge-status badge-${statusVal.toLowerCase()}">
+                ${statusVal}
+              </span>
+            </td>
+            <td>
+              <div class="row-actions">
+                ${statusVal !== 'Approved' ? `<button class="btn-action btn-approve" onclick="moderateReviewStatus('${rev['Review ID']}', 'Approved')">অনুমোদন</button>` : ''}
+                ${statusVal !== 'Rejected' ? `<button class="btn-action btn-reject" onclick="moderateReviewStatus('${rev['Review ID']}', 'Rejected')">বাতিল</button>` : ''}
+                <button class="btn-action btn-delete" onclick="softDeleteReview('${rev['Review ID']}')">মুছুন</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function moderateReviewStatus(reviewId, status) {
+      try {
+        const response = await ApiClient.request('reviews.moderate', { id: reviewId, status: status });
+        if (response && response.success) {
+          alert(`রিভিউ সফলভাবে ${status === 'Approved' ? 'অনুমোদিত' : 'বাতিল'} করা হয়েছে।`);
+          await fetchReviews();
+          return;
+        }
+      } catch (err) {
+        console.warn('Backend reviews moderation failed. Processing local state simulation.', err);
+      }
+
+      // Simulated local transactions [2]
+      const target = localReviewsList.find(r => r['Review ID'] === reviewId);
+      if (target) {
+        target['Status'] = status;
+        alert(`সিমুলেশন: রিভিউ স্ট্যাটাস '${status}' আপডেট করা হয়েছে।`);
+        renderTable(localReviewsList);
+      }
+    }
+
+    async function softDeleteReview(reviewId) {
+      if (confirm('আপনি কি নিশ্চিতভাবে এই রিভিউটি মডারেশন তালিকা থেকে বাদ দিতে চান?')) {
+        try {
+          const response = await ApiClient.request('reviews.delete', { id: reviewId });
+          if (response && response.success) {
+            alert('রিভিউ সফলভাবে ডিলিট করা হয়েছে।');
+            await fetchReviews();
+            return;
+          }
+        } catch (err) {
+          console.warn('Backend reviews deletion transaction failed. Executing local slice.', err);
+        }
+
+        // Local state simulation
+        localReviewsList = localReviewsList.filter(r => r['Review ID'] !== reviewId);
+        alert('সিমুলেশন: রিভিউ রেকর্ডটি তালিকা থেকে বাদ দেওয়া হয়েছে।');
+        renderTable(localReviewsList);
+      }
+    }
+
+    function filterReviews() {
+      const searchVal = document.querySelector('#review-search').value.trim().toLowerCase();
+      const statusVal = document.querySelector('#review-status-filter').value;
+      const ratingVal = document.querySelector('#review-rating-filter').value;
+
+      let filtered = [...localReviewsList];
+
+      if (searchVal) {
+        filtered = filtered.filter(r => 
+          r['Customer ID'].toLowerCase().includes(searchVal) ||
+          r['Product ID'].toLowerCase().includes(searchVal) ||
+          r['Review'].toLowerCase().includes(searchVal)
+        );
+      }
+
+      if (statusVal !== 'all') {
+        filtered = filtered.filter(r => r['Status'].toLowerCase() === statusVal);
+      }
+
+      if (ratingVal !== 'all') {
+        filtered = filtered.filter(r => parseInt(r['Rating'], 10) === parseInt(ratingVal, 10));
+      }
+
+      renderTable(filtered);
+    }
+
+    function performLogout() {
+      if (confirm('আপনি কি এডমিন সেশন থেকে লগআউট করতে চান?')) {
+        StorageHelper.remove(ENV.STORAGE_KEYS.SESSION);
+        window.location.href = 'login.html';
+      }
+    }
+  </script>
+</body>
+</html>

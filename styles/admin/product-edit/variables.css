@@ -1,0 +1,61 @@
+/* ==========================================================================
+   AYT MART CONTROL — PRODUCT EDIT PAGE
+   variables.css — page-scoped design tokens
+   Falls back to global tokens from styles/themes/variables.css where present.
+   ========================================================================== */
+
+:root {
+  --ayt-primary:        var(--color-primary, #0B4238);
+  --ayt-primary-dark:   #072722;
+  --ayt-primary-light:  var(--color-primary-light, #14614F);
+  --ayt-gold:           var(--color-gold, #C9A227);
+  --ayt-gold-light:     #E7CD73;
+  --ayt-gold-dark:      #96751A;
+  --ayt-cream:          #FBF7EF;
+  --ayt-ink:            #1C2420;
+  --ayt-rose:           #B23B3B;
+  --ayt-rose-dark:      #8E2E2E;
+  --ayt-amber:          #B5750F;
+  --ayt-emerald:        #1E7A5F;
+  --ayt-blue:           #2563A8;
+  --ayt-surface:        var(--bg-surface, #FFFFFF);
+  --ayt-surface-alt:    var(--bg-surface-alt, #F5F2E9);
+  --ayt-border:         var(--border-color, #E5E0D2);
+  --ayt-muted:          var(--text-muted, #756F62);
+
+  --ayt-sp-1: var(--space-1, 4px);  --ayt-sp-2: var(--space-2, 8px);
+  --ayt-sp-3: var(--space-3, 12px); --ayt-sp-4: var(--space-4, 16px);
+  --ayt-sp-5: var(--space-5, 20px); --ayt-sp-6: var(--space-6, 24px);
+  --ayt-sp-8: var(--space-8, 32px); --ayt-sp-10: var(--space-10, 40px);
+
+  --ayt-radius-sm: var(--border-radius-sm, 6px);
+  --ayt-radius-md: var(--border-radius-md, 12px);
+  --ayt-radius-lg: var(--border-radius-lg, 18px);
+  --ayt-radius-full: var(--border-radius-full, 999px);
+  --ayt-shadow-sm: 0 2px 8px rgba(15, 35, 30, .06);
+  --ayt-shadow-md: var(--shadow-md, 0 10px 30px rgba(15, 35, 30, .10));
+  --ayt-shadow-lg: 0 24px 60px rgba(15, 35, 30, .16);
+  --ayt-shadow-gold: 0 8px 20px rgba(201, 162, 39, .22);
+  --ayt-fast: var(--transition-fast, 150ms ease);
+  --ayt-normal: var(--transition-normal, 320ms cubic-bezier(.22,.61,.36,1));
+
+  --ayt-font-display: 'Tiro Bangla', 'Noto Serif Bengali', serif;
+  --ayt-font-body: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+  --ayt-font-num: 'Poppins', 'Hind Siliguri', sans-serif;
+
+  --sidebar-w: 264px;
+  --sidebar-w-collapsed: 84px;
+  --topbar-h: 72px;
+
+  /* Focus ring token — shared by forms.css, buttons.css, header.css, sidebar.css */
+  --ayt-focus-ring: 0 0 0 3px rgba(201, 162, 39, .35);
+}
+
+html[data-theme="dark"] {
+  --ayt-cream: #0F1613;
+  --ayt-ink: #EDEAE0;
+  --ayt-surface: #16201C;
+  --ayt-surface-alt: #1B2622;
+  --ayt-border: #263129;
+  --ayt-muted: #93998F;
+}

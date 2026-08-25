@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>সকল ক্যাটাগরি | AYT Mart</title>
+  <link rel="stylesheet" href="styles/themes/variables.css">
+  <link rel="stylesheet" href="styles/base/reset.css">
+  <link rel="stylesheet" href="styles/layout/layout.css">
+  <style>
+    .page-head { text-align: center; margin: var(--space-8) auto var(--space-6); max-width: 640px; }
+    .page-head h1 { font-size: var(--font-3xl); font-weight: var(--weight-bold); margin-bottom: var(--space-2); }
+    .page-head p { color: var(--text-muted); }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-5);
+      margin: var(--space-8) 0 var(--space-12);
+    }
+    .cat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-6) var(--space-4);
+      text-align: center;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+    .cat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--color-gold); }
+    .cat-icon { font-size: 2.4rem; display: block; margin-bottom: var(--space-3); }
+    .cat-name { font-weight: var(--weight-semibold); color: var(--text-heading); font-size: var(--font-md); }
+    .cat-loading { text-align: center; color: var(--text-muted); padding: var(--space-8) 0; }
+  </style>
+</head>
+<body>
+  <header id="global-header"></header>
+
+  <main class="container">
+    <div class="page-head">
+      <h1>সকল ক্যাটাগরি</h1>
+      <p>আপনার পছন্দের ক্যাটাগরি বেছে নিয়ে সরাসরি প্রোডাক্ট ব্রাউজ করুন।</p>
+    </div>
+    <div class="cat-grid" id="categories-grid">
+      <div class="cat-loading">লোড হচ্ছে...</div>
+    </div>
+  </main>
+
+  <footer id="global-footer"></footer>
+
+  <script src="config/environment/env.js"></script>
+  <script src="utils/storage/storage.js"></script>
+  <script src="api/shared/api-client.js"></script>
+  <script src="components/header/header.js"></script>
+  <script src="components/footer/footer.js"></script>
+  <script src="components/whatsapp/whatsapp.js"></script>
+  <script src="services/products/product-service.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const grid = document.querySelector('#categories-grid');
+      try {
+        const categories = await ProductService.getCategories();
+        if (!categories || !categories.length) {
+          grid.innerHTML = '<p style="color: var(--text-muted);">কোনো ক্যাটাগরি পাওয়া যায়নি।</p>';
+          return;
+        }
+        grid.innerHTML = categories.map(cat => `
+          <a class="cat-card" href="products.html?category=${encodeURIComponent(cat.id)}">
+            <span class="cat-icon">${cat.icon || '🛍️'}</span>
+            <span class="cat-name">${cat.name}</span>
+          </a>
+        `).join('');
+      } catch (err) {
+        console.error('Failed to load categories:', err);
+        grid.innerHTML = '<p style="color: var(--text-muted);">ক্যাটাগরি লোড করতে সমস্যা হয়েছে। পরে আবার চেষ্টা করুন।</p>';
+      }
+    });
+  </script>
+</body>
+</html>

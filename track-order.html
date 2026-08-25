@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>অর্ডার ট্র্যাক করুন | AYT Mart</title>
+  <link rel="stylesheet" href="styles/themes/variables.css">
+  <link rel="stylesheet" href="styles/base/reset.css">
+  <link rel="stylesheet" href="styles/layout/layout.css">
+  <style>
+    .track-panel {
+      max-width: 560px;
+      margin: var(--space-8) auto;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-8);
+    }
+    .track-intro {
+      text-align: center;
+      margin-bottom: var(--space-6);
+    }
+    .track-intro h1 {
+      font-size: var(--font-2xl);
+      font-weight: var(--weight-bold);
+      margin-bottom: var(--space-2);
+    }
+    .track-intro p {
+      color: var(--text-muted);
+      font-size: var(--font-sm);
+    }
+    .track-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .form-label {
+      font-size: var(--font-sm);
+      font-weight: var(--weight-medium);
+      color: var(--text-color);
+    }
+    .form-input {
+      background-color: var(--bg-surface-alt);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--font-sm);
+      width: 100%;
+      transition: border-color var(--transition-fast);
+    }
+    .form-input:focus {
+      border-color: var(--color-accent);
+      background-color: var(--bg-surface);
+    }
+    .track-submit-btn {
+      background-color: var(--color-primary);
+      color: #ffffff;
+      padding: var(--space-3);
+      border-radius: var(--border-radius-sm);
+      font-weight: var(--weight-bold);
+      text-align: center;
+      transition: background-color var(--transition-fast);
+    }
+    .track-submit-btn:hover {
+      background-color: var(--color-accent);
+    }
+    .track-submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .track-result {
+      margin-top: var(--space-6);
+      border-top: 1px dashed var(--border-color);
+      padding-top: var(--space-6);
+      display: none;
+    }
+    .track-result.is-visible {
+      display: block;
+    }
+    .track-status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background-color: var(--bg-surface-alt);
+      border-radius: var(--border-radius-full);
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--font-sm);
+      font-weight: var(--weight-semibold);
+      margin-bottom: var(--space-4);
+    }
+    .track-detail-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--font-sm);
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .track-detail-row:last-child {
+      border-bottom: none;
+    }
+    .track-detail-row span:first-child {
+      color: var(--text-muted);
+    }
+    .track-detail-row span:last-child {
+      font-weight: var(--weight-semibold);
+      text-align: right;
+    }
+    .track-notfound-box {
+      text-align: center;
+      padding: var(--space-6) var(--space-4);
+      background-color: var(--bg-surface-alt);
+      border-radius: var(--border-radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .btn-whatsapp-support {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background-color: #25d366;
+      color: #ffffff;
+      padding: var(--space-2) var(--space-6);
+      border-radius: var(--border-radius-full);
+      font-weight: var(--weight-semibold);
+      font-size: var(--font-sm);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Header Injection Placeholder -->
+  <header id="global-header"></header>
+
+  <main class="main-container">
+    <div class="track-panel">
+      <div class="track-intro">
+        <h1>আপনার অর্ডার ট্র্যাক করুন</h1>
+        <p>অর্ডার আইডি এবং যে মোবাইল নাম্বার দিয়ে অর্ডার করেছিলেন তা দিন।</p>
+      </div>
+
+      <form class="track-form" id="track-form">
+        <div class="form-field">
+          <label class="form-label" for="track-order-id">অর্ডার আইডি (Order ID) *</label>
+          <input type="text" id="track-order-id" class="form-input" placeholder="যেমন: AYT-20260806-1234" required />
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="track-phone">মোবাইল নাম্বার (Mobile Number) *</label>
+          <input type="tel" id="track-phone" class="form-input" placeholder="01XXXXXXXXX" required />
+        </div>
+        <button type="submit" class="track-submit-btn" id="track-submit-btn">অর্ডার খুঁজুন ➔</button>
+      </form>
+
+      <div class="track-result" id="track-result"></div>
+    </div>
+  </main>
+
+  <!-- Dynamic Footer Injection Placeholder -->
+  <footer id="global-footer"></footer>
+
+  <!-- App Services & Scripts -->
+  <script src="config/environment/env.js"></script>
+  <script src="utils/storage/storage.js"></script>
+  <script src="api/shared/api-client.js"></script>
+  <script src="components/header/header.js"></script>
+  <script src="components/footer/footer.js"></script>
+  <script src="components/whatsapp/whatsapp.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // If the customer arrived straight from checkout, prefill their own order.
+      const lastOrder = StorageHelper.get('ayt_last_order', null);
+      if (lastOrder && lastOrder.Order_ID) {
+        document.querySelector('#track-order-id').value = lastOrder.Order_ID;
+        if (lastOrder.Customer_Phone) document.querySelector('#track-phone').value = lastOrder.Customer_Phone;
+      }
+
+      document.querySelector('#track-form').addEventListener('submit', handleTrackSubmit);
+    });
+
+    async function handleTrackSubmit(event) {
+      event.preventDefault();
+
+      const orderId = document.querySelector('#track-order-id').value.trim();
+      const phone = document.querySelector('#track-phone').value.trim();
+      const resultBox = document.querySelector('#track-result');
+      const submitBtn = document.querySelector('#track-submit-btn');
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'খোঁজা হচ্ছে...';
+      resultBox.classList.remove('is-visible');
+      resultBox.innerHTML = '';
+
+      try {
+        const response = await ApiClient.request('orders.track', { orderId, phone }, 'GET');
+        if (response && response.success && response.data) {
+          renderOrderFound(response.data);
+        } else {
+          renderNotFound(orderId);
+        }
+      } catch (err) {
+        // Deliberately NOT fabricating a fake tracking result here: if the
+        // backend can't be reached, we tell the customer plainly and route
+        // them to WhatsApp instead of guessing at an order status.
+        console.warn('Order tracking lookup failed.', err);
+        renderNotFound(orderId);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'অর্ডার খুঁজুন ➔';
+      }
+    }
+
+    function renderOrderFound(order) {
+      const resultBox = document.querySelector('#track-result');
+      const statusLabels = {
+        pending: '⏳ প্রসেসিং হচ্ছে',
+        confirmed: '✅ নিশ্চিত হয়েছে',
+        shipped: '🚚 পাঠানো হয়েছে',
+        delivered: '📦 ডেলিভারি সম্পন্ন',
+        cancelled: '❌ বাতিল হয়েছে'
+      };
+      const statusText = statusLabels[order.status] || order.status || 'আপডেট পাওয়া যায়নি';
+
+      resultBox.innerHTML = `
+        <span class="track-status-chip">${statusText}</span>
+        <div class="track-detail-row"><span>অর্ডার আইডি</span><span>${order.orderId || ''}</span></div>
+        <div class="track-detail-row"><span>মোট বিল</span><span>৳${parseFloat(order.grandTotal || 0).toFixed(2)}</span></div>
+        <div class="track-detail-row"><span>ডেলিভারি ঠিকানা</span><span>${order.shippingAddress || '—'}</span></div>
+        <div class="track-detail-row"><span>সর্বশেষ আপডেট</span><span>${order.updatedAt || '—'}</span></div>
+      `;
+      resultBox.classList.add('is-visible');
+    }
+
+    function renderNotFound(orderId) {
+      const resultBox = document.querySelector('#track-result');
+      const cleanPhone = ENV.CONTACT_WHATSAPP.replace(/\+/g, '');
+      const waMessage = encodeURIComponent(`আসসালামু আলাইকুম! আমি আমার অর্ডারটি ট্র্যাক করতে পারছি না। অর্ডার আইডি: ${orderId}`);
+
+      resultBox.innerHTML = `
+        <div class="track-notfound-box">
+          <p style="font-weight: var(--weight-semibold);">এই মুহূর্তে অর্ডারের তথ্য যাচাই করা যায়নি।</p>
+          <p style="color: var(--text-muted); font-size: var(--font-sm);">
+            অর্ডার আইডি ও মোবাইল নাম্বারটি আবার যাচাই করে দেখুন, অথবা সরাসরি আমাদের WhatsApp-এ যোগাযোগ করুন — আমরা দ্রুত সাহায্য করব।
+          </p>
+          <a href="https://wa.me/${cleanPhone}?text=${waMessage}" target="_blank" rel="noopener" class="btn-whatsapp-support">
+            💬 WhatsApp-এ যোগাযোগ করুন
+          </a>
+        </div>
+      `;
+      resultBox.classList.add('is-visible');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ক্যাটাগরি | AYT Mart</title>
+  <link rel="stylesheet" href="styles/themes/variables.css">
+  <link rel="stylesheet" href="styles/base/reset.css">
+  <link rel="stylesheet" href="styles/layout/layout.css">
+  <style>
+    .redirect-panel {
+      max-width: 480px;
+      margin: var(--space-12) auto;
+      text-align: center;
+      padding: var(--space-8);
+    }
+    .redirect-panel p { color: var(--text-muted); margin-top: var(--space-3); }
+  </style>
+</head>
+<body>
+  <header id="global-header"></header>
+
+  <main class="container">
+    <div class="redirect-panel">
+      <h1>ক্যাটাগরি লোড হচ্ছে...</h1>
+      <p>স্বয়ংক্রিয়ভাবে পৌঁছে না গেলে, <a id="fallback-link" href="products.html">এখানে ক্লিক করুন</a>।</p>
+    </div>
+  </main>
+
+  <footer id="global-footer"></footer>
+
+  <script src="config/environment/env.js"></script>
+  <script src="utils/storage/storage.js"></script>
+  <script src="api/shared/api-client.js"></script>
+  <script src="components/header/header.js"></script>
+  <script src="components/footer/footer.js"></script>
+  <script src="components/whatsapp/whatsapp.js"></script>
+  <script>
+    // category.html?id=CAT-00001  ->  products.html?category=CAT-00001
+    // Kept as a real page (not a bare <meta refresh>) so it degrades gracefully
+    // and old links to category.html?id=... keep working even if the catalog
+    // page ever moves.
+    const params = new URLSearchParams(window.location.search);
+    const catId = params.get('id') || params.get('category');
+    const target = catId ? `products.html?category=${encodeURIComponent(catId)}` : 'products.html';
+    document.getElementById('fallback-link').href = target;
+    window.location.replace(target);
+  </script>
+</body>
+</html>

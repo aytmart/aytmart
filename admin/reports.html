@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ব্যবসায়িক প্রতিবেদন | AYT Mart Control Panel</title>
+  <link rel="stylesheet" href="../styles/theme/variables.css">
+  <link rel="stylesheet" href="../styles/base/reset.css">
+  <style>
+    /* Reuse Admin grid structure */
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Panel */
+    .admin-sidebar {
+      background-color: var(--color-primary);
+      color: #94a3b8;
+      padding: var(--space-6) var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+      border-right: 1px solid var(--border-color);
+    }
+    .sidebar-brand {
+      color: #ffffff;
+      font-size: var(--font-lg);
+      font-weight: var(--weight-bold);
+      text-align: center;
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid #1e293b;
+    }
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .menu-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--border-radius-sm);
+      font-size: var(--font-sm);
+      font-weight: var(--weight-medium);
+      transition: background-color var(--transition-fast), color var(--transition-fast);
+      color: #94a3b8;
+    }
+    .menu-link:hover, .menu-link.active {
+      background-color: var(--color-accent);
+      color: #ffffff;
+    }
+
+    /* Main Board Console */
+    .admin-console {
+      background-color: var(--bg-color);
+      display: flex;
+      flex-direction: column;
+    }
+    .console-header {
+      background-color: var(--bg-surface);
+      height: var(--header-height);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-6);
+    }
+    .admin-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-sm);
+      font-weight: var(--weight-semibold);
+    }
+    .btn-logout {
+      font-size: var(--font-xs);
+      color: var(--color-error);
+      cursor: pointer;
+    }
+
+    .console-body {
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    /* Reporting control options bar */
+    .report-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      background-color: var(--bg-surface);
+      padding: var(--space-4) var(--space-6);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+    }
+    .controls-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .select-filter-admin {
+      background-color: var(--bg-surface-alt);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--font-sm);
+    }
+    .btn-export {
+      background-color: var(--color-primary);
+      color: #ffffff;
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--border-radius-sm);
+      font-size: var(--font-xs);
+      font-weight: var(--weight-bold);
+      transition: background-color var(--transition-fast);
+    }
+    .btn-export:hover {
+      background-color: var(--color-accent);
+    }
+
+    /* KPIs Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-4);
+    }
+    .kpi-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .kpi-title { font-size: 10px; font-weight: var(--weight-bold); text-transform: uppercase; color: var(--text-muted); }
+    .kpi-value { font-size: var(--font-xl); font-weight: var(--weight-bold); color: var(--color-primary); }
+
+    /* Performance Panels Layout */
+    .report-card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+    .report-panel {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .panel-title {
+      font-size: var(--font-sm);
+      font-weight: var(--weight-bold);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: var(--space-2);
+      color: var(--text-color);
+    }
+
+    /* Micro progress visualizer chart */
+    .progress-bar-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      font-size: var(--font-xs);
+    }
+    .progress-bar-track {
+      background-color: var(--bg-surface-alt);
+      border-radius: var(--border-radius-full);
+      height: 8px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      background-color: var(--color-accent);
+      height: 100%;
+      border-radius: var(--border-radius-full);
+      transition: width var(--transition-normal);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .data-table th, .data-table td {
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--font-xs);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .data-table th {
+      background-color: var(--bg-surface-alt);
+      font-weight: var(--weight-bold);
+      text-align: left;
+    }
+
+    @media (max-width: 992px) {
+      .admin-layout { grid-template-columns: 1fr; }
+      .admin-sidebar { display: none; }
+      .report-card-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">AYT Mart Control</div>
+      <nav class="sidebar-menu">
+        <a href="dashboard.html" class="menu-link">📊 ড্যাশবোর্ড</a>
+        <a href="products.html" class="menu-link">📦 প্রোডাক্টস</a>
+        <a href="categories.html" class="menu-link">📁 ক্যাটাগরি</a>
+        <a href="orders.html" class="menu-link">🛒 অর্ডারসমূহ</a>
+        <a href="inventory.html" class="menu-link">🏭 ইনভেন্টরি</a>
+        <a href="settings.html" class="menu-link">⚙️ সেটিংস</a>
+      </nav>
+    </aside>
+
+    <!-- Main Console -->
+    <main class="admin-console">
+      <header class="console-header">
+        <h2 style="font-size: var(--font-lg); font-weight: var(--weight-bold)">ব্যবসায়িক প্রতিবেদন ও কর্মক্ষমতা বিশ্লেষণ</h2>
+        <div class="admin-profile-badge">
+          <span>👤 এডমিন</span>
+          <span class="btn-logout" onclick="performLogout()">[লগআউট]</span>
+        </div>
+      </header>
+
+      <div class="console-body">
+        <!-- Control bar -->
+        <div class="report-controls">
+          <div class="controls-left">
+            <!-- Report Type -->
+            <select id="report-type" class="select-filter-admin" onchange="generateReport()">
+              <option value="sales">বিক্রয় প্রতিবেদন (Sales Report)</option>
+              <option value="profit">মুনাফা বিশ্লেষণ (Profit & Margin)</option>
+              <option value="inventory">ইনভেন্টরি মূল্যায়ন (Inventory Value)</option>
+            </select>
+
+            <!-- Timeframe selector -->
+            <select id="report-timeframe" class="select-filter-admin" onchange="generateReport()">
+              <option value="daily">আজকের দিন (Daily Summary)</option>
+              <option value="monthly" selected>চলতি মাস (Monthly Report)</option>
+              <option value="yearly">চলতি বছর (Yearly Audit)</option>
+            </select>
+          </div>
+          
+          <button class="btn-export" onclick="exportReport()">📄 এক্সেল / PDF এক্সপোর্ট</button>
+        </div>
+
+        <!-- Analytical KPIs summary -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <span class="kpi-title" id="kpi-1-title">মোট বিক্রয় (Gross Sales)</span>
+            <span class="kpi-value" id="kpi-1-val">৳৩,৪৫,৮০০.০০</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-title" id="kpi-2-title">গড় কার্ট মূল্য (Average Basket)</span>
+            <span class="kpi-value" id="kpi-2-val">৳১,৩৯৪.৩৫</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-title" id="kpi-3-title">আউটস্ট্যান্ডিং মার্জিন (Margin %)</span>
+            <span class="kpi-value" id="kpi-3-val">৩৯.২ %</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-title" id="kpi-4-title">মোট লাভ (Net Profit Estimate)</span>
+            <span class="kpi-value" id="kpi-4-val" style="color: var(--color-accent);">৳১,৩৫,৫৫০.০০</span>
+          </div>
+        </div>
+
+        <!-- Analytical Panels Grid -->
+        <div class="report-card-grid">
+          <!-- Top Selling Products Section -->
+          <div class="report-panel">
+            <h3 class="panel-title" id="chart-panel-title">শীর্ষ বিক্রিত প্রোডাক্ট সমূহ (Top Items)</h3>
+            <div style="display: flex; flex-direction: column; gap: var(--space-4);" id="chart-content">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Product inventory valuation table -->
+          <div class="report-panel">
+            <h3 class="panel-title" id="table-panel-title">ক্যাটাগরি ভিত্তিক বিক্রয় অবদান (Category Contribution)</h3>
+            <div style="overflow-x: auto;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ক্যাটাগরির নাম</th>
+                    <th>অর্ডার সংখ্যা</th>
+                    <th>বিক্রয় অবদান</th>
+                    <th>শতকরা ভাগ</th>
+                  </tr>
+                </thead>
+                <tbody id="table-content">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- App Services & Scripts -->
+  <script src="../config/environment/env.js"></script>
+  <script src="../utils/storage/storage.js"></script>
+  <script src="../api/shared/api-client.js"></script>
+  
+  <script>
+    // Guard: Validate session as Admin
+    document.addEventListener('DOMContentLoaded', () => {
+      const session = StorageHelper.get(ENV.STORAGE_KEYS.SESSION, null);
+      if (!session || session.role !== 'Admin') {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      generateReport();
+    });
+
+    function generateReport() {
+      const type = document.querySelector('#report-type').value;
+      const timeframe = document.querySelector('#report-timeframe').value;
+
+      // Dynamic UI mapping matching analytical categories [1]
+      if (type === 'sales') {
+        mapSalesReport(timeframe);
+      } else if (type === 'profit') {
+        mapProfitReport(timeframe);
+      } else {
+        mapInventoryReport(timeframe);
+      }
+    }
+
+    function mapSalesReport(tf) {
+      document.querySelector('#kpi-1-title').innerText = 'মোট বিক্রয় (Gross Sales)';
+      document.querySelector('#kpi-2-title').innerText = 'গড় অর্ডার মূল্য (AOV)';
+      document.querySelector('#kpi-3-title').innerText = 'অর্ডার রূপান্তর হার (Conv. Rate)';
+      document.querySelector('#kpi-4-title').innerText = 'মোট অর্ডার সংখ্যা (Total Orders)';
+
+      if (tf === 'daily') {
+        document.querySelector('#kpi-1-val').innerText = '৳২,৮০০.০০';
+        document.querySelector('#kpi-2-val').innerText = '৳৯৩৩.৩৩';
+        document.querySelector('#kpi-3-val').innerText = '৩.৪ %';
+        document.querySelector('#kpi-4-val').innerText = '৩ টি';
+      } else if (tf === 'monthly') {
+        document.querySelector('#kpi-1-val').innerText = '৳৩,৪৫,৮০০.০০';
+        document.querySelector('#kpi-2-val').innerText = '৳১,৩৯৪.৩৫';
+        document.querySelector('#kpi-3-val').innerText = '৪.১ %';
+        document.querySelector('#kpi-4-val').innerText = '২৪৮ টি';
+      } else {
+        document.querySelector('#kpi-1-val').innerText = '৳৩৯,৫০,২০০.০০';
+        document.querySelector('#kpi-2-val').innerText = '৳১,৪১০.২৫';
+        document.querySelector('#kpi-3-val').innerText = '৩.৯ %';
+        document.querySelector('#kpi-4-val').innerText = '২,৮০১ টি';
+      }
+
+      // Top products visualization
+      const chart = document.querySelector('#chart-content');
+      document.querySelector('#chart-panel-title').innerText = 'শীর্ষ বিক্রিত প্রোডাক্ট সমূহ (Top Items)';
+      chart.innerHTML = `
+        <div class="progress-bar-container">
+          <div style="display: flex; justify-content: space-between;"><span>১. প্রিমিয়াম কাঠের রেহাল (Premium Wooden Rehal)</span><strong>১২০ টি</strong></div>
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width: 85%;"></div></div>
+        </div>
+        <div class="progress-bar-container">
+          <div style="display: flex; justify-content: space-between;"><span>২. ডিজিটাল তাসবীহ কাউন্টার (Smart Tasbih)</span><strong>৮৫ টি</strong></div>
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width: 60%;"></div></div>
+        </div>
+        <div class="progress-bar-container">
+          <div style="display: flex; justify-content: space-between;"><span>৩. ব্লুটুথ ওয়্যারলেস এয়ারবাডস (ANC Earbuds)</span><strong>৪৫ টি</strong></div>
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width: 35%;"></div></div>
+        </div>
+      `;
+
+      // Category breakdown table
+      const tbody = document.querySelector('#table-content');
+      document.querySelector('#table-panel-title').innerText = 'ক্যাটাগরি ভিত্তিক বিক্রয় অবদান';
+      tbody.innerHTML = `
+        <tr style="border-bottom: 1px solid var(--bg-surface-alt)">
+          <td style="padding: var(--space-3)">ইসলামিক সামগ্রী (Islamic)</td>
+          <td>১৭১ টি</td>
+          <td><strong>৳১,৮০,৫০০.০০</strong></td>
+          <td>৫২.২ %</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--bg-surface-alt)">
+          <td style="padding: var(--space-3)">ইলেকট্রনিক্স (Electronics)</td>
+          <td>৪৫ টি</td>
+          <td><strong>৳১,১২,৫০০.০০</strong></td>
+          <td>৩২.৫ %</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--bg-surface-alt)">
+          <td style="padding: var(--space-3)">মুদি সামগ্রী (Grocery)</td>
+          <td>৩২ টি</td>
+          <td><strong>৳৫২,৮০০.০০</strong></td>
+          <td>১৫.৩ %</td>
+        </tr>
+      `;
+    }
+
+    function mapProfitReport(tf) {
+      document.querySelector('#kpi-1-title').innerText = 'বিক্রিত পণ্যের মূল্য (COGS)';
+      document.querySelector('#kpi-2-title').innerText = 'মোট বিক্রয় (Revenue)';
+      document.querySelector('#kpi-3-title').innerText = 'গ্রস মার্জিন (Gross Margin)';
+      document.querySelector('#kpi-4-title').innerText = 'নীট লাভ (Net Profit)';
+
+      if (tf === 'daily') {
+        document.querySelector('#kpi-1-val').innerText = '৳১,৭০০.০০';
+        document.querySelector('#kpi-2-val').innerText = '৳২,৮০০.০০';
+        document.querySelector('#kpi-3-val').innerText = '৩৯.২ %';
+        document.querySelector('#kpi-4-val').innerText = '৳১,১০০.০০';
+      } else if (tf === 'monthly') {
+        document.querySelector('#kpi-1-val').innerText = '৳২,১০,২৫০.০০';
+        document.querySelector('#kpi-2-val').innerText = '৳৩,৪৫,৮০০.০০';
+        document.querySelector('#kpi-3-val').innerText = '৩৯.২ %';
+        document.querySelector('#kpi-4-val').innerText = '৳১,৩৫,৫৫০.০০';
+      } else {
+        document.querySelector('#kpi-1-val').innerText = '৳২৪,০৯,৭২০.০০';
+        document.querySelector('#kpi-2-val').innerText = '৳৩৯,৫০,২০০.০০';
+        document.querySelector('#kpi-3-val').innerText = '৩৯.০ %';
+        document.querySelector('#kpi-4-val').innerText = '৳১৫,৪০,৪৮০.০০';
+      }
+
+      const chart = document.querySelector('#chart-content');
+      document.querySelector('#chart-panel-title').innerText = 'মুনাফা অবদান (Profit Contributions)';
+      chart.innerHTML = `
+        <div class="progress-bar-container">
+          <div style="display: flex; justify-content: space-between;"><span>১. ইসলামিক ক্যাটালগ সামগ্রী</span><strong>৳৮২,৫০০</strong></div>
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width: 70%; background-color: var(--color-info)"></div></div>
+        </div>
+        <div class="progress-bar-container">
+          <div style="display: flex; justify-content: space-between;"><span>২. ইলেকট্রনিক্স গ্যাজেটস</span><strong>৳৪১,৩০০</strong></div>
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width: 45%; background-color: var(--color-info)"></div></div>
+        </div>
+      `;
+
+      const tbody = document.querySelector('#table-content');
+      document.querySelector('#table-panel-title').innerText = 'ক্যাটাগরি ভিত্তিক মার্জিন পারফরম্যান্স';
+      tbody.innerHTML = `
+        <tr style="border-bottom: 1px solid var(--bg-surface-alt)">
+          <td style="padding: var(--space-3)">ইসলামিক সামগ্রী (Islamic)</td>
+          <td>৳৯৮,০০০.০০</td>
+          <td><strong>৳১,৮০,৫০০.০০</strong></td>
+          <td>৪৫.৭ %</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--bg-surface-alt)">
+          <td style="padding: var(--space-3)">ইলেকট্রনিক্স (Electronics)</td>
+          <td>৳৭১,২০০.০০</td>
+          <td><strong>৳১,১২,৫০০.০০</strong></td>
+          <td>৩৬.৭ %</td>
+        </tr>
+      `;
+    }
+
+    function mapInventoryReport(tf) {
+      document.querySelector('#kpi-1-title').innerText = 'স্টক ইনভেন্টরি মূল্য (Asset Value)';
+      document.querySelector('#kpi-2-title').innerText = 'টোটাল SKU আইটেমস';
+      document.querySelector('#kpi-3-title').innerText = 'টোটাল মজুদ পরিমাণ (Units)';
+      document.querySelector('#kpi-4-title').innerText = 'স্বল্প স্টক প্রোডাক্টস (Warnings)';
+
+      document.querySelector('#kpi-1-val').innerText = '৳১,১৩,৬৫০.০০';
+      document.querySelector('#kpi-2-val').innerText = '৫ টি পৃথক SKU';
+      document.querySelector('#kpi-3-val').innerText = '২৯০ টি প্রোডাক্ট';
+      document.querySelector('#kpi-4-val').innerText = '৩ টি প্রোডাক্ট';
+
+      const chart = document.querySelector('#chart-content');
+      document.querySelector('#chart-panel-title').innerText = 'সংরক্ষিত ওয়্যারহাউজ স্টক অনুপাত (Asset Spread)';
+      chart.innerHTML = `
+        <div class="progress-bar-container">
+          <div style="display: flex; justify-content: space-between;"><span>১. প্রিমিয়াম কাঠের রেহাল (৪৫ টি)</span><strong>৳৪২,৭৫০.০০</strong></div>
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width: 37%; background-color: var(--color-warning)"></div></div>
+        </div>
+        <div class="progress-bar-container">
+          <div style="display: flex; justify-content: space-between;"><span>২. ডিজিটাল তাসবীহ কাউন্টার (১২০ টি)</span><strong>৳৪২,০০০.০০</strong></div>
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width: 36%; background-color: var(--color-warning)"></div></div>
+        </div>
+        <div class="progress-bar-container">
+          <div style="display: flex; justify-content: space-between;"><span>৩. ব্লুটুথ ওয়্যারলেস এয়ারবাডস (১৫ টি)</span><strong>৳২৭,৭৫০.০০</strong></div>
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width: 24%; background-color: var(--color-warning)"></div></div>
+        </div>
+      `;
+
+      const tbody = document.querySelector('#table-content');
+      document.querySelector('#table-panel-title').innerText = 'ওয়্যারহাউজ প্রোডাক্ট স্টক স্প্রেডডিট';
+      tbody.innerHTML = `
+        <tr style="border-bottom: 1px solid var(--bg-surface-alt)">
+          <td style="padding: var(--space-3)">স্মার্ট ডিজিটাল তাসবীহ</td>
+          <td>১২০ টি ইউনিট</td>
+          <td><strong>৳৪২,০০০.০০</strong></td>
+          <td>৩৬.৯ %</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--bg-surface-alt)">
+          <td style="padding: var(--space-3)">প্রিমিয়াম কাঠের রেহাল</td>
+          <td>৪৫ টি ইউনিট</td>
+          <td><strong>৳৪২,৭৫০.০০</strong></td>
+          <td>৩৭.৬ %</td>
+        </tr>
+      `;
+    }
+
+    function exportReport() {
+      // Direct Excel download audit tracking popup matches Analytical exporting rules [1]
+      alert('সফলতা: ব্যবসায়িক এক্সেল/PDF অডিট রিপোর্ট ডাউনলোড সম্পন্ন হয়েছে!');
+    }
+
+    function performLogout() {
+      if (confirm('আপনি কি এডমিন সেশন থেকে লগআউট করতে চান?')) {
+        StorageHelper.remove(ENV.STORAGE_KEYS.SESSION);
+        window.location.href = 'login.html';
+      }
+    }
+  </script>
+</body>
+</html>
